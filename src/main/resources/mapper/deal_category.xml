@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.database.DealCategoryDao">
+
+    <resultMap id="dealCategory" type="com.common.entity.DealCategory">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parent_id"/>
+        <result column="name" property="name"/>
+        <result column="url_name" property="url_name"/>
+        <result column="publish_status" property="publish_status"/>
+        <result column="create_time" property="create_time"/>
+        <result column="order_num" property="order_num"/>
+        <result column="deep" property="deep"/>
+    </resultMap>
+
+    <select id="getDealCategoryList" resultMap="dealCategory">
+        SELECT
+            id
+            ,parent_id
+            ,name
+            ,url_name
+            ,publish_status
+            ,create_time
+            ,order_num
+            ,deep
+        FROM
+            deal_category
+        WHERE
+            1 = 1
+        <where>
+            <if test="id !=null and id !=''">
+                AND id = #{id}
+            </if>
+            <if test="parent_id !=null and parent_id !=''">
+                AND parent_id = #{parent_id}
+            </if>
+            <if test="url_name !=null and url_name !=''">
+                AND url_name = #{url_name}
+            </if>
+            <if test="publish_status !=null and publish_status !=''">
+                AND publish_status = #{publish_status}
+            </if>
+            <if test="create_time !=null and create_time !=''">
+                AND create_time = #{create_time}
+            </if>
+            <if test="deep !=null and deep !=''">
+                AND deep = #{deep}
+            </if>
+        </where>
+    </select>
+
+</mapper>
