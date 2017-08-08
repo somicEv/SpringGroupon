@@ -7,20 +7,55 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-    <!-- 加载属性文件 -->
-   <!-- <context:property-placeholder location="classpath:jdbc.properties"/> -->
     <!-- 配置注解驱动 -->
     <mvc:annotation-driven />
     <!-- 视图解析器 -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/" />
-        <property name="suffix" value=".jsp" />
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" id="viewResolver">
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="order" value="2"/>
+                    <property name="prefix" value="/WEB-INF/jsp/" />
+                    <property name="suffix" value=".jsp" />
+                </bean>
+                <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+                    <property name="order" value="1"/>
+                    <property name="contentType" value="text/html;charset=UTF-8"/>
+                    <property name="cache" value="true"/>
+                    <property name="prefix" value=""/>
+                    <property name="suffix" value=".ftl"/>
+                    <property name="requestContextAttribute" value="request"/>
+                    <property name="exposeRequestAttributes" value="true"/>
+                    <property name="exposeSessionAttributes" value="true"/>
+                    <property name="exposeSpringMacroHelpers" value="true"/>
+                    <property name="allowSessionOverride" value="true"/>
+                </bean>
+            </list>
+        </property>
     </bean>
+
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/views/" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">0</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="number_format">0.##########</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="template_exception_handler">ignore</prop>
+            </props>
+        </property>
+    </bean>
+
+
     <!-- 配置包扫描器，扫描@Controller注解的类 -->
     <context:component-scan base-package="com.controller"/>
     <!-- 配置资源映射 -->
-    <mvc:resources location="css/" mapping="/css/**"/>
-    <mvc:resources location="js/" mapping="/js/**"/>
+    <mvc:resources mapping="/images/**" location="WEB-INF/images/"/>
+    <mvc:resources mapping="/js/**" location="WEB-INF/js/" />
+    <mvc:resources mapping="/style/**" location="WEB-INF/style/" />
+
     <!-- 多媒体解析器 -->
     <!-- 配置文件上传解析器 -->
     <bean id="multipartResolver"

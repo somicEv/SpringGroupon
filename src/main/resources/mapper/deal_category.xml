@@ -14,7 +14,7 @@
         <result column="deep" property="deep"/>
     </resultMap>
 
-    <select id="getDealCategoryList" resultMap="dealCategory">
+    <select id="getDealCategoryList" resultMap="dealCategory" parameterType="com.common.entity.DealCategory">
         SELECT
             id
             ,parent_id
@@ -26,13 +26,12 @@
             ,deep
         FROM
             deal_category
-        WHERE
-            1 = 1
+
         <where>
             <if test="id !=null and id !=''">
                 AND id = #{id}
             </if>
-            <if test="parent_id !=null and parent_id !=''">
+            <if test="parent_id !=null">
                 AND parent_id = #{parent_id}
             </if>
             <if test="url_name !=null and url_name !=''">
