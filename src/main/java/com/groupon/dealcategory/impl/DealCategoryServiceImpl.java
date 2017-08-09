@@ -1,9 +1,9 @@
-package com.groupon.impl;
+package com.groupon.dealcategory.impl;
 
 
 import com.common.entity.DealCategory;
 import com.database.DealCategoryDao;
-import com.groupon.api.DealCategoryService;
+import com.groupon.dealcategory.api.DealCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

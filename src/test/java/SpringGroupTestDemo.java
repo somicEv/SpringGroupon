@@ -1,6 +1,9 @@
+import com.common.entity.Deal;
 import com.common.entity.DealCategory;
-import com.groupon.api.DealCategoryService;
-import com.groupon.business.DealCategoryBusiness;
+import com.common.vo.IndexCategoryDealVo;
+import com.groupon.deal.business.DealBusiness;
+import com.groupon.dealcategory.api.DealCategoryService;
+import com.groupon.dealcategory.business.DealCategoryBusiness;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,9 @@ public class SpringGroupTestDemo {
 	@Autowired
 	private DealCategoryBusiness dealCategoryBusiness;
 
+	@Autowired
+	private DealBusiness dealBusiness;
+
 	@Test
 	public void testDealCategoryService() {
 		DealCategory dealCategory = new DealCategory();
@@ -27,23 +33,28 @@ public class SpringGroupTestDemo {
 	}
 
 	@Test
-	public void testDealCategoryBussiness() {
-		List<DealCategory> rootNode = dealCategoryBusiness.getRootNode();
-		List<DealCategory> notRootNode = dealCategoryBusiness.getNotRootNode();
-		for (DealCategory dc : rootNode) {
-			dc = dealCategoryBusiness.getAllChildrenNode(dc, notRootNode);
-		}
-		for(DealCategory dc : rootNode){
-			System.out.println("分类名称："+dc.getName());
-			System.out.println("子分类：");
-			for (DealCategory cdc : dc.getChildren()){
-
-				System.out.println(cdc);
+	public void test(){
+		List<DealCategory> allChildrenNode = dealCategoryBusiness.getAllChildrenNode();
+		for (DealCategory dc : allChildrenNode) {
+			System.out.println(dc.toString());
+			List<DealCategory> children = dc.getChildren();
+			for (DealCategory cdc : children){
+				System.out.println(cdc.toString());
 			}
 		}
 	}
 
+	@Test
+	public void testDealBusiness(){
+		List<IndexCategoryDealVo> dealForIndex = dealBusiness.createIndexCategoryDealVo();
+		for (IndexCategoryDealVo deal : dealForIndex){
 
+			System.out.println("第一组：");
+			deal.showFirst();
+			System.out.println("第二组：");
+			deal.showSecond();
+		}
+	}
 }
 
 

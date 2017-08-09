@@ -33,8 +33,8 @@
 		<#if indexCategoryDealDTOs??>
 			<#list indexCategoryDealDTOs as dto>
 				<div class="shopTit comWidth">
-					<span class="icon"></span><h3>${dto.name}</h3>
-					<a href="${ctx}/category/${dto.url_name}" class="more">更多&gt;&gt;</a>
+					<span class="icon"></span><h3>${dto.category.name}</h3>
+					<a href="${ctx}/category/${dto.category.url_name}" class="more">更多&gt;&gt;</a>
 				</div>
 				<div class="shopList comWidth clearfix">
 					<div class="leftArea">
@@ -54,7 +54,7 @@
 								<#list dto.first as deal>
 									<div class="shop_item">
 										<div class="shop_img">
-											<a href="${ctx}/item/${deal.skuId}"><img src="${helper.getDealImageUrlForIndexDeal1List(deal)}" alt=""></a>
+											<a href="${ctx}/item/${deal.skuId}"><#--<img src="${helper.getDealImageUrlForIndexDeal1List(deal)}" alt="">--></a>
 										</div>
 										<h3>${deal.dealTitle}</h3>
 										<p><@common.formatPrice deal.dealPrice/></p>
@@ -68,7 +68,7 @@
 								<#list dto.second as deal>
 									<div class="shopItem_sm">
 										<div class="shopItem_smImg">
-											<a href="${ctx}/item/${deal.skuId}"><img src="${helper.getDealImageUrlForIndexDeal2List(deal)}" alt=""></a>
+											<a href="${ctx}/item/${deal.skuId}"><#--<img src="${helper.getDealImageUrlForIndexDeal2List(deal)}" alt="">--></a>
 										</div>
 										<div class="shopItem_text">
 											<p>${deal.dealTitle}</p>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.database.DealDao">
+
+    <resultMap id="BaseResultMap" type="com.common.entity.Deal">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="area_id" property="areaId" jdbcType="BIGINT"/>
+        <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
+        <result column="sku_id" property="skuId" jdbcType="BIGINT"/>
+        <result column="deal_class" property="dealClass" jdbcType="INTEGER"/>
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
+        <result column="merchant_sku" property="merchantSku" jdbcType="BIGINT"/>
+        <result column="deal_title" property="dealTitle" jdbcType="VARCHAR"/>
+        <result column="deal_price" property="dealPrice" jdbcType="INTEGER"/>
+        <result column="merchant_price" property="merchantPrice" jdbcType="INTEGER"/>
+        <result column="market_price" property="marketPrice" jdbcType="INTEGER"/>
+        <result column="settlementrice_max" property="settlementPriceMax" jdbcType="INTEGER"/>
+        <result column="settlement_price" property="settlementPrice" jdbcType="INTEGER"/>
+        <result column="discount" property="discount" jdbcType="INTEGER"/>
+        <result column="bonus_points" property="bonusPoints" jdbcType="INTEGER"/>
+        <result column="deal_type" property="dealType" jdbcType="INTEGER"/>
+        <result column="image_id" property="imageId" jdbcType="BIGINT"/>
+        <result column="deal_level" property="dealLevel" jdbcType="INTEGER"/>
+        <result column="max_purchase_count" property="maxPurchaseCount" jdbcType="INTEGER"/>
+        <result column="publish_status" property="publishStatus" jdbcType="INTEGER"/>
+        <result column="inventory_amount" property="inventoryAmount" jdbcType="INTEGER"/>
+        <result column="vendibility_amount" property="vendibilityAmount" jdbcType="INTEGER"/>
+        <result column="oos_status" property="oosStatus" jdbcType="INTEGER"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP"/>
+        <result column="merchant_code" property="merchantCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+        <result column="root_id" property="rootId" javaType="INTEGER"/>
+    </resultMap>
+
+    <!-- 查询字段列表 -->
+    <sql id="Base_Column_List">
+        id, area_id, area_name, sku_id, deal_class, merchant_id, merchant_sku, deal_title, deal_price, merchant_price,
+        market_price, settlement_price_max, settlement_price, discount, bonus_points, deal_type, image_id, deal_level,
+        max_purchase_count, publish_status, inventory_amount, oos_status, vendibility_amount, start_time, end_time,
+        publish_time, merchant_code, create_time, update_time, category_id, root_id
+    </sql>
+
+    <select id="getDealsForIndex" resultMap="BaseResultMap" parameterType="com.common.entity.Deal">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        deal
+        WHERE
+        publish_status = #{publishStatus,jdbcType=INTEGER}
+        AND end_time &gt;= #{endTime,jdbcType=TIMESTAMP}
+        AND area_id = #{areaId, jdbcType=VARCHAR}
+        AND root_id = #{rootId, jdbcType=INTEGER}
+    </select>
+
+</mapper>

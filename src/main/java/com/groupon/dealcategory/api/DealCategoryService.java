@@ -1,4 +1,4 @@
-package com.groupon.api;
+package com.groupon.dealcategory.api;
 
 
 import com.common.entity.DealCategory;

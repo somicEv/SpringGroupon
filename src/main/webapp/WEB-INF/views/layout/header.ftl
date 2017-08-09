@@ -13,7 +13,7 @@
                                 <dd>
                                     <#if category.children??>
                                         <#list category.children as child>
-                                            <a href="${ctx}/category/${child.url_ame}">${child.name}</a>
+                                            <a href="${ctx}/category/${child.url_name}">${child.name}</a>
                                         </#list>
                                     </#if>
                                 </dd>

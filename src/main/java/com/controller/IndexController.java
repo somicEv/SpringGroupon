@@ -1,7 +1,10 @@
 package com.controller;
 
 import com.common.entity.DealCategory;
-import com.groupon.business.DealCategoryBusiness;
+import com.common.vo.IndexCategoryDealVo;
+import com.groupon.deal.api.DealService;
+import com.groupon.deal.business.DealBusiness;
+import com.groupon.dealcategory.business.DealCategoryBusiness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,9 @@ public class IndexController {
 	@Autowired
 	private DealCategoryBusiness dealCategoryBusiness;
 
+	@Autowired
+	private DealBusiness dealBusiness;
+
 	/**
 	 * 首页显示
 	 * @param model
@@ -23,16 +29,15 @@ public class IndexController {
 	 */
 	@RequestMapping(value = "/index")
 	public String index(Model model) {
-		// 获取根节点
-		List<DealCategory> rootNode = dealCategoryBusiness.getRootNode();
-		model.addAttribute("indexCategoryDealDTOs", rootNode);
-		// 获取根分类的一级分类
-		List<DealCategory> notRootNode = dealCategoryBusiness.getNotRootNode();
-		List<DealCategory> firstNode = new ArrayList<DealCategory>();
-		for (DealCategory dc : rootNode){
-			firstNode.add(dealCategoryBusiness.getAllChildrenNode(dc,notRootNode));
-		}
+		// 获取根分类和一级分类
+		ArrayList<DealCategory> firstNode = (ArrayList<DealCategory>) dealCategoryBusiness.getAllChildrenNode();
 		model.addAttribute("categories",firstNode);
+		// 获取根节点
+		List<IndexCategoryDealVo> rootNode = dealBusiness.createIndexCategoryDealVo();
+		for (IndexCategoryDealVo vo : rootNode){
+			System.out.println(vo);
+		}
+		model.addAttribute("indexCategoryDealDTOs", rootNode);
 		return "index";
 	}
 

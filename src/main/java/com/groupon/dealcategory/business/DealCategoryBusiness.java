@@ -1,7 +1,7 @@
-package com.groupon.business;
+package com.groupon.dealcategory.business;
 
 import com.common.entity.DealCategory;
-import com.groupon.api.DealCategoryService;
+import com.groupon.dealcategory.api.DealCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,16 +33,36 @@ public class DealCategoryBusiness {
 		return children;
 	}
 
-	// 获取某节点的子节点
-	public DealCategory getAllChildrenNode(DealCategory node, List<DealCategory> notRootNode) {
+	// 获取根节点和一级子节点
+	public List<DealCategory> getAllChildrenNode(List<DealCategory> rootNode) {
+		List<DealCategory> notRootNode = this.getNotRootNode();
+		for (DealCategory dc : rootNode) {
+			this.getChildrenNode(dc,notRootNode);
+		}
+		return rootNode;
+	}
+
+	// 获取根节点和一级子节点
+	public List<DealCategory> getAllChildrenNode(){
+		List<DealCategory> rootNode = this.getRootNode();
+		List<DealCategory> notRootNode = this.getNotRootNode();
+		for (DealCategory dc : rootNode) {
+			this.getChildrenNode(dc,notRootNode);
+		}
+		return rootNode;
+	}
+
+	// 获取单一节点的子节点
+	private void getChildrenNode(DealCategory node, List<DealCategory> notRootNode) {
 		List<DealCategory> children = new ArrayList<DealCategory>();
 		node.setChildren(children);
 		for (DealCategory cdc : notRootNode) {
-			if (cdc.getParent_id().equals(node.getId())) {
+			if (node.getId().equals(cdc.getParent_id())) {
 				node.getChildren().add(cdc);
+				this.getChildrenNode(cdc, notRootNode);
 			}
 		}
-		return node;
 	}
 
+	//
 }
