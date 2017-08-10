@@ -54,7 +54,7 @@
 								<#list dto.first as deal>
 									<div class="shop_item">
 										<div class="shop_img">
-											<a href="${ctx}/item/${deal.skuId}"><#--<img src="${helper.getDealImageUrlForIndexDeal1List(deal)}" alt="">--></a>
+											<a href="${ctx}/item/${deal.skuId}"><img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(deal)}" alt=""></a>
 										</div>
 										<h3>${deal.dealTitle}</h3>
 										<p><@common.formatPrice deal.dealPrice/></p>
@@ -68,7 +68,7 @@
 								<#list dto.second as deal>
 									<div class="shopItem_sm">
 										<div class="shopItem_smImg">
-											<a href="${ctx}/item/${deal.skuId}"><#--<img src="${helper.getDealImageUrlForIndexDeal2List(deal)}" alt="">--></a>
+											<a href="${ctx}/item/${deal.skuId}"><img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(deal)}" alt=""></a>
 										</div>
 										<div class="shopItem_text">
 											<p>${deal.dealTitle}</p>
