@@ -1,4 +1,4 @@
-package com.common.entity;
+package com.common.entity.deal;
 
 
 import java.util.Date;
@@ -6,9 +6,8 @@ import java.util.Date;
 /**
  * Deal即一个单品
  */
-public class Deal {
+public class Deal extends PublicDeal{
 
-	private Integer id;
 
 	private Long areaId; // 地区ID
 
@@ -75,16 +74,6 @@ public class Deal {
 	private Integer categoryId; // 商品类别ID
 
 	private Integer rootId; // 商品根分类
-
-
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Long getAreaId() {
 		return areaId;
@@ -361,7 +350,7 @@ public class Deal {
 	@Override
 	public String toString() {
 		return "Deal{" +
-				"id=" + id +
+				"id=" + super.getId()  +
 				", areaId=" + areaId +
 				", areaName='" + areaName + '\'' +
 				", skuId=" + skuId +

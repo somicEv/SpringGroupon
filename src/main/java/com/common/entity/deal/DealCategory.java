@@ -1,10 +1,9 @@
-package com.common.entity;
+package com.common.entity.deal;
 
 import java.util.List;
 
-public class DealCategory {
+public class DealCategory extends PublicDeal {
 
-	private Integer id;
 	private String name;
 	private Integer parent_id;
 	private String url_name;
@@ -13,14 +12,6 @@ public class DealCategory {
 	private Integer order_num;
 	private Integer deep;
 	private List<DealCategory> children;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Integer getParent_id() {
 		return parent_id;
@@ -89,7 +80,7 @@ public class DealCategory {
 	@Override
 	public String toString() {
 		return "DealCategory{" +
-				"id='" + id + '\'' +
+				"id='" + super.getId() + '\'' +
 				", parent_id='" + parent_id + '\'' +
 				", name='" + name + '\'' +
 				", url_name='" + url_name + '\'' +

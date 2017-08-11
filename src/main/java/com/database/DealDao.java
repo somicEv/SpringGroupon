@@ -1,10 +1,9 @@
 package com.database;
 
-import com.common.entity.Deal;
+import com.common.entity.deal.Deal;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface DealDao {

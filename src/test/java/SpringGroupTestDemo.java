@@ -1,6 +1,7 @@
-import com.common.entity.Deal;
-import com.common.entity.DealCategory;
+import com.cache.DealCacheOperator;
+import com.common.entity.deal.DealCategory;
 import com.common.vo.IndexCategoryDealVo;
+import com.database.DealCategoryDao;
 import com.groupon.deal.business.DealBusiness;
 import com.groupon.dealcategory.api.DealCategoryService;
 import com.groupon.dealcategory.business.DealCategoryBusiness;
@@ -24,6 +25,7 @@ public class SpringGroupTestDemo {
 
 	@Autowired
 	private DealBusiness dealBusiness;
+
 
 	@Test
 	public void testDealCategoryService() {
@@ -53,6 +55,18 @@ public class SpringGroupTestDemo {
 			deal.showFirst();
 			System.out.println("第二组：");
 			deal.showSecond();
+		}
+	}
+
+	@Test
+	public void testCache(){
+		List<DealCategory> rootNode = dealCategoryBusiness.getRootNode();
+		for (DealCategory dc : rootNode){
+			System.out.println(dc);
+		}
+		List<DealCategory> notRootNode = dealCategoryBusiness.getNotRootNode();
+		for (DealCategory cdc : notRootNode){
+			System.out.println(cdc);
 		}
 	}
 }

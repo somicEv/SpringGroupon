@@ -1,8 +1,8 @@
 package com.groupon.deal.business;
 
 import com.common.constant.DealConstant;
-import com.common.entity.Deal;
-import com.common.entity.DealCategory;
+import com.common.entity.deal.Deal;
+import com.common.entity.deal.DealCategory;
 import com.common.vo.IndexCategoryDealVo;
 import com.groupon.deal.api.DealService;
 import com.groupon.dealcategory.business.DealCategoryBusiness;

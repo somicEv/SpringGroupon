@@ -1,6 +1,6 @@
 package com.helper;
 
-import com.common.entity.Deal;
+import com.common.entity.deal.Deal;
 import com.common.entity.Image;
 import com.database.ImageDao;
 import org.springframework.beans.factory.annotation.Autowired;

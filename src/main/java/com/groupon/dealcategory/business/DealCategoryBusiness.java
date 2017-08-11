@@ -1,6 +1,8 @@
 package com.groupon.dealcategory.business;
 
-import com.common.entity.DealCategory;
+import com.cache.DealCacheOperator;
+import com.common.entity.deal.Deal;
+import com.common.entity.deal.DealCategory;
 import com.groupon.dealcategory.api.DealCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,23 +16,44 @@ public class DealCategoryBusiness {
 	@Autowired
 	private DealCategoryService dealCategoryService;
 
+	@Autowired
+	private DealCacheOperator dealCacheOperator;
+
 	// 获取根节点
 	public List<DealCategory> getRootNode() {
-		DealCategory dealCategory = new DealCategory();
-		dealCategory.setParent_id(0);
-		return dealCategoryService.getDealCategory(dealCategory);
+
+		ArrayList<DealCategory> resultList = (ArrayList<DealCategory>) dealCacheOperator.getDealCategory("RootDealCategory");
+
+		if (resultList != null && resultList.size() > 0){
+			return resultList;
+		}
+		else{
+			DealCategory dealCategory = new DealCategory();
+			dealCategory.setParent_id(0);
+			resultList = (ArrayList<DealCategory>)dealCategoryService.getDealCategory(dealCategory);
+			dealCacheOperator.putDealCategory(resultList,"RootDealCategory");
+			return resultList;
+		}
+
 	}
 
 	// 获取所有非根节点
 	public List<DealCategory> getNotRootNode() {
-		List<DealCategory> node = dealCategoryService.getDealCategory(new DealCategory());
-		List<DealCategory> children = new ArrayList<DealCategory>();
-		for (DealCategory dc : node) {
-			if (dc.getParent_id() != 0) {
-				children.add(dc);
+		ArrayList<DealCategory> resultList = (ArrayList<DealCategory>) dealCacheOperator.getDealCategory("SubDealCategory");
+		if (resultList != null && resultList.size() > 0){
+			return resultList;
+		}else {
+			List<DealCategory> subDealCategory = new ArrayList<DealCategory>();
+			List<DealCategory> node = dealCategoryService.getDealCategory(new DealCategory());
+			for (DealCategory dc : node) {
+				if (dc.getParent_id() != 0) {
+					subDealCategory.add(dc);
+				}
 			}
+			dealCacheOperator.putDealCategory(resultList,"SubDealCategory");
+			return subDealCategory;
 		}
-		return children;
+
 	}
 
 	// 获取根节点和一级子节点
@@ -64,5 +87,5 @@ public class DealCategoryBusiness {
 		}
 	}
 
-	//
+
 }

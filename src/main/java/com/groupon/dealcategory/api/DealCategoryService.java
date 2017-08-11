@@ -1,7 +1,7 @@
 package com.groupon.dealcategory.api;
 
 
-import com.common.entity.DealCategory;
+import com.common.entity.deal.DealCategory;
 
 import java.util.List;
 

@@ -1,23 +1,15 @@
-package com.common.entity;
+package com.common.entity.deal;
 
 /**
  * 商品对应描述
  */
-public class DealDetail {
+public class DealDetail extends PublicDeal {
 
-	private Integer id;
 
 	private Long dealId;
 
 	private String dealDetail; // 商品详细描述信息
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Long getDealId() {
 		return dealId;
