@@ -25,6 +25,8 @@ public class IndexController {
 	 * 首页显示
 	 * @param model
 	 * @return
+	 *
+	 * ps:没有根据城市显示商品
 	 */
 	@RequestMapping(value = "/index")
 	public String index(Model model) {

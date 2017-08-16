@@ -1,7 +1,8 @@
-import com.cache.DealCacheOperator;
+import com.common.entity.area.Area;
 import com.common.entity.deal.DealCategory;
 import com.common.vo.IndexCategoryDealVo;
-import com.database.DealCategoryDao;
+import com.database.AreaDao;
+import com.groupon.area.business.AreaBusiness;
 import com.groupon.deal.business.DealBusiness;
 import com.groupon.dealcategory.api.DealCategoryService;
 import com.groupon.dealcategory.business.DealCategoryBusiness;
@@ -12,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-context.xml", "classpath:spring/spring-dao.xml"})
@@ -26,6 +28,11 @@ public class SpringGroupTestDemo {
 	@Autowired
 	private DealBusiness dealBusiness;
 
+	@Autowired
+	private AreaDao areaDao;
+
+	@Autowired
+	private AreaBusiness areaBusiness;
 
 	@Test
 	public void testDealCategoryService() {
@@ -67,6 +74,25 @@ public class SpringGroupTestDemo {
 		List<DealCategory> notRootNode = dealCategoryBusiness.getNotRootNode();
 		for (DealCategory cdc : notRootNode){
 			System.out.println(cdc);
+		}
+	}
+
+	@Test
+	public void testAreaDao(){
+		Area area = new Area();
+		area.setName("北京市");
+		List<Area> areaList = areaDao.getArea(area);
+		System.out.println(areaList);
+	}
+
+	@Test
+	public void testAreaBusiness(){
+		Map<String, List<Area>> areaGroup = areaBusiness.getAreaGroup();
+		for (String key : areaGroup.keySet()){
+			System.out.println("key:  "+ key);
+			for (Area area : areaGroup.get(key)){
+				System.out.println("Area: "+area);
+			}
 		}
 	}
 }

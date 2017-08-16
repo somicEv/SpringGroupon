@@ -1,5 +1,7 @@
 package com.interceptor;
 
+import com.common.entity.area.Area;
+import com.util.IpUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,7 +25,19 @@ public class CtxInterceptor implements HandlerInterceptor {
 		if (modelAndView == null || modelAndView.getModel() == null){
 			return;
 		}
-		modelAndView.addObject("areaName", "北京");
+		String areaName = request.getParameter("requestAreaName");
+		if(areaName != null){
+			System.out.println("查询到的城市名称：" + areaName);
+			modelAndView.addObject("areaName", areaName);
+		}else {
+			Area area = IpUtil.getArea(request);
+			if (area == null) {
+				modelAndView.addObject("areaName", "找不到相关城市");
+			} else {
+				System.out.println("查询到的城市名称：" + area.getName());
+				modelAndView.addObject("areaName", area.getName());
+			}
+		}
 
 		StringBuffer ctx = new StringBuffer();
 		ctx.append(request.getScheme());

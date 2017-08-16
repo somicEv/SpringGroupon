@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.database.AreaDao">
+
+    <resultMap id="resultMap" type="com.common.entity.area.Area">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="common" property="common" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getArea" resultMap="resultMap" parameterType="com.common.entity.area.Area">
+        SELECT
+          id,name,parent_id,common,type,create_time,update_time
+        FROM
+          area
+        WHERE
+          1 = 1
+          <if test="name != null and name != ''">
+            AND name = #{name}
+          </if>
+          <if test="parentId != null">
+            AND parent_id = #{parentId}
+          </if>
+          <if test="common != null">
+            AND common = #{common}
+          </if>
+          <if test="type != null and type != ''">
+            AND type = #{type}
+          </if>
+          <if test="createTime !=null and createTime !=''">
+            AND create_time = #{createTime}
+          </if>
+          <if test="updateTime != null and updateTime !=''">
+            AND update_time = #{updateTime}
+          </if>
+    </select>
+
+
+</mapper>
