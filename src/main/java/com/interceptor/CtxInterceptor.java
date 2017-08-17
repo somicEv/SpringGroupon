@@ -1,6 +1,8 @@
 package com.interceptor;
 
 import com.common.entity.area.Area;
+import com.common.entity.user.WebUser;
+import com.util.CookieUtil;
 import com.util.IpUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +27,7 @@ public class CtxInterceptor implements HandlerInterceptor {
 		if (modelAndView == null || modelAndView.getModel() == null){
 			return;
 		}
+		// 查询城市名称
 		String areaName = request.getParameter("requestAreaName");
 		if(areaName != null){
 			System.out.println("查询到的城市名称：" + areaName);
@@ -38,7 +41,12 @@ public class CtxInterceptor implements HandlerInterceptor {
 				modelAndView.addObject("areaName", area.getName());
 			}
 		}
-
+		// 首页显示用户名称
+		WebUser loginUser = CookieUtil.getLoginUser(request);
+		if (loginUser != null) {
+			modelAndView.addObject("username", loginUser.getUsername());
+		}
+		// 设置ctx变量
 		StringBuffer ctx = new StringBuffer();
 		ctx.append(request.getScheme());
 		ctx.append(SCHEME_SUFFEX);

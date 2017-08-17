@@ -47,43 +47,44 @@
     <insert id="add" parameterType="com.common.entity.user.UserBasicInfo">
         insert into user_basic_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="nickname != null and nickname != ''">
+            <if test="nickname != null">
                 nickname,
             </if>
-            <if test="realName != null and realName != '' ">
+            <if test="realName != null">
                 real_name,
             </if>
-            <if test="mail != null and mail != '' ">
-                login_time,
+
+            <if test="mail != null">
+                mail,
             </if>
-            <if test="phone != null and phone != '' ">
+            <if test="phone != null">
                 phone,
             </if>
-            <if test="createTime != null and createTime != '' ">
+            <if test="createTime != null">
                 create_time,
             </if>
-            <if test="updateTime != null and updateTime != '' ">
+            <if test="updateTime != null">
                 update_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="nickname != null">
-                #{nickname}
+                #{nickname},
             </if>
             <if test="realName != null">
-                #{realName}
+                #{realName},
             </if>
-            <if test="mail != null and mail != '' ">
-                #{mail}
+            <if test="mail != null">
+                #{mail},
             </if>
-            <if test="phone != null and phone != '' ">
-                #{phone}
+            <if test="phone != null">
+                #{phone},
             </if>
-            <if test="createTime != null and createTime != '' ">
-                #{createTime}
+            <if test="createTime != null">
+                #{createTime},
             </if>
-            <if test="updateTime != null and updateTime != '' ">
-                #{updateTime}
+            <if test="updateTime != null">
+                #{updateTime},
             </if>
         </trim>
     </insert>
@@ -92,22 +93,19 @@
         update user_basic_info
         <set>
             <if test="nickname != null and nickname != ''">
-                AND nickname = #{nickname}
+                nickname = #{nickname},
             </if>
             <if test="realName != null and realName != '' ">
-                AND real_name = #{realName}
-            </if>
-            <if test="mail != null and mail != '' ">
-                AND login_time = #{loginTime}
+                real_name = #{realName},
             </if>
             <if test="phone != null and phone != '' ">
-                AND phone = #{phone}
+                phone = #{phone},
             </if>
             <if test="createTime != null and createTime != '' ">
-                AND create_time = #{createTime}
+                create_time = #{createTime},
             </if>
             <if test="updateTime != null and updateTime != '' ">
-                AND update_time = #{createTime}
+                update_time = #{createTime},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
