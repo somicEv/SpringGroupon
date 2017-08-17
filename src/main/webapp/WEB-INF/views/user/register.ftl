@@ -39,6 +39,6 @@
                 </ul>
             </div>
         </div>
-        <#include "layout/footer.ftl">
+         <#include "layout/footer.ftl">
     </body>
 </html>
