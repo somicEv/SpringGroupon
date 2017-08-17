@@ -59,7 +59,6 @@ public class UserController {
 			return "redirect:/reg";
 		}
 		// 存入Cookie
-
 		WebUser webuser = new WebUser();
 		webuser.setUsername(user.getName());
 		webuser.setLoginStatus(WebConstants.USER_LOGIN_STATUS_NORMAL);
