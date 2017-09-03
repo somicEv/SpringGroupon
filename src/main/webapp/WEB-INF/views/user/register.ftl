@@ -30,9 +30,9 @@
             <div class="login_cont">
                 <ul class="login">
                     <form action="/register" method="post">
-                        <li><span class="reg_item"><i>*</i>用户名：</span><div class="input_item"><input type="text" name="username" class="login_input user_icon"></div></li>
-                        <li><span class="reg_item"><i>*</i>密码：</span><div class="input_item"><input type="password" name="password1" class="login_input user_icon"></div></li>
-                        <li><span class="reg_item"><i>*</i>确认密码：</span><div class="input_item"><input type="text" name="password2" class="login_input user_icon"></div></li>
+                        <li><span class="reg_item"><i>*</i>用户名：</span><div class="input_item"><input type="text" name="name" class="login_input user_icon"></div></li>
+                        <li><span class="reg_item"><i>*</i>密码：</span><div class="input_item"><input type="password" name="password" class="login_input user_icon"></div></li>
+                        <li><span class="reg_item"><i>*</i>确认密码：</span><div class="input_item"><input type="password" name="checkPassword" class="login_input user_icon"></div></li>
                         <li class="autoLogin"><span class="reg_item">&nbsp;</span><input type="checkbox" id="t1" class="checked"><label for="t1">我同意什么什么条款</label></li>
                         <li><span class="reg_item">&nbsp;</span><input type="submit" value="" class="login_btn"></li>
                     </form>

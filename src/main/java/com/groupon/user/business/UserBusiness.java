@@ -9,6 +9,8 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 import java.util.List;
 
+import static org.springframework.util.DigestUtils.md5DigestAsHex;
+
 @Component
 public class UserBusiness {
 
@@ -41,12 +43,15 @@ public class UserBusiness {
 		user.setCreateTime(new Date());
 		user.setUpdateTime(new Date());
 		user.setLoginTime(new Date());
+		// 对密码进行加密
+		String md5Password = md5DigestAsHex(user.getPassword().getBytes());
+		user.setPassword(md5Password);
 		// 存入数据库
 		Integer integer = userService.add(user);
-		if (integer > 0){
-			return true;
+		if (integer < 0){
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 }

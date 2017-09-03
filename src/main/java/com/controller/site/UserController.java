@@ -7,13 +7,12 @@ import com.groupon.user.business.UserBusiness;
 import com.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-import java.util.UUID;
+
+import static org.springframework.util.DigestUtils.md5DigestAsHex;
 
 @Controller
 public class UserController {
@@ -32,8 +31,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/dologin")
-	public String doLogin(User user,HttpServletResponse response,Model model){
+	public String doLogin(String name,String password,HttpServletResponse response){
+		// 将用户的密码进行MD5加密
+		String md5DigestAsHex = md5DigestAsHex(password.getBytes());
 		// 在数据库中查找
+		User user = new User();
+		user.setName(name);
+		user.setPassword(md5DigestAsHex);
 		User resultUser = userBusiness.dologin(user);
 		if(resultUser == null){
 			return "redirect:/login";
@@ -52,7 +56,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register")
-	public String doRegister(User user, HttpServletResponse response, Model model){
+	public String doRegister(User user, HttpServletResponse response){
 		// 查询数据库
 		boolean result = userBusiness.doRegister(user);
 		if (!result){
@@ -69,6 +73,6 @@ public class UserController {
 	@RequestMapping(value = "/logout")
 	public String logout(HttpServletResponse response){
 		CookieUtil.removeCookie(response,"ui","/");
-		return "index.html";
+		return "redirect:/index.html";
 	}
 }

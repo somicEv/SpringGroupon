@@ -8,6 +8,8 @@ public class User {
 
 	private String password;
 
+	private String checkPassword;
+
 	private String name;
 
 	private Date loginTime;
@@ -62,6 +64,14 @@ public class User {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getCheckPassword() {
+		return checkPassword;
+	}
+
+	public void setCheckPassword(String checkPassword) {
+		this.checkPassword = checkPassword;
 	}
 
 	@Override

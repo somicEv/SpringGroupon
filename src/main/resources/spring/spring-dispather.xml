@@ -19,6 +19,13 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
+            <mvc:mapping path="/cart/**"/>
+            <mvc:mapping path="/home/*"/>
+            <mvc:mapping path="/settlement/*"/>
+            <mvc:mapping path="/settlement"/>
+            <bean class="com.interceptor.LoginInterceptor" />
+        </mvc:interceptor>
+        <mvc:interceptor>
             <mvc:mapping path="/**" />
             <bean class="com.interceptor.CtxInterceptor" />
         </mvc:interceptor>
