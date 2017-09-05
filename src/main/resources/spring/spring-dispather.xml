@@ -26,6 +26,10 @@
             <bean class="com.interceptor.LoginInterceptor" />
         </mvc:interceptor>
         <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.interceptor.UserInterceptor" />
+        </mvc:interceptor>
+        <mvc:interceptor>
             <mvc:mapping path="/**" />
             <bean class="com.interceptor.CtxInterceptor" />
         </mvc:interceptor>
@@ -33,6 +37,7 @@
             <mvc:mapping path="/**" />
             <bean class="com.interceptor.HelperInterceptor" />
         </mvc:interceptor>
+
     </mvc:interceptors>
 
     <!-- 视图解析器 -->

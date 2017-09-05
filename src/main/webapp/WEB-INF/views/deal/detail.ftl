@@ -1,6 +1,19 @@
 <#import "macro/common.ftl" as common>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>${title}</title>
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+        <link rel="bookmark" href="images/favicon.ico" type="image/x-icon" />
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.getContextPath}/style/reset.css">
+        <link type="text/css" rel="stylesheet" href="${ctx}/style/main.css">
+        <script type="text/javascript" src="${ctx}/js/jquery-1.8.0.min.js"></script>
+        <script type="text/javascript" src="${ctx}/js/site.js"></script>
+        <!--[if IE 6]>
+        <script type="text/javascript" src="${ctx}/js/DD_belatedPNG_0.0.8a-min.js"></script>
+        <script type="text/javascript" src="${ctx}/js/ie6Fixpng.js"></script>
+        <![endif]-->
         <title>商品介绍</title>
         <script type="text/javascript">
             function dealCount(type) {
@@ -48,6 +61,7 @@
         </script>
     </head>
     <body>
+    <#include "layout/header.ftl">
         <div class="userPosition comWidth">
             <strong><a href="${ctx}">首页</a></strong>
             <span>&nbsp;&gt;&nbsp;</span>
@@ -62,13 +76,7 @@
                         <div class="big">
                             <img src="${helper.getDealImageUrlForDealView(deal)}" alt="">
                         </div>
-                        <#--<ul class="des_smimg clearfix">-->
-                            <#--<li><a href="#"><img src="${ctx}/images/des_sm.jpg" class="active" alt=""></a></li>-->
-                            <#--<li><a href="#"><img src="${ctx}/images/des_sm2.jpg" alt=""></a></li>-->
-                            <#--<li><a href="#"><img src="${ctx}/images/des_sm.jpg" alt=""></a></li>-->
-                            <#--<li><a href="#"><img src="${ctx}/images/des_sm2.jpg" alt=""></a></li>-->
-                            <#--<li><a href="#"><img src="${ctx}/images/des_sm.jpg" alt=""></a></li>-->
-                        <#--</ul>-->
+
                     </div>
                 </div>
                 <div class="rightArea">

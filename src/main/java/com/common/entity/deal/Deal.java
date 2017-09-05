@@ -78,7 +78,13 @@ public class Deal extends PublicDeal{
 
 	private Long rootId; // 商品根分类
 
+	public boolean isStart() {//是否开始团购
+		return new Date().after(this.getStartTime());
+	}
 
+	public boolean isEnd() {//是否结束
+		return new Date().after(this.getEndTime());
+	}
 
 	@Override
 	public String toString() {
