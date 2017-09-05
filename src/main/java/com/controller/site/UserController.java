@@ -3,7 +3,7 @@ package com.controller.site;
 import com.common.constant.WebConstants;
 import com.common.entity.user.User;
 import com.common.entity.user.WebUser;
-import com.groupon.user.business.UserBusiness;
+import com.service.business.UserBusiness;
 import com.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

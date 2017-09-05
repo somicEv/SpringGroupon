@@ -1,7 +1,7 @@
-package com.groupon.user.business;
+package com.service.business;
 
 import com.common.entity.user.User;
-import com.groupon.user.service.UserService;
+import com.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -15,7 +15,7 @@ import static org.springframework.util.DigestUtils.md5DigestAsHex;
 public class UserBusiness {
 
 	@Autowired
-	private UserService userService;
+	private UserServiceImpl userServiceImpl;
 
 	/**
 	 * 执行用户登录操作
@@ -23,7 +23,7 @@ public class UserBusiness {
 	 * @return
 	 */
 	public User dologin(User user){
-		List<User> userList = userService.get(user);
+		List<User> userList = userServiceImpl.get(user);
 		if (userList == null || userList.size() == 0){
 			return new User();
 		}
@@ -47,7 +47,7 @@ public class UserBusiness {
 		String md5Password = md5DigestAsHex(user.getPassword().getBytes());
 		user.setPassword(md5Password);
 		// 存入数据库
-		Integer integer = userService.add(user);
+		Integer integer = userServiceImpl.add(user);
 		if (integer < 0){
 			return false;
 		}

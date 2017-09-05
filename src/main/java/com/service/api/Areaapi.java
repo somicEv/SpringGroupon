@@ -1,9 +1,8 @@
-package com.groupon.area.api;
+package com.service.api;
 
 import com.common.entity.area.Area;
 
 import java.util.List;
-import java.util.Map;
 
 public interface Areaapi {
 

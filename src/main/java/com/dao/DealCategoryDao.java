@@ -1,4 +1,4 @@
-package com.database;
+package com.dao;
 
 
 import com.common.entity.deal.DealCategory;
@@ -10,5 +10,7 @@ import java.util.List;
 public interface DealCategoryDao {
 
 	List<DealCategory> getDealCategoryList(DealCategory dealCategory);
+
+	Integer countDealCategory(DealCategory dealCategory);
 
 }

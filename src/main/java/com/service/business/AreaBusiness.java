@@ -1,8 +1,8 @@
-package com.groupon.area.business;
+package com.service.business;
 
 import com.common.entity.area.Area;
 import com.common.entity.area.AreaType;
-import com.groupon.area.service.AreaService;
+import com.service.impl.AreaServiceImpl;
 import com.util.Pinyin4jUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,11 +13,11 @@ import java.util.*;
 public class AreaBusiness {
 
 	@Autowired
-	private AreaService areaService;
+	private AreaServiceImpl areaServiceImpl;
 
 	// 获得按地名首字母分组的地名信息(不包括省一级)
 	public Map<String, List<Area>> getAreaGroup() {
-		List<Area> areaList = areaService.getAllArea();
+		List<Area> areaList = areaServiceImpl.getAllArea();
 		Map<String, List<Area>> group = new TreeMap<>(new Comparator() {
 			@Override
 			public int compare(Object o1, Object o2) {
@@ -40,7 +40,7 @@ public class AreaBusiness {
 	public Area getByName(String name){
 		Area area = new Area();
 		area.setName(name);
-		Area resutlArea = areaService.getArea(area);
+		Area resutlArea = areaServiceImpl.getArea(area);
 		return resutlArea;
 	}
 

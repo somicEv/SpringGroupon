@@ -1,4 +1,4 @@
-package com.database;
+package com.dao;
 
 import com.common.entity.user.User;
 import org.springframework.stereotype.Repository;

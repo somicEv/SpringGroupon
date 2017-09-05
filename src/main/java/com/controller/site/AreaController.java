@@ -1,8 +1,7 @@
 package com.controller.site;
 
 import com.common.entity.area.Area;
-import com.groupon.area.business.AreaBusiness;
-import com.groupon.area.service.AreaService;
+import com.service.business.AreaBusiness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

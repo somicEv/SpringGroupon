@@ -1,15 +1,15 @@
-package com.groupon.user.service;
+package com.service.impl;
 
 import com.common.entity.user.User;
-import com.database.UserDao;
-import com.groupon.user.api.UserApi;
+import com.dao.UserDao;
+import com.service.api.UserApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserService implements UserApi{
+public class UserServiceImpl implements UserApi{
 
 	@Autowired
 	private UserDao userDao;

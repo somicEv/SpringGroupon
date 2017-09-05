@@ -1,4 +1,4 @@
-package com.groupon.user.api;
+package com.service.api;
 
 
 import com.common.entity.user.User;

@@ -1,9 +1,9 @@
-package com.groupon.dealcategory.impl;
+package com.service.impl;
 
 
 import com.common.entity.deal.DealCategory;
-import com.database.DealCategoryDao;
-import com.groupon.dealcategory.api.DealCategoryService;
+import com.dao.DealCategoryDao;
+import com.service.api.DealCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +20,4 @@ public class DealCategoryServiceImpl implements DealCategoryService {
 		List<DealCategory> dealCategoryList = dealCategoryDao.getDealCategoryList(dealCategory);
 		return dealCategoryList;
 	}
-
 }

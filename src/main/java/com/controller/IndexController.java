@@ -2,8 +2,8 @@ package com.controller;
 
 import com.common.entity.deal.DealCategory;
 import com.common.vo.IndexCategoryDealVo;
-import com.groupon.deal.business.DealBusiness;
-import com.groupon.dealcategory.business.DealCategoryBusiness;
+import com.service.business.DealBusiness;
+import com.service.business.DealCategoryBusiness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

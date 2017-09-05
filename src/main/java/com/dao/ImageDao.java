@@ -1,4 +1,4 @@
-package com.database;
+package com.dao;
 
 import com.common.entity.Image;
 import org.springframework.stereotype.Repository;
