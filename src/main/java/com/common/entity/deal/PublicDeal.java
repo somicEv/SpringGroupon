@@ -1,16 +1,13 @@
 package com.common.entity.deal;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
 public abstract class PublicDeal implements Serializable{
 
-	private Integer id;
+	private Long id;
 
-	public Integer getId() {
-		return id;
-	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
 }
