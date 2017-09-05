@@ -2,9 +2,8 @@ package dao;
 
 import com.common.entity.user.User;
 import com.common.entity.user.UserBasicInfo;
-import com.database.UserBasicInfoDao;
-import com.database.UserDao;
-import org.junit.Before;
+import com.dao.UserBasicInfoDao;
+import com.dao.UserDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

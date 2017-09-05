@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import com.common.entity.area.Area;
-import com.groupon.area.business.AreaBusiness;
+import com.service.business.AreaBusiness;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;

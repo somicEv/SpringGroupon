@@ -1,11 +1,11 @@
 import com.common.entity.area.Area;
 import com.common.entity.deal.DealCategory;
 import com.common.vo.IndexCategoryDealVo;
-import com.database.AreaDao;
-import com.groupon.area.business.AreaBusiness;
-import com.groupon.deal.business.DealBusiness;
-import com.groupon.dealcategory.api.DealCategoryService;
-import com.groupon.dealcategory.business.DealCategoryBusiness;
+import com.dao.AreaDao;
+import com.service.business.AreaBusiness;
+import com.service.business.DealBusiness;
+import com.service.api.DealCategoryService;
+import com.service.business.DealCategoryBusiness;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
