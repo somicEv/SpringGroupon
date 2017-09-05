@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.database.DealDao">
+<mapper namespace="com.dao.DealDao">
 
     <resultMap id="BaseResultMap" type="com.common.entity.deal.Deal">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="area_id" property="areaId" jdbcType="BIGINT"/>
-        <result column="area_name" property="areaName" jdbcType="VARCHAR"/>
-        <result column="sku_id" property="skuId" jdbcType="BIGINT"/>
-        <result column="deal_class" property="dealClass" jdbcType="INTEGER"/>
-        <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
-        <result column="merchant_sku" property="merchantSku" jdbcType="BIGINT"/>
-        <result column="deal_title" property="dealTitle" jdbcType="VARCHAR"/>
-        <result column="deal_price" property="dealPrice" jdbcType="INTEGER"/>
-        <result column="merchant_price" property="merchantPrice" jdbcType="INTEGER"/>
-        <result column="market_price" property="marketPrice" jdbcType="INTEGER"/>
-        <result column="settlementrice_max" property="settlementPriceMax" jdbcType="INTEGER"/>
-        <result column="settlement_price" property="settlementPrice" jdbcType="INTEGER"/>
-        <result column="discount" property="discount" jdbcType="INTEGER"/>
-        <result column="bonus_points" property="bonusPoints" jdbcType="INTEGER"/>
-        <result column="deal_type" property="dealType" jdbcType="INTEGER"/>
-        <result column="image_id" property="imageId" jdbcType="BIGINT"/>
-        <result column="deal_level" property="dealLevel" jdbcType="INTEGER"/>
-        <result column="max_purchase_count" property="maxPurchaseCount" jdbcType="INTEGER"/>
-        <result column="publish_status" property="publishStatus" jdbcType="INTEGER"/>
-        <result column="inventory_amount" property="inventoryAmount" jdbcType="INTEGER"/>
-        <result column="vendibility_amount" property="vendibilityAmount" jdbcType="INTEGER"/>
-        <result column="oos_status" property="oosStatus" jdbcType="INTEGER"/>
-        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
-        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
-        <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP"/>
-        <result column="merchant_code" property="merchantCode" jdbcType="VARCHAR"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
-        <result column="root_id" property="rootId" javaType="INTEGER"/>
+        <id column="id" property="id"/>
+        <result column="area_id" property="areaId" />
+        <result column="area_name" property="areaName"/>
+        <result column="sku_id" property="skuId" />
+        <result column="deal_class" property="dealClass" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="merchant_sku" property="merchantSku" />
+        <result column="deal_title" property="dealTitle" />
+        <result column="deal_price" property="dealPrice" />
+        <result column="merchant_price" property="merchantPrice" />
+        <result column="market_price" property="marketPrice" />
+        <result column="settlementrice_max" property="settlementPriceMax" />
+        <result column="settlement_price" property="settlementPrice" />
+        <result column="discount" property="discount"/>
+        <result column="bonus_points" property="bonusPoints" />
+        <result column="deal_type" property="dealType" />
+        <result column="image_id" property="imageId" />
+        <result column="deal_level" property="dealLevel" />
+        <result column="max_purchase_count" property="maxPurchaseCount" />
+        <result column="publish_status" property="publishStatus" />
+        <result column="inventory_amount" property="inventoryAmount" />
+        <result column="vendibility_amount" property="vendibilityAmount" />
+        <result column="oos_status" property="oosStatus" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="publish_time" property="publishTime" />
+        <result column="merchant_code" property="merchantCode" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="category_id" property="categoryId" />
+        <result column="root_id" property="rootId"/>
     </resultMap>
 
     <!-- 查询字段列表 -->
@@ -45,6 +45,7 @@
         publish_time, merchant_code, create_time, update_time, category_id, root_id
     </sql>
 
+    <!-- TODO 修改 end_time >= #{endTime,jdbcType=TIMESTAMP} -->
     <select id="getDealsForIndex" resultMap="BaseResultMap" parameterType="com.common.entity.deal.Deal">
         SELECT
         <include refid="Base_Column_List"/>
@@ -55,6 +56,41 @@
         AND end_time &gt;= #{endTime,jdbcType=TIMESTAMP}
         AND area_id = #{areaId, jdbcType=VARCHAR}
         AND root_id = #{rootId, jdbcType=INTEGER}
+    </select>
+
+    <!-- 分页查询某个类别下的商品 -->
+    <select id="selectDealsOfCategories" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from deal
+        where publish_status = #{publishStatus,jdbcType=INTEGER}
+        and end_time &gt;= #{nowTime,jdbcType=TIMESTAMP}
+        and area_id = #{areaId, jdbcType=VARCHAR}
+        <if test="categoryIdList != null">
+            and category_id in
+            <foreach item="item" index="index" collection="categoryIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by deal_level desc
+        LIMIT #{begin},#{pageSize}
+    </select>
+
+    <select id="countDealCategory" parameterType="java.util.Map" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM deal
+        WHERE
+        publish_status = #{publishStatus,jdbcType=INTEGER}
+        AND end_time &gt;= #{nowTime,jdbcType=TIMESTAMP}
+        AND area_id = #{areaId, jdbcType=VARCHAR}
+        <if test="categoryIdList != null">
+            and category_id in
+            <foreach item="item" index="index" collection="categoryIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by deal_level desc
+
     </select>
 
 </mapper>
