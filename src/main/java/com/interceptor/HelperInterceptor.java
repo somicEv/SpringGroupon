@@ -18,7 +18,6 @@ public class HelperInterceptor implements HandlerInterceptor {
 	}
 
 	public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-		System.out.println("通过拦截器");
 		if (null == modelAndView || null == modelAndView.getModel() ) {
 			return;
 		}
