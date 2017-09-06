@@ -5,7 +5,7 @@ import com.common.entity.user.User;
 
 import java.util.List;
 
-public interface UserApi {
+public interface UserService {
 
 	List<User> get(User user);
 

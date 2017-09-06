@@ -4,7 +4,7 @@ import com.common.entity.area.Area;
 
 import java.util.List;
 
-public interface Areaapi {
+public interface AreaService {
 
 	Area getArea(Area area);
 

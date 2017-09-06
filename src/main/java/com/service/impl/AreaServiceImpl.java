@@ -2,14 +2,14 @@ package com.service.impl;
 
 import com.common.entity.area.Area;
 import com.dao.AreaDao;
-import com.service.api.Areaapi;
+import com.service.api.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class AreaServiceImpl implements Areaapi{
+public class AreaServiceImpl implements AreaService {
 
 	@Autowired
 	private AreaDao areaDao;
