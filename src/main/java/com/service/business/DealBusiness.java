@@ -76,4 +76,10 @@ public class DealBusiness {
         return new PagingResult<>(dealCount, dealList, page, pagesize);
     }
 
+    public Deal getDealBySkuId(Long skuId){
+        Map<String,Object> params = new HashMap<>();
+        params.put("skuId",skuId);
+        params.put("nowTime",new Date());
+        return dealService.getDealBySkuId(params);
+    }
 }

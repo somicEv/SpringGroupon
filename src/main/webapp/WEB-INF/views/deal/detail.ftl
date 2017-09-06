@@ -73,8 +73,8 @@
             <div class="description clearfix">
                 <div class="leftArea">
                     <div class="description_imgs">
-                        <div class="big">
-                            <img src="${helper.getDealImageUrlForDealView(deal)}" alt="">
+                        <div class="big" >
+                            <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(deal)}" alt="" style="width: 300px;height: 350px">
                         </div>
 
                     </div>
@@ -174,7 +174,7 @@
                         <div class="info_tit">
                             <h3>${deal.dealTitle!}</h3>
                         </div>
-                        <p>${deal.dealDetail.dealDetail!}</p>
+                        <#--<p>${deal.dealDetail.dealDetail!}</p>-->
                     </div>
                 </div>
                 <div class="hr_15"></div>

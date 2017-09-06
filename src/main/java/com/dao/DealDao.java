@@ -9,11 +9,18 @@ import java.util.Map;
 @Repository
 public interface DealDao {
 
-	// 查询首页显示商品
+	/**
+	 * 查询首页商品
+	 * @param deal
+	 * @return
+	 */
 	List<Deal> getDealsForIndex(Deal deal);
 
-	// 查询总数量
-	// TODO 修改 参数--Map<String,Object> params
+	/**
+	 * 查询总数量
+	 * @param params
+	 * @return
+	 */
 	Long countDealCategory(Map<String,Object> params);
 
 	/**
@@ -22,5 +29,13 @@ public interface DealDao {
 	 * @return
 	 */
 	List<Deal> selectDealsOfCategories(Map<String,Object> params);
+
+	/**
+	 * 根据SkuId查询商品
+	 * @param params
+	 * @return
+	 */
+	Deal getDealBySkuId(Map<String,Object> params);
+
 
 }

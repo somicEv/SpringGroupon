@@ -44,4 +44,9 @@ public class DealServiceImpl implements DealService {
         params.put("pageSize",pageSize);
         return dealDao.selectDealsOfCategories(params);
     }
+
+    @Override
+    public Deal getDealBySkuId(Map<String, Object> params) {
+       return dealDao.getDealBySkuId(params);
+    }
 }
