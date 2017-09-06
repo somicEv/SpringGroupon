@@ -3,6 +3,7 @@ package com.controller.site;
 import com.common.constant.WebConstants;
 import com.common.entity.user.User;
 import com.common.entity.user.WebUser;
+import com.controller.FrontendBaseController;
 import com.service.business.UserBusiness;
 import com.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.Date;
 import static org.springframework.util.DigestUtils.md5DigestAsHex;
 
 @Controller
-public class UserController {
+public class UserController extends FrontendBaseController{
 
 	@Autowired
 	private UserBusiness userBusiness;
