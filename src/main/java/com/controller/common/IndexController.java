@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.common;
 
 import com.common.entity.deal.DealCategory;
 import com.common.vo.IndexCategoryDealVo;

@@ -1,10 +1,9 @@
 package com.controller.site;
 
 import com.common.entity.deal.Deal;
-import com.controller.FrontendBaseController;
+import com.controller.common.FrontendBaseController;
 import com.service.business.DealBusiness;
 import com.util.DealUtil;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

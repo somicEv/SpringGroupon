@@ -1,4 +1,4 @@
-package com.controller;
+package com.controller.common;
 
 import com.common.constant.WebConstants;
 

@@ -3,7 +3,7 @@ package com.controller.site;
 import com.common.constant.DealConstant;
 import com.common.entity.deal.Deal;
 import com.common.entity.deal.DealCategory;
-import com.controller.FrontendBaseController;
+import com.controller.common.FrontendBaseController;
 import com.service.business.DealBusiness;
 import com.service.business.DealCategoryBusiness;
 import com.util.PagingResult;
