@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>${title}</title>
+
         <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
         <link rel="bookmark" href="images/favicon.ico" type="image/x-icon" />
@@ -37,25 +37,25 @@
 
             function addToCart(skuId) {
                 <#if username??>
-                    Submit.AjaxSubmit(ctx + '/cart/default/' + skuId);
+                    Submit.AjaxSubmit('${ctx}/cart/default/' + skuId);
                 <#else >
-                    window.location = ctx + '/login';
+                    window.location = '${ctx}/login';
                 </#if>
             }
 
             function addToFavorite(skuId) {
                 <#if username??>
-                    Submit.AjaxSubmit(ctx + '/home/favorite/' + skuId);
+                    Submit.AjaxSubmit('${ctx}/home/favorite/' + skuId);
                 <#else >
-                    window.location = ctx + '/login';
+                    window.location = '${ctx}/login';
                 </#if>
             }
 
             function addToStartRemind(skuId) {
                 <#if username??>
-                    Submit.AjaxSubmit(ctx + '/home/remind/' + skuId);
+                    Submit.AjaxSubmit('${ctx}/home/remind/' + skuId);
                 <#else >
-                    window.location = ctx + '/login';
+                    window.location = '${ctx}/login';
                 </#if>
             }
         </script>
@@ -63,9 +63,9 @@
     <body>
     <#include "layout/header.ftl">
         <div class="userPosition comWidth">
-            <strong><a href="${ctx}">首页</a></strong>
+            <strong><a href="${ctx}/index">首页</a></strong>
             <span>&nbsp;&gt;&nbsp;</span>
-            <a href="#">数码相机</a>
+            <a href="${ctx}/category/${dealCategory.url_name}">${dealCategory.name}</a>
             <span>&nbsp;&gt;&nbsp;</span>
             <em>${deal.dealTitle}</em>
         </div>

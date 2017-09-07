@@ -8,4 +8,6 @@ public interface FavoriteDao {
 
     Integer save(Favorite favorite);
 
+    Favorite checkExist(Favorite favorite);
+
 }

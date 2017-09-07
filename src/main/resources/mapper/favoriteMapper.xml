@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.FavoriteDao">
-    <resultMap id="BaseResultMap" type="com.common.entity.Favorite">
+    <resultMap id="baseResultMap" type="com.common.entity.Favorite">
         <id property="id" column="id" />
         <result property="userId" column="user_id" />
         <result property="dealId" column="deal_id" />
@@ -10,10 +10,24 @@
         <result property="createTime" column="create_time" />
         <result property="updateTime" column="update_time" />
     </resultMap>
-    
+
+    <sql id="base_sql_list">
+        id,user_id,deal_id,deal_sku_id,create_time,update_time
+    </sql>
+
     <insert id="save" parameterType="com.common.entity.Favorite">
         INSERT INTO favorite
         (user_id,deal_id,deal_sku_id,create_time,update_time)
         VALUES (#{userId},#{dealId},#{dealSkuId},#{createTime},#{updateTime})
     </insert>
+    
+    <select id="checkExist" parameterType="com.common.entity.Favorite" resultMap="baseResultMap">
+        SELECT
+          <include refid="base_sql_list" />
+        FROM
+          favorite
+        WHERE
+          user_id = #{userId} AND deal_id = #{dealId} AND deal_sku_id = #{dealSkuId}
+    </select>
+    
 </mapper>

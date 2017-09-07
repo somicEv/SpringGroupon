@@ -36,6 +36,7 @@ public class CookieUtil {
 		if (null == response || null == user) {
 			return;
 		}
+		Long userId = user.getUserId();
 		String username = user.getUsername();
 		try {
 			username = URLEncoder.encode(user.getUsername(), "UTF-8");
@@ -45,7 +46,7 @@ public class CookieUtil {
 
 		StringBuilder cookieValue = new StringBuilder();
 		//FIXME 用户ID此处写入是用于调试,上线需要去掉
-		cookieValue.append(username).append("|").append(user.getLoginStatus());
+		cookieValue.append(userId).append("|").append(username).append("|").append(user.getLoginStatus());
 		addCookie(response, USER_INFO, cookieValue.toString());
 
 	}
@@ -82,12 +83,13 @@ public class CookieUtil {
 		String[] array = value.split("\\|");
 
 		WebUser user = new WebUser();
+		user.setUserId(Long.parseLong(array[0]));
 		try {
-			user.setUsername(URLDecoder.decode(array[0], "UTF-8"));
+			user.setUsername(URLDecoder.decode(array[1], "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
-			user.setUsername(array[0]);
+			user.setUsername(array[1]);
 		}
-		user.setLoginStatus(Integer.parseInt(array[1]));
+		user.setLoginStatus(Integer.parseInt(array[2]));
 		return user;
 	}
 

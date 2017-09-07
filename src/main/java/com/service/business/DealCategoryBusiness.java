@@ -122,4 +122,13 @@ public class DealCategoryBusiness {
         }
         return idList;
     }
+
+    // 根据ID查询一个分类
+    public DealCategory getOneDealCategory(DealCategory dealCategory){
+        List<DealCategory> dealCategoryList = dealCategoryService.getDealCategory(dealCategory);
+        if (dealCategoryList == null || dealCategoryList.size() == 0){
+            return new DealCategory();
+        }
+        return dealCategoryList.get(0);
+    }
 }

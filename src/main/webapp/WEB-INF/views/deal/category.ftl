@@ -3,7 +3,6 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>${title}</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
     <link rel="bookmark" href="images/favicon.ico" type="image/x-icon"/>
@@ -31,7 +30,7 @@
                     <h3>${child.name}</h3>
                     <ul class="navCont_list clearfix">
                         <#list child.children as c>
-                            <li><a href="${ctx}/category/${c.urlName}">${c.name}</a></li>
+                            <li><a href="${ctx}/category/${c.url_name}">${c.name}</a></li>
                         </#list>
                     </ul>
                 </div>

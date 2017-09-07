@@ -6,4 +6,6 @@ public interface FavoriteService {
 
     Integer save(Favorite favorite);
 
+    Favorite checkExist(Favorite favorite);
+
 }

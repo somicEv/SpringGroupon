@@ -9,13 +9,15 @@ var Submit = {
             success: function(result, textStatus) {
                 if (1 == result) {
                     alert("操作成功");
-                } else {
-                    alert("操作失败");
+                } else if(2 == result){
+                    alert("已经存在，请不要重复添加");
+                }else{
+                    alert("操作失败--success");
                 }
                 //return result;
             },
             error: function() {
-                alert("操作失败");
+                alert("操作失败--error");
             }
         });
     }
