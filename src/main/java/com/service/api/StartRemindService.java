@@ -6,4 +6,5 @@ public interface StartRemindService {
 
     Integer save(StartRemind startRemind);
 
+    StartRemind checkExist(StartRemind startRemind);
 }

@@ -24,4 +24,12 @@ public class StartRemindBusiness {
         System.out.println("添加结果为：-------"+saveResult);
         return saveResult;
     }
+
+    public boolean checkExist(StartRemind startRemind){
+        StartRemind result = startRemindService.checkExist(startRemind);
+        if(result != null){
+            return false;
+        }
+        return true;
+    }
 }

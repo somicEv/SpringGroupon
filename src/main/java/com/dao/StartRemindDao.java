@@ -8,4 +8,6 @@ public interface StartRemindDao {
 
     Integer save(StartRemind startRemind);
 
+    StartRemind checkExist(StartRemind startRemind);
+
 }

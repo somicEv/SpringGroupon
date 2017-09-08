@@ -51,8 +51,8 @@ public class HomeController extends FrontendBaseController {
         favorite.setDealSkuId(deal.getSkuId());
         favorite.setUserId(webUser.getUserId());
         // 检查数据库中是否存在相同的数据
-        boolean result = favoriteBusiness.checkExsite(favorite);
-        if (result) {
+        boolean result = favoriteBusiness.checkExist(favorite);
+        if(!result){
             // 如果存在
             return "2";
         }
@@ -61,7 +61,7 @@ public class HomeController extends FrontendBaseController {
         // 存入数据库
         Integer saveResult = favoriteBusiness.saveResult(favorite);
         if (saveResult != 1) {
-            // 不存在或查询结果过多
+            // 存入失败
             return "0";
         }
         return "1";
@@ -80,12 +80,19 @@ public class HomeController extends FrontendBaseController {
         startRemind.setDealId(deal.getId());
         startRemind.setDealSkuId(deal.getSkuId());
         startRemind.setDealTitle(deal.getDealTitle());
+        // 查询是否已经存在
+        boolean result = startRemindBusiness.checkExist(startRemind);
+        if (!result){
+            // 如果存在
+            return "2";
+        }
         startRemind.setCreateTime(new Date());
         startRemind.setStartTime(new Date());
         startRemind.setUpdateTime(new Date());
         Integer saveResult = startRemindBusiness.save(startRemind);
         log.info("查询的结果为："+saveResult);
-        if (saveResult == 0){
+        if (saveResult != 1){
+            // 存入失败
             return "0";
         }
         return "1";

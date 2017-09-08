@@ -16,4 +16,9 @@ public class StartRemindServiceImpl implements StartRemindService{
     public Integer save(StartRemind startRemind) {
         return startRemindDao.save(startRemind);
     }
+
+    @Override
+    public StartRemind checkExist(StartRemind startRemind) {
+        return startRemindDao.checkExist(startRemind);
+    }
 }

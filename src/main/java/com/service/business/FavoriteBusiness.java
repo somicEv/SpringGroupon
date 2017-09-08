@@ -11,9 +11,10 @@ public class FavoriteBusiness {
     @Autowired
     private FavoriteService favoriteService;
 
-    public boolean checkExsite(Favorite favorite){
+    public boolean checkExist(Favorite favorite){
         Favorite result = favoriteService.checkExist(favorite);
-        if(result == null){
+        if(result != null){
+            // 说明存在
             return false;
         }
         return true;

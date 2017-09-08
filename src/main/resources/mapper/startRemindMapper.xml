@@ -23,11 +23,11 @@
         VALUES (#{userId},#{dealId},#{dealSkuId},#{dealTitle},#{createTime},#{updateTime},#{startTime})
     </insert>
     
-    <select id="checkExist" parameterType="com.common.entity.Favorite" resultMap="baseResultMap">
+    <select id="checkExist" parameterType="com.common.entity.StartRemind" resultMap="baseResultMap">
         SELECT
           <include refid="base_sql_list" />
         FROM
-          favorite
+          start_remind
         WHERE
           user_id = #{userId} AND deal_id = #{dealId} AND deal_sku_id = #{dealSkuId}
     </select>
