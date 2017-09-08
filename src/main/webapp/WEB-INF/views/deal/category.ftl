@@ -3,9 +3,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
+    <#--<link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
-    <link rel="bookmark" href="images/favicon.ico" type="image/x-icon"/>
+    <link rel="bookmark" href="images/favicon.ico" type="image/x-icon"/>-->
     <link type="text/css" rel="stylesheet" href="${pageContext.request.getContextPath}/style/reset.css">
     <link type="text/css" rel="stylesheet" href="${ctx}/style/main.css">
     <script type="text/javascript" src="${ctx}/js/jquery-1.8.0.min.js"></script>
@@ -15,6 +15,15 @@
     <script type="text/javascript" src="${ctx}/js/ie6Fixpng.js"></script>
     <![endif]-->
     <title>分类</title>
+    <script type="text/javascript">
+        function addToCart(skuId) {
+        <#if username??>
+            Submit.AjaxSubmit('${ctx}/cart/default/' + skuId);
+        <#else >
+            window.location = '${ctx}/login';
+        </#if>
+        }
+    </script>
 </head>
 <body>
 <#include "layout/header.ftl">
@@ -55,7 +64,7 @@
                     </div>
                     <p><a href="${ctx}/item/${deal.skuId}">${deal.dealTitle}</a></p>
                     <p class="money"><@common.formatPrice deal.dealPrice/></p>
-                    <p><a href="${ctx}/cart/default/${deal.skuId}" class="addCar">加入购物车</a></p>
+                    <p><a href="#" class="addCar" onclick="addToCart(${deal.skuId})">加入购物车</a></p>
                 </div>
             </div>
         </#list>

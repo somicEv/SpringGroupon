@@ -36,8 +36,9 @@
             }
 
             function addToCart(skuId) {
+                var count = document.getElementById('count').value;
                 <#if username??>
-                    Submit.AjaxSubmit('${ctx}/cart/default/' + skuId);
+                    Submit.AjaxSubmit('${ctx}/cart/default/' + skuId,count);
                 <#else >
                     window.location = '${ctx}/login';
                 </#if>

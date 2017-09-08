@@ -1,9 +1,10 @@
 var Submit = {
     AjaxSubmit: function(url, params) {
+
         $.ajax({
             type: "post",
             url: url,
-            data: params,
+            data: {"params":params},
             dataType: "json",
             async: false,
             success: function(result, textStatus) {
@@ -12,7 +13,7 @@ var Submit = {
                 } else if(2 == result){
                     alert("已经存在，请不要重复添加");
                 }else{
-                    alert("操作失败--success");
+                    alert("操作失败--服务器内部错误");
                 }
                 //return result;
             },
