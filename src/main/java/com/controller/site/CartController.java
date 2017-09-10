@@ -3,6 +3,7 @@ package com.controller.site;
 import com.common.entity.Cart;
 import com.common.entity.deal.Deal;
 import com.common.entity.user.WebUser;
+import com.common.vo.CartVo;
 import com.controller.common.FrontendBaseController;
 import com.service.business.CartBusiness;
 import com.service.business.DealBusiness;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -32,12 +34,53 @@ public class CartController extends FrontendBaseController {
     /**
      * 显示购物车
      *
-     * @param model
+     * @param model 页面对象
      * @return
      */
     @RequestMapping(value = "")
-    public String cartDetail(Model model) {
-        return "/cart/cart";
+    public String cartDetail(Model model, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // 确定相应的用户
+            WebUser webUser = getCurrentUser(request);
+            if (null != webUser) {
+                Long userId = webUser.getUserId();
+                // 获取该用户的购物车列表
+                List<Cart> cartList = cartBusiness.selectCartByUserId(userId);
+                if (cartList != null) {
+                    List<CartVo> cartVoList = this.createCartVoList(cartList);
+                    model.addAttribute("carts", cartVoList);
+                    return "/cart/cart";
+                }
+            }
+            return "redirect:/login";
+        } catch (Exception e) {
+            log.error("显示购物车页面失败----", e);
+            return this.generateError404Page(response);
+        }
+    }
+
+    /**
+     * 购物车页面更改数量
+     * @param cartId 购物车ID
+     * @param dealCount 商品数量
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{cartId}/{dealCount}")
+    public String updateDealCartByCartId(@PathVariable Long cartId, @PathVariable Integer dealCount) {
+        // 根据ID获取购物车对象
+        List<Cart> cartList = cartBusiness.selectDealCartByCartId(cartId);
+        if (cartList == null || cartList.size() == 0){
+            return "0";
+        }
+        Cart cart = cartList.get(0);
+        cart.setDealCount(dealCount);
+        // 更新购物车数据
+        String result = cartBusiness.updateDealCart(cart);
+        if("1".equals(result)){
+            return "1";
+        }
+        return "0";
     }
 
     /**
@@ -52,7 +95,7 @@ public class CartController extends FrontendBaseController {
         Cart cart = new Cart();
         // 验证skuId合法性
         boolean validSkuId = DealUtil.isValidSkuId(skuId);
-        if (!validSkuId){
+        if (!validSkuId) {
             return "0";
         }
         cart.setDealSkuId(skuId);
@@ -62,7 +105,7 @@ public class CartController extends FrontendBaseController {
         // 查询当前用户
         WebUser webUser = this.getCurrentUser(request);
         cart.setUserId(webUser.getUserId());
-        if(params == null || params < 0){
+        if (params == null || params < 0) {
             // 如果没有输入数量 设置默认值 避免出错
             cart.setDealCount(1);
             cart.setUpdateTime(new Date());
@@ -71,6 +114,30 @@ public class CartController extends FrontendBaseController {
         cart.setDealCount(params);
         cart.setUpdateTime(new Date());
         return cartBusiness.saveDealCart(cart);
+    }
+
+    /**
+     * 封装cartVo列表
+     *
+     * @param cartList 购物车列表
+     * @return
+     */
+    private ArrayList<CartVo> createCartVoList(List<Cart> cartList) {
+        // 获取dealIdList
+        List<Long> dealIds = cartBusiness.selectDealIdsByCart(cartList);
+        // 根据ID列表获取相应的商品信息
+        Map<String, Object> params = new HashMap<>();
+        params.put("idList", dealIds);
+        List<Deal> dealList = dealBusiness.selectDealList(params);
+        Map<Long, Deal> resultMap = new HashMap<>();
+        for (Deal deal : dealList) {
+            resultMap.put(deal.getId(), deal);
+        }
+        ArrayList<CartVo> cartVoList = new ArrayList<>();
+        for (Cart cart : cartList) {
+            cartVoList.add(new CartVo(cart, resultMap.get(cart.getDealId())));
+        }
+        return cartVoList;
     }
 
 }

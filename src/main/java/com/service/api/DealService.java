@@ -16,5 +16,7 @@ public interface DealService {
 
 	List<Deal> selectDealsOfCategories(List<Long> idList,Integer publishStatus,Date nowTime,Integer areaId,Integer page,Integer pageSize);
 
+	List<Deal> selectDealList(Map<String,Object> params);
+
 	Deal getDealBySkuId(Map<String,Object> params);
 }

@@ -76,6 +76,20 @@
         LIMIT #{begin},#{pageSize}
     </select>
 
+    <select id="selectDealList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from deal
+        <where>
+            <if test="idList != null">
+                and id in
+                <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
     <select id="countDealCategory" parameterType="java.util.Map" resultType="java.lang.Long">
         SELECT count(*)
         FROM deal

@@ -16,8 +16,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         WebUser loginUser = getLoginUser(httpServletRequest);
         if (loginUser == null) {
             // 跳转到相应页面
-            String basePath = httpServletRequest.getScheme() + "//:" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort();
-            httpServletResponse.sendRedirect(basePath + "/login");
+            httpServletResponse.sendRedirect("/login");
             return false;
         }
         return true;

@@ -31,6 +31,13 @@ public interface DealDao {
 	List<Deal> selectDealsOfCategories(Map<String,Object> params);
 
 	/**
+	 * 根据Id列表查询商品信息
+	 * @param idList Id列表
+	 * @return
+	 */
+	List<Deal> selectDealList(Map<String,Object> params);
+
+	/**
 	 * 根据SkuId查询商品
 	 * @param params
 	 * @return

@@ -49,4 +49,9 @@ public class DealServiceImpl implements DealService {
     public Deal getDealBySkuId(Map<String, Object> params) {
        return dealDao.getDealBySkuId(params);
     }
+
+    @Override
+    public List<Deal> selectDealList(Map<String,Object> params) {
+        return dealDao.selectDealList(params);
+    }
 }

@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class CartServiceImpl implements CartService {
@@ -37,5 +39,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart selectDealCart(Cart cart) {
         return cartDao.selectDealCart(cart);
+    }
+
+    @Override
+    public List<Cart> selectDealCartList(Cart cart){
+        return cartDao.selectDealCartList(cart);
     }
 }

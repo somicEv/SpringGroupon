@@ -43,23 +43,29 @@
 
             function dealCount(type, cartId, maxPurchaseCount) {
                 var id = 'count_' + cartId;
+                var id_subtotal = 'subtotal_price_'+cartId;
                 if (type == 1) {
-                    var count = Number(document.getElementById(id).value);
-                    if (count >= maxPurchaseCount) {
+                    var addCount = Number(document.getElementById(id).value);
+                    if (addCount >= maxPurchaseCount) {
                         document.getElementById(id).value = maxPurchaseCount;
                     } else {
-                        document.getElementById(id).value = count + 1;
+                        document.getElementById(id).value = addCount + 1;
                         Submit.AjaxSubmit(ctx + '/cart/' + cartId + '/1');
                     }
-//                    $('#subtotal_' + cartId).val(newPrice);
+                    var add_update_count = Number(document.getElementById(id).value);
+                    var add_update_price = Number(document.getElementById('price_'+cartId).value);
+                    document.getElementById(id_subtotal).innerText = '￥'+(add_update_count/100) * add_update_price;
                 } else {
-                    var count = Number(document.getElementById(id).value);
-                    if (count <= 1) {
+                    var subCount = Number(document.getElementById(id).value);
+                    if (subCount <= 1) {
                         document.getElementById(id).value = 1;
                     } else {
-                        document.getElementById(id).value = count - 1;
+                        document.getElementById(id).value = subCount - 1;
                         Submit.AjaxSubmit(ctx + '/cart/' + cartId + '/0');
                     }
+                    var sub_update_count = Number(document.getElementById(id).value);
+                    var sub_update_price = Number(document.getElementById('price_'+cartId).value);
+                    document.getElementById(id_subtotal).innerText = '￥'+(sub_update_count/100) * sub_update_price;
                 }
             }
 
@@ -106,7 +112,7 @@
                                         <div class="cart_shopInfo clearfix">
                                             <div>
                                                 <input type="checkbox" id="${cart.cart.id}" onclick="check(this, ${cart.cart.id})" style="float:left; margin-top:40px; margin-right: 10px">
-                                                <img src="${helper.getDealImageUrlForDealList(cart.deal)}" alt="">
+                                               <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForDealCart(cart.cart)}" alt="">
                                                 <div class="cart_shopInfo_cont">
                                                     <p class="cart_link"><a href="${ctx}/item/${cart.deal.skuId}">${cart.deal.dealTitle}</a></p>
                                                     <p class="cart_info">7天退换</p>
@@ -114,20 +120,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="cart_item t_price">
+
+                                    <div class="cart_item t_price" id="cart_item_price">
+                                        <input id="price_${cart.cart.id}" type="hidden" value="${cart.deal.dealPrice}">
                                         <@common.formatPrice cart.deal.dealPrice/>
                                     </div>
                                     <div class="cart_item t_num">
                                         <div class="des_number">
                                             <div class="reduction" onclick="dealCount(0, '${cart.cart.id}', '${cart.deal.maxPurchaseCount}')">-</div>
                                             <div class="des_input">
-                                                <input type="text" id="count_${cart.cart.id}" name="count" value="${cart.cart.count}" readonly>
+                                                <input type="text" id="count_${cart.cart.id}" name="count" value="${cart.cart.dealCount}" readonly>
                                             </div>
                                             <div class="plus"  onclick="dealCount(1, '${cart.cart.id}', '${cart.deal.maxPurchaseCount}')">+</div>
                                         </div>
                                     </div>
                                     <div class="cart_item t_return"><@common.formatDiscount cart.deal.discount/></div>
-                                    <div class="cart_item t_subtotal t_red"><input id="subtotal_${cart.cart.id}" type="hidden" value="${cart.subtotal}"><@common.formatPrice cart.subtotal/></div>
+                                    <div class="cart_item t_subtotal t_red">
+                                        <input id="subtotal_${cart.cart.id}" type="hidden" value="${cart.subtotal}">
+                                        <p id="subtotal_price_${cart.cart.id}"><@common.formatPrice cart.subtotal/></p>
+                                    </div>
                                     <div class="cart_item t_status">
                                         <#if cart.deal.start>
                                             进行中

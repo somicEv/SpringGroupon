@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -53,4 +51,11 @@ public class TestCartDao {
         log.info("查询结果为："+cartDao.selectDealCart(cart).toString());
     }
 
+    @Test
+    public void testSelectDealCartList(){
+        Cart cart = new Cart();
+        cart.setUserId(14L);
+        List<Cart> resultList =cartDao.selectDealCartList(cart);
+        log.info("查询结果为："+resultList.toString());
+    }
 }

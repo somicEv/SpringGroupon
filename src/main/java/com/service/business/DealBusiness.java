@@ -20,9 +20,13 @@ public class DealBusiness {
     @Autowired
     private DealCategoryBusiness dealCategoryBusiness;
 
-    // 构建首页显示vo
+    /**
+     * 构建首页显示vo
+     *
+     * @return
+     */
     public List<IndexCategoryDealVo> createIndexCategoryDealVo() {
-        List<IndexCategoryDealVo> voList = new ArrayList<IndexCategoryDealVo>();
+        List<IndexCategoryDealVo> voList = new ArrayList<>();
         for (DealCategory dc : dealCategoryBusiness.getRootNode()) {
             Map<String, List<Deal>> dealForIndex = this.getDealForIndex(dc.getId(), new Date(), 367L, DealConstant.DEAL_PUBLISH_STATUS_PUBLISH);
             // 创建所需实体类
@@ -32,8 +36,17 @@ public class DealBusiness {
         return voList;
     }
 
+    /**
+     * 将获取到的商品信息分组封装
+     *
+     * @param rootId
+     * @param date
+     * @param areaId
+     * @param publicstatus
+     * @return
+     */
     private Map<String, List<Deal>> getDealForIndex(Long rootId, Date date, Long areaId, Integer publicstatus) {
-        Map<String, List<Deal>> resultMap = new HashMap<String, List<Deal>>();
+        Map<String, List<Deal>> resultMap = new HashMap<>();
         Deal deal = new Deal();
         deal.setRootId(rootId);
         deal.setEndTime(date);
@@ -62,7 +75,16 @@ public class DealBusiness {
         return resultMap;
     }
 
-
+    /**
+     * 根据分类分页查询商品信息
+     *
+     * @param dealCategory
+     * @param areaId
+     * @param publishStatus
+     * @param page
+     * @param pagesize
+     * @return
+     */
     public PagingResult<Deal> getDealsOfDealCates(DealCategory dealCategory, Integer areaId, Integer publishStatus, Integer page, Integer pagesize) {
         // 查询当前分类及子分类的id
         List<Long> integerList = dealCategoryBusiness.selectIdList(dealCategory);
@@ -76,10 +98,26 @@ public class DealBusiness {
         return new PagingResult<>(dealCount, dealList, page, pagesize);
     }
 
+    /**
+     * 根据SkuId查询Deal
+     *
+     * @param skuId
+     * @return
+     */
     public Deal getDealBySkuId(Long skuId){
         Map<String,Object> params = new HashMap<>();
         params.put("skuId",skuId);
         params.put("nowTime",new Date());
         return dealService.getDealBySkuId(params);
+    }
+
+    /**
+     * 查询 deal
+     *
+     * @param params
+     * @return
+     */
+    public List<Deal> selectDealList(Map<String,Object> params){
+        return dealService.selectDealList(params);
     }
 }

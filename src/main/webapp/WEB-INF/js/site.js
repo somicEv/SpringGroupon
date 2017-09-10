@@ -6,13 +6,13 @@ var Submit = {
             url: url,
             data: {"params":params},
             dataType: "json",
-            async: false,
+            async: true,
             success: function(result, textStatus) {
                 if (1 == result) {
                     alert("操作成功");
                 } else if(2 == result){
                     alert("已经存在，请不要重复添加");
-                }else{
+                }else {
                     alert("操作失败--服务器内部错误");
                 }
                 //return result;
@@ -22,4 +22,5 @@ var Submit = {
             }
         });
     }
+
 }
