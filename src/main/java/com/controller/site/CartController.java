@@ -1,9 +1,12 @@
 package com.controller.site;
 
+import com.common.constant.CartConstant;
+import com.common.constant.GlobalConstant;
 import com.common.entity.Cart;
 import com.common.entity.deal.Deal;
 import com.common.entity.user.WebUser;
 import com.common.vo.CartVo;
+import com.common.vo.QueryMessage;
 import com.controller.common.FrontendBaseController;
 import com.service.business.CartBusiness;
 import com.service.business.DealBusiness;
@@ -12,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +26,6 @@ import java.util.*;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/cart")
 public class CartController extends FrontendBaseController {
 
     @Autowired
@@ -37,7 +40,7 @@ public class CartController extends FrontendBaseController {
      * @param model 页面对象
      * @return
      */
-    @RequestMapping(value = "")
+    @RequestMapping(value = "/cart")
     public String cartDetail(Model model, HttpServletRequest request, HttpServletResponse response) {
         try {
             // 确定相应的用户
@@ -61,26 +64,28 @@ public class CartController extends FrontendBaseController {
 
     /**
      * 购物车页面更改数量
-     * @param cartId 购物车ID
+     *
+     * @param cartId    购物车ID
      * @param dealCount 商品数量
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/{cartId}/{dealCount}")
-    public String updateDealCartByCartId(@PathVariable Long cartId, @PathVariable Integer dealCount) {
+    @RequestMapping(value = "/cart/{cartId}/{dealCount}")
+    public QueryMessage updateDealCartByCartId(@PathVariable Long cartId, @PathVariable Integer dealCount) {
         // 根据ID获取购物车对象
         List<Cart> cartList = cartBusiness.selectDealCartByCartId(cartId);
-        if (cartList == null || cartList.size() == 0){
-            return "0";
+        if (cartList == null || cartList.size() == 0) {
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_NOTFOUND, CartConstant.ERROR);
         }
         Cart cart = cartList.get(0);
         cart.setDealCount(dealCount);
         // 更新购物车数据
-        String result = cartBusiness.updateDealCart(cart);
-        if("1".equals(result)){
-            return "1";
+        cart.setUpdateTime(new Date());
+        QueryMessage queryMessage = cartBusiness.updateDealCart(cart);
+        if (!"200".equals(queryMessage.getQueryCode())) {
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
         }
-        return "0";
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
     }
 
     /**
@@ -90,30 +95,52 @@ public class CartController extends FrontendBaseController {
      * @return 返回相应的状态码
      */
     @ResponseBody
-    @RequestMapping(value = "/default/{skuId}")
-    public String addCart(@PathVariable Long skuId, Integer params, HttpServletRequest request) {
-        Cart cart = new Cart();
+    @RequestMapping(value = "/cart/default/{skuId}")
+    public QueryMessage addCart(@PathVariable Long skuId, Integer params, HttpServletRequest request) {
         // 验证skuId合法性
         boolean validSkuId = DealUtil.isValidSkuId(skuId);
         if (!validSkuId) {
-            return "0";
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
         }
-        cart.setDealSkuId(skuId);
         // 根据skuId查询商品信息
         Deal deal = dealBusiness.getDealBySkuId(skuId);
-        cart.setDealId(deal.getId());
         // 查询当前用户
         WebUser webUser = this.getCurrentUser(request);
-        cart.setUserId(webUser.getUserId());
-        if (params == null || params < 0) {
-            // 如果没有输入数量 设置默认值 避免出错
-            cart.setDealCount(1);
-            cart.setUpdateTime(new Date());
-            return cartBusiness.saveDealCart(cart);
+        // 根据ID查询购物车对象
+        QueryMessage queryMessage = this.updateExistDealCart(deal, webUser, skuId, params);
+        if ("200".equals(queryMessage.getQueryCode())) {
+            return queryMessage;
+        } else if ("500".equals(queryMessage.getQueryCode())) {
+            return queryMessage;
+        } else {
+            Cart dealCart = new Cart(webUser.getUserId(), deal.getId(), skuId);
+            if (params == null || params < 0) {
+                // 如果没有输入数量 设置默认值 避免出错
+                dealCart.setDealCount(1);
+                dealCart.setUpdateTime(new Date());
+                return cartBusiness.saveDealCart(dealCart);
+            }
+            dealCart.setDealCount(params);
+            dealCart.setUpdateTime(new Date());
+            return cartBusiness.saveDealCart(dealCart);
         }
-        cart.setDealCount(params);
-        cart.setUpdateTime(new Date());
-        return cartBusiness.saveDealCart(cart);
+    }
+
+    @RequestMapping(value = "/settlement")
+    public String settlement(Integer totalPrice, String cartIds, Model model, HttpServletRequest request) {
+        try {
+            if (!StringUtils.isEmpty(cartIds) && totalPrice != 0 && totalPrice > 0) {
+                WebUser webUser = this.getCurrentUser(request);
+                List<Cart> cartList = cartBusiness.selectCartByUserId(webUser.getUserId());
+                ArrayList<CartVo> cartVoList = this.createCartVoList(cartList);
+                model.addAttribute("carts", cartVoList);
+                model.addAttribute("totalPrice", totalPrice);
+            }
+        } catch (Exception e) {
+            log.error("显示结算页面失败" + e);
+            return "/cart/cart";
+        }
+        return "/cart/settlement";
     }
 
     /**
@@ -138,6 +165,24 @@ public class CartController extends FrontendBaseController {
             cartVoList.add(new CartVo(cart, resultMap.get(cart.getDealId())));
         }
         return cartVoList;
+    }
+
+    private QueryMessage updateExistDealCart(Deal deal, WebUser webUser, Long skuId, Integer dealCount) {
+        Cart dealCartExist = cartBusiness.selectDealCart(webUser.getUserId(), skuId, deal.getId());
+        if (dealCartExist != null) {
+            if (dealCartExist.getDealCount().equals(deal.getMaxPurchaseCount())) {
+                // 如果数据库中的商品数量已经达到当前商品的限购数量
+                return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR_REACH_LIMIT);
+            }
+            // 更新购物车数据
+            dealCartExist.setDealCount(dealCount);
+            dealCartExist.setUpdateTime(new Date());
+            QueryMessage queryMessage = cartBusiness.updateDealCart(dealCartExist);
+            if ("200".equals(queryMessage.getQueryCode())) {
+                return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
+            }
+        }
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_NOTFOUND, CartConstant.ERROR);
     }
 
 }

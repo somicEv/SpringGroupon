@@ -1,9 +1,12 @@
 package com.controller.site;
 
+import com.common.constant.CartConstant;
+import com.common.constant.GlobalConstant;
 import com.common.entity.Favorite;
 import com.common.entity.StartRemind;
 import com.common.entity.deal.Deal;
 import com.common.entity.user.WebUser;
+import com.common.vo.QueryMessage;
 import com.controller.common.FrontendBaseController;
 import com.service.business.DealBusiness;
 import com.service.business.FavoriteBusiness;
@@ -34,13 +37,14 @@ public class HomeController extends FrontendBaseController {
 
     /**
      * 加入收藏
+     *
      * @param skuId
      * @param request
      * @return
      */
     @RequestMapping(value = "/favorite/{skuId}")
     @ResponseBody
-    public String favorite(@PathVariable Long skuId, HttpServletRequest request) {
+    public QueryMessage favorite(@PathVariable Long skuId, HttpServletRequest request) {
         // 根据skuId查询商品
         Deal deal = dealBusiness.getDealBySkuId(skuId);
         // 查询当前用户
@@ -52,9 +56,9 @@ public class HomeController extends FrontendBaseController {
         favorite.setUserId(webUser.getUserId());
         // 检查数据库中是否存在相同的数据
         boolean result = favoriteBusiness.checkExist(favorite);
-        if(!result){
+        if (!result) {
             // 如果存在
-            return "2";
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR_FIND_SOME);
         }
         favorite.setCreateTime(new Date());
         favorite.setUpdateTime(new Date());
@@ -62,14 +66,14 @@ public class HomeController extends FrontendBaseController {
         Integer saveResult = favoriteBusiness.saveResult(favorite);
         if (saveResult != 1) {
             // 存入失败
-            return "0";
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
         }
-        return "1";
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
     }
 
     @RequestMapping(value = "/remind/{skuId}")
     @ResponseBody
-    public String remind(@PathVariable Long skuId,HttpServletRequest request){
+    public QueryMessage remind(@PathVariable Long skuId, HttpServletRequest request) {
         // 构造StartRemind对象
         StartRemind startRemind = new StartRemind();
         // 查询当前用户
@@ -82,19 +86,19 @@ public class HomeController extends FrontendBaseController {
         startRemind.setDealTitle(deal.getDealTitle());
         // 查询是否已经存在
         boolean result = startRemindBusiness.checkExist(startRemind);
-        if (!result){
+        if (!result) {
             // 如果存在
-            return "2";
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR_FIND_SOME);
         }
         startRemind.setCreateTime(new Date());
         startRemind.setStartTime(new Date());
         startRemind.setUpdateTime(new Date());
         Integer saveResult = startRemindBusiness.save(startRemind);
-        log.info("查询的结果为："+saveResult);
-        if (saveResult != 1){
+        log.info("查询的结果为：" + saveResult);
+        if (saveResult != 1) {
             // 存入失败
-            return "0";
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
         }
-        return "1";
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
     }
 }

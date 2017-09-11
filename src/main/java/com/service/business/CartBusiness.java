@@ -1,6 +1,9 @@
 package com.service.business;
 
+import com.common.constant.CartConstant;
+import com.common.constant.GlobalConstant;
 import com.common.entity.Cart;
+import com.common.vo.QueryMessage;
 import com.service.api.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,28 +24,49 @@ public class CartBusiness {
      * @param cart 购物车对象
      * @return 返回相应的状态码
      */
-    public String saveDealCart(Cart cart) {
+    public QueryMessage saveDealCart(Cart cart) {
         // 查询是否存在相同的数据
         boolean exist = this.checkExist(cart);
         if (exist) {
-            this.updateDealCart(cart);
+            return this.updateDealCart(cart);
         }
         cart.setCreateTime(new Date());
         Integer result = cartService.saveDealCart(cart);
         if (result != 1) {
             // 添加出错
-            return "0";
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
         }
         // 正常
-        return "1";
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
+    }
+
+    /**
+     * 根据ID查询相应的Cart
+     *
+     * @param userId 用户ID
+     * @param skuId  商品SkuId
+     * @param dealId 商品Id
+     * @return
+     *
+     * TODO 返回值更改为 bo
+     */
+    public Cart selectDealCart(Long userId, Long skuId, Long dealId) {
+        Cart cart = new Cart();
+        cart.setDealId(dealId);
+        cart.setUserId(userId);
+        cart.setDealSkuId(skuId);
+        return cartService.selectDealCart(cart);
     }
 
     /**
      * 查询是否存在相同的数据
      *
      * @param cart 购物车对象
-     * @return TODO 将其余checkExist()方法修改
+     * @return
+     *
+     * TODO 将其余checkExist()方法修改
      */
+
     private boolean checkExist(Cart cart) {
         Cart dealCart = cartService.selectDealCart(cart);
         if (dealCart != null) {
@@ -58,7 +82,7 @@ public class CartBusiness {
      * @param userId
      * @return
      */
-    public List<Cart> selectCartByUserId(Long userId){
+    public List<Cart> selectCartByUserId(Long userId) {
         Cart cart = new Cart();
         cart.setUserId(userId);
         return cartService.selectDealCartList(cart);
@@ -70,7 +94,7 @@ public class CartBusiness {
      * @param cartId
      * @return
      */
-    public List<Cart> selectDealCartByCartId(Long cartId){
+    public List<Cart> selectDealCartByCartId(Long cartId) {
         Cart cart = new Cart();
         cart.setId(cartId);
         return cartService.selectDealCartList(cart);
@@ -82,14 +106,14 @@ public class CartBusiness {
      * @param cart
      * @return
      */
-    public String updateDealCart(Cart cart){
+    public QueryMessage updateDealCart(Cart cart) {
         // 更改数量
         Integer updateResult = cartService.updateDealCart(cart);
         if (updateResult != 1) {
             // 更新出错
-            return "0";
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
         }
-        return "1";
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
     }
 
     /**
@@ -98,9 +122,9 @@ public class CartBusiness {
      * @param cartList
      * @return
      */
-    public List<Long> selectDealIdsByCart(List<Cart> cartList){
+    public List<Long> selectDealIdsByCart(List<Cart> cartList) {
         ArrayList<Long> resultList = new ArrayList<>();
-        for (Cart cart : cartList){
+        for (Cart cart : cartList) {
             resultList.add(cart.getDealId());
         }
         return resultList;

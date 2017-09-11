@@ -34,8 +34,6 @@
             </div>
         </div>
         <div class="shoppingCart comWidth">
-            <#--<form action="${ctx}/settlement/confirm" method="post">-->
-            <#--<form action="${ctx}/alipay" method="post">-->
                 <form action="${ctx}/pay" method="post">
                 <div class="shopping_item">
                     <h3 class="shopping_tit">送货清单<a href="${ctx}/cart" class="backCar">返回购物车修改</a></h3>
@@ -56,7 +54,7 @@
                                     <div class="cart_cont clearfix">
                                         <div class="cart_item t_name">
                                             <div class="cart_shopInfo clearfix">
-                                                <img src="${helper.getDealImageUrlForDealList(cart.deal)}" alt="">
+                                                <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForDealCart(cart.cart)}" alt="">
                                                 <div class="cart_shopInfo_cont">
                                                     <p class="cart_link"><a href="#">${cart.deal.dealTitle}</a></p>
                                                     <p class="cart_info">7天退换</p>

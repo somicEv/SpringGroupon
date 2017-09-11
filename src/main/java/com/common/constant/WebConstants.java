@@ -3,7 +3,7 @@ package com.common.constant;
 /**
  * Web常量
  */
-public class WebConstants {
+public final class WebConstants {
 
 	// ------错误页面------
 	public static final String ERROR_PAGE_404 = "/common/error/404";
