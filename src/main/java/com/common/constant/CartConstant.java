@@ -15,4 +15,6 @@ public final class CartConstant {
 
     public static final String ERROR = "操作失败";
 
+    public static final String NOTFOUND = "不存在查询结果";
+
 }

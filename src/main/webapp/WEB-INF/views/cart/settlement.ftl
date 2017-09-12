@@ -70,45 +70,14 @@
                                     </div>
                                 </#list>
                             </#if>
-                            <#--<div class="cart_message">-->
-                                <#--若有问题请留言，若有问题请留言-->
-                            <#--</div>-->
-                            <#--<div class="cart_prompt"><i class="cart_prompt_icon"></i>抱歉，一下商品无法购买。</div>-->
-                            <#--<div class="cart_cont cart_no_bor clearfix">-->
-                                <#--<div class="cart_item t_name">-->
-                                    <#--<div class="cart_shopInfo clearfix">-->
-                                        <#--<img src="${ctx}/images/des_sm.jpg" alt="">-->
-                                        <#--<div class="cart_shopInfo_cont">-->
-                                            <#--<p class="cart_link"><a href="#">微信支付微信支付微信支付微</a></p>-->
-                                            <#--<p class="cart_info">微信支付微信支付微信支付微</p>-->
-                                        <#--</div>-->
-                                    <#--</div>-->
-                                <#--</div>-->
-                            <#--</div>-->
+
                         </div>
                     </div>
                 </div>
                 <div class="hr_25"></div>
                 <div class="shopping_item">
                     <h3 class="shopping_tit">选择收货地址</h3>
-                    <#--<div class="shopping_cont padding_shop">-->
-                        <#--<ul class="shopping_list">-->
-                            <#--<li><span class="shopping_list_text"><em>*</em>选择地区：</span>-->
-                                <#--<div class="select">-->
-                                    <#--<h3>海淀区五环内</h3><span></span>-->
-                                    <#--<ul class="show_select">-->
-                                        <#--<li>上帝</li>-->
-                                        <#--<li>五道口</li>-->
-                                        <#--<li>上帝</li>-->
-                                    <#--</ul>-->
-                                <#--</div>-->
-                            <#--</li>-->
-                            <#--<li><span class="shopping_list_text"><em>*</em>详细地址：</span><input type="text" value="" placeholder="最多输入20个汉字" class="input input_b"></li>-->
-                            <#--<li><span class="shopping_list_text"><em>*</em>收 货 人：</span><input type="text" value="" placeholder="最多10个" class="input"></li>-->
-                            <#--<li><span class="shopping_list_text"><em>*</em>联系电话：</span><input type="text" value="" class="input"></li>-->
-                            <#--<li><input type="button" class="affirm"></li>-->
-                        <#--</ul>-->
-                    <#--</div>-->
+
 
                     <!--表格-->
                     <table class="table" cellspacing="0" cellpadding="0">

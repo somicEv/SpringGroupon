@@ -135,6 +135,8 @@ public class CartController extends FrontendBaseController {
                 ArrayList<CartVo> cartVoList = this.createCartVoList(cartList);
                 model.addAttribute("carts", cartVoList);
                 model.addAttribute("totalPrice", totalPrice);
+
+
             }
         } catch (Exception e) {
             log.error("显示结算页面失败" + e);
