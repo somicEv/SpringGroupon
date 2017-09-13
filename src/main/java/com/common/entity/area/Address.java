@@ -2,13 +2,16 @@ package com.common.entity.area;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
 /**
  * 地址
  */
+@ToString
 public class Address {
+
     @Getter @Setter private Long id;
     @Getter @Setter private Long userId;//地址归属用户ID
     @Getter @Setter private String receiver;//收货人

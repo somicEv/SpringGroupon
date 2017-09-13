@@ -21,6 +21,17 @@ public class FrontendBaseController {
     }
 
     /**
+     * 生成500页面
+     * @param response
+     * @return
+     */
+    protected String generateError500Page(HttpServletResponse response) {
+        //公益信息
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        return WebConstants.ERROR_PAGE_500;
+    }
+
+    /**
      * 获取当前登录用户
      * @param request
      * @return

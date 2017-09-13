@@ -18,12 +18,12 @@ public class AddressServiceImpl implements AddressService {
     AddressDao addressDao;
 
     @Override
-    public QueryMessage selectUserAddress(Long userId) {
+    public QueryMessage<List<Address>> selectUserAddress(Long userId) {
         try {
             List<Address> addressList = addressDao.selectAddressDetail(userId);
-            return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS, addressList);
+            return new QueryMessage<>(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS, addressList);
         } catch (Exception e) {
-            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
+            return new QueryMessage<>(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
         }
     }
 }

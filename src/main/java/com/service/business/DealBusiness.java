@@ -3,7 +3,7 @@ package com.service.business;
 import com.common.constant.DealConstant;
 import com.common.entity.deal.Deal;
 import com.common.entity.deal.DealCategory;
-import com.common.vo.IndexCategoryDealVo;
+import com.common.vo.IndexCategoryDealDTO;
 import com.service.api.DealService;
 import com.util.PagingResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +25,13 @@ public class DealBusiness {
      *
      * @return
      */
-    public List<IndexCategoryDealVo> createIndexCategoryDealVo() {
-        List<IndexCategoryDealVo> voList = new ArrayList<>();
+    public List<IndexCategoryDealDTO> createIndexCategoryDealVo() {
+        List<IndexCategoryDealDTO> voList = new ArrayList<>();
         for (DealCategory dc : dealCategoryBusiness.getRootNode()) {
             Map<String, List<Deal>> dealForIndex = this.getDealForIndex(dc.getId(), new Date(), 367L, DealConstant.DEAL_PUBLISH_STATUS_PUBLISH);
             // 创建所需实体类
-            IndexCategoryDealVo indexCategoryDealVo = new IndexCategoryDealVo(dc, dealForIndex.get("firstGroup"), dealForIndex.get("secondGroup"));
-            voList.add(indexCategoryDealVo);
+            IndexCategoryDealDTO indexCategoryDealDTO = new IndexCategoryDealDTO(dc, dealForIndex.get("firstGroup"), dealForIndex.get("secondGroup"));
+            voList.add(indexCategoryDealDTO);
         }
         return voList;
     }

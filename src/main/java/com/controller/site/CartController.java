@@ -3,11 +3,13 @@ package com.controller.site;
 import com.common.constant.CartConstant;
 import com.common.constant.GlobalConstant;
 import com.common.entity.Cart;
+import com.common.entity.area.Address;
 import com.common.entity.deal.Deal;
 import com.common.entity.user.WebUser;
-import com.common.vo.CartVo;
 import com.common.vo.QueryMessage;
+import com.common.vo.SettlementDTO;
 import com.controller.common.FrontendBaseController;
+import com.service.business.AreaBusiness;
 import com.service.business.CartBusiness;
 import com.service.business.DealBusiness;
 import com.util.DealUtil;
@@ -34,6 +36,9 @@ public class CartController extends FrontendBaseController {
     @Autowired
     CartBusiness cartBusiness;
 
+    @Autowired
+    AreaBusiness areaBusiness;
+
     /**
      * 显示购物车
      *
@@ -50,8 +55,8 @@ public class CartController extends FrontendBaseController {
                 // 获取该用户的购物车列表
                 List<Cart> cartList = cartBusiness.selectCartByUserId(userId);
                 if (cartList != null) {
-                    List<CartVo> cartVoList = this.createCartVoList(cartList);
-                    model.addAttribute("carts", cartVoList);
+                    List<SettlementDTO> settlementDTOList = this.createSettlementDTOList(cartList);
+                    model.addAttribute("carts", settlementDTOList);
                     return "/cart/cart";
                 }
             }
@@ -126,17 +131,68 @@ public class CartController extends FrontendBaseController {
         }
     }
 
+    /**
+     * 从详情页面直接跳转到结算页面 -- 创建一个新的购物车对象列表
+     *
+     * @param skuId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/settlement/{skuId}")
+    public String settlementFromDetail(@PathVariable Long skuId, Model model, HttpServletRequest request, HttpServletResponse response) {
+        boolean validSkuId = DealUtil.isValidSkuId(skuId);
+        if (!validSkuId) {
+            return this.generateError404Page(response);
+        }
+        Deal deal = dealBusiness.getDealBySkuId(skuId);
+        if (deal == null) {
+            return this.generateError404Page(response);
+        }
+        // 查询当前用户
+        WebUser webUser = this.getCurrentUser(request);
+        // 根据Id查询
+        QueryMessage queryMessage = this.updateExistDealCart(deal, webUser, skuId, 1);
+        if ("500".equals(queryMessage.getQueryCode())) {
+            return this.generateError404Page(response);
+        } else if ("404".equals(queryMessage.getQueryCode())) {
+            Cart cart = new Cart(webUser.getUserId(), deal.getId(), skuId);
+            cart.setDealCount(1);
+            SettlementDTO settlementDTO = new SettlementDTO(cart, deal);
+            model.addAttribute("carts", settlementDTO);
+            model.addAttribute("totalPrice", settlementDTO.getSubtotal());
+            List<Address> addressList = areaBusiness.selectUserAddress(webUser);
+            model.addAttribute("addresses", addressList);
+            return "/cart/settlement";
+        }
+        Cart cart = cartBusiness.selectDealCart(webUser.getUserId(), skuId, deal.getId());
+        SettlementDTO settlementDTO = new SettlementDTO(cart, deal);
+        model.addAttribute("carts", settlementDTO);
+        model.addAttribute("totalPrice", settlementDTO.getSubtotal());
+        List<Address> addressList = areaBusiness.selectUserAddress(webUser);
+        model.addAttribute("addresses", addressList);
+        return "/cart/settlement";
+    }
+
+    /**
+     * 从购物车跳转到结算页面
+     *
+     * @param totalPrice 总价格
+     * @param cartIds    购物车Id列表
+     * @param model      页面对象
+     * @param request    请求对象
+     * @return
+     */
     @RequestMapping(value = "/settlement")
     public String settlement(Integer totalPrice, String cartIds, Model model, HttpServletRequest request) {
         try {
             if (!StringUtils.isEmpty(cartIds) && totalPrice != 0 && totalPrice > 0) {
                 WebUser webUser = this.getCurrentUser(request);
                 List<Cart> cartList = cartBusiness.selectCartByUserId(webUser.getUserId());
-                ArrayList<CartVo> cartVoList = this.createCartVoList(cartList);
-                model.addAttribute("carts", cartVoList);
+                ArrayList<SettlementDTO> settlementDTOList = this.createSettlementDTOList(cartList);
+                model.addAttribute("carts", settlementDTOList);
                 model.addAttribute("totalPrice", totalPrice);
-
-
+                List<Address> addressList = areaBusiness.selectUserAddress(webUser);
+                model.addAttribute("addresses", addressList);
             }
         } catch (Exception e) {
             log.error("显示结算页面失败" + e);
@@ -145,13 +201,14 @@ public class CartController extends FrontendBaseController {
         return "/cart/settlement";
     }
 
+
     /**
      * 封装cartVo列表
      *
      * @param cartList 购物车列表
      * @return
      */
-    private ArrayList<CartVo> createCartVoList(List<Cart> cartList) {
+    private ArrayList<SettlementDTO> createSettlementDTOList(List<Cart> cartList) {
         // 获取dealIdList
         List<Long> dealIds = cartBusiness.selectDealIdsByCart(cartList);
         // 根据ID列表获取相应的商品信息
@@ -162,13 +219,22 @@ public class CartController extends FrontendBaseController {
         for (Deal deal : dealList) {
             resultMap.put(deal.getId(), deal);
         }
-        ArrayList<CartVo> cartVoList = new ArrayList<>();
+        ArrayList<SettlementDTO> settlementDTOList = new ArrayList<>();
         for (Cart cart : cartList) {
-            cartVoList.add(new CartVo(cart, resultMap.get(cart.getDealId())));
+            settlementDTOList.add(new SettlementDTO(cart, resultMap.get(cart.getDealId())));
         }
-        return cartVoList;
+        return settlementDTOList;
     }
 
+    /**
+     * 更新购物车中已经存在得数据
+     *
+     * @param deal      商品信息
+     * @param webUser   当前用户对象
+     * @param skuId     商品skuId
+     * @param dealCount 商品数量
+     * @return
+     */
     private QueryMessage updateExistDealCart(Deal deal, WebUser webUser, Long skuId, Integer dealCount) {
         Cart dealCartExist = cartBusiness.selectDealCart(webUser.getUserId(), skuId, deal.getId());
         if (dealCartExist != null) {

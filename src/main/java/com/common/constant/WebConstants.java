@@ -8,6 +8,8 @@ public final class WebConstants {
 	// ------错误页面------
 	public static final String ERROR_PAGE_404 = "/common/error/404";
 
+	public static final String ERROR_PAGE_500 = "/common/error/500";
+
 	// ------用户登陆状态------
 	/** 未登录 */
 	public static final int USER_LOGIN_STATUS_NO = 0;

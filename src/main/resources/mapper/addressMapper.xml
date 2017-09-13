@@ -16,7 +16,7 @@
     </resultMap>
 
     <sql id="base_query_list">
-        id,user_id,receiver,area,detail,address_type,phone,create_time,update_times
+        id,user_id,receiver,area,detail,address_type,phone,create_time,update_time
     </sql>
 
     <select id="selectAddressDetail" parameterType="java.lang.Long" resultMap="BaseResultMap">

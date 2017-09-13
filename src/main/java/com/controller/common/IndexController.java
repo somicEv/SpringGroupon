@@ -1,7 +1,7 @@
 package com.controller.common;
 
 import com.common.entity.deal.DealCategory;
-import com.common.vo.IndexCategoryDealVo;
+import com.common.vo.IndexCategoryDealDTO;
 import com.service.business.DealBusiness;
 import com.service.business.DealCategoryBusiness;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,8 @@ public class IndexController {
 		ArrayList<DealCategory> firstNode = (ArrayList<DealCategory>) dealCategoryBusiness.getAllChildrenNode();
 		model.addAttribute("categories",firstNode);
 		// 获取根节点
-		List<IndexCategoryDealVo> rootNode = dealBusiness.createIndexCategoryDealVo();
-		for (IndexCategoryDealVo vo : rootNode){
+		List<IndexCategoryDealDTO> rootNode = dealBusiness.createIndexCategoryDealVo();
+		for (IndexCategoryDealDTO vo : rootNode){
 			System.out.println(vo);
 		}
 		model.addAttribute("indexCategoryDealDTOs", rootNode);

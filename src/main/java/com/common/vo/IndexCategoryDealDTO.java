@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 首页显示商品
  */
-public class IndexCategoryDealVo {
+public class IndexCategoryDealDTO {
 
     private DealCategory category;
     private List<Deal> first;
@@ -37,7 +37,7 @@ public class IndexCategoryDealVo {
         this.second = second;
     }
 
-    public IndexCategoryDealVo(DealCategory category, List<Deal> first, List<Deal> second) {
+    public IndexCategoryDealDTO(DealCategory category, List<Deal> first, List<Deal> second) {
         this.category = category;
         this.first = first;
         this.second = second;
@@ -45,7 +45,7 @@ public class IndexCategoryDealVo {
 
     @Override
     public String toString() {
-        return "IndexCategoryDealVo{" +
+        return "IndexCategoryDealDTO{" +
                 "category=" + category +
                 ", first=" + first +
                 ", second=" + second +

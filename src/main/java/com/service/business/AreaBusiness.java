@@ -4,6 +4,7 @@ import com.common.entity.area.Address;
 import com.common.entity.area.Area;
 import com.common.entity.area.AreaType;
 import com.common.entity.user.WebUser;
+import com.common.vo.QueryMessage;
 import com.service.api.AddressService;
 import com.service.api.AreaService;
 import com.util.Pinyin4jUtil;
@@ -49,6 +50,7 @@ public class AreaBusiness {
 
     /**
      * 根据名称获取Area对象
+     *
      * @param name
      * @return
      */
@@ -60,13 +62,16 @@ public class AreaBusiness {
 
     /**
      * 根据登录用户信息查询收货地址
+     *
      * @param webUser
      * @return
      */
-    public Address selectUserAddress(WebUser webUser){
-
-        addressService.selectUserAddress(webUser.getUserId());
-        return null;
+    public List<Address> selectUserAddress(WebUser webUser) {
+        QueryMessage<List<Address>> queryMessage = addressService.selectUserAddress(webUser.getUserId());
+        if ("500".equals(queryMessage.getQueryCode())) {
+            return new ArrayList<>();
+        }
+        return queryMessage.getQueryObject();
     }
 
 }

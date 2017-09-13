@@ -6,13 +6,13 @@ import lombok.Setter;
 /**
  * 用于Controller层和Business进行数据交互
  */
-public class QueryMessage {
+public class QueryMessage<T> {
 
     @Getter @Setter private String queryCode;
 
     @Getter @Setter private String resultMessage;
 
-    @Getter @Setter private Object queryObject;
+    @Getter @Setter private T queryObject;
 
     public QueryMessage(){
 
@@ -23,7 +23,7 @@ public class QueryMessage {
         this.resultMessage = resultMessage;
     }
 
-    public QueryMessage(String queryCode, String resultMessage, Object queryObject) {
+    public QueryMessage(String queryCode, String resultMessage, T queryObject) {
         this.queryCode = queryCode;
         this.resultMessage = resultMessage;
         this.queryObject = queryObject;

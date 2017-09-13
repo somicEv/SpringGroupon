@@ -2,7 +2,7 @@ import com.common.entity.Cart;
 import com.common.entity.area.Area;
 import com.common.entity.deal.Deal;
 import com.common.entity.deal.DealCategory;
-import com.common.vo.IndexCategoryDealVo;
+import com.common.vo.IndexCategoryDealDTO;
 import com.dao.AreaDao;
 import com.service.business.AreaBusiness;
 import com.service.business.CartBusiness;
@@ -62,8 +62,8 @@ public class SpringGroupTestDemo {
 
     @Test
     public void testDealBusiness() {
-        List<IndexCategoryDealVo> dealForIndex = dealBusiness.createIndexCategoryDealVo();
-        for (IndexCategoryDealVo deal : dealForIndex) {
+        List<IndexCategoryDealDTO> dealForIndex = dealBusiness.createIndexCategoryDealVo();
+        for (IndexCategoryDealDTO deal : dealForIndex) {
 
             System.out.println("第一组：");
             deal.showFirst();

@@ -8,7 +8,7 @@ import lombok.Setter;
 /**
  * 购物车页面数据类
  */
-public class CartVo {
+public class SettlementDTO {
 
     @Getter @Setter private Cart cart;
 
@@ -16,7 +16,7 @@ public class CartVo {
 
     @Getter @Setter private Integer subtotal;
 
-    public CartVo(Cart cart,Deal deal){
+    public SettlementDTO(Cart cart, Deal deal){
         this.cart = cart;
         this.deal = deal;
         this.subtotal = deal.getDealPrice() * cart.getDealCount();
