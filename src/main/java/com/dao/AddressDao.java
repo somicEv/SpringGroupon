@@ -10,4 +10,5 @@ public interface AddressDao {
 
     List<Address> selectAddressDetail(Long userId);
 
+    Address selectUserById(Long addressId);
 }

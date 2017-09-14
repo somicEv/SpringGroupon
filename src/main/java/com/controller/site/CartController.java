@@ -183,16 +183,23 @@ public class CartController extends FrontendBaseController {
      * @return
      */
     @RequestMapping(value = "/settlement")
-    public String settlement(Integer totalPrice, String cartIds, Model model, HttpServletRequest request) {
+    public String settlement(Integer totalPrice, String cartIds, Model model, HttpServletRequest request,HttpServletResponse response) {
         try {
             if (!StringUtils.isEmpty(cartIds) && totalPrice != 0 && totalPrice > 0) {
                 WebUser webUser = this.getCurrentUser(request);
-                List<Cart> cartList = cartBusiness.selectCartByUserId(webUser.getUserId());
+                String[] cartIdArray = cartIds.split(",");
+                List<Long> cartIdList = new ArrayList<>();
+                for (String s : cartIdArray) {
+                    cartIdList.add(Long.parseLong(s));
+                }
+                List<Cart> cartList = cartBusiness.selectDealCartByIdList(cartIdList);
                 ArrayList<SettlementDTO> settlementDTOList = this.createSettlementDTOList(cartList);
                 model.addAttribute("carts", settlementDTOList);
                 model.addAttribute("totalPrice", totalPrice);
                 List<Address> addressList = areaBusiness.selectUserAddress(webUser);
                 model.addAttribute("addresses", addressList);
+            }else {
+                return generateError404Page(response);
             }
         } catch (Exception e) {
             log.error("显示结算页面失败" + e);
@@ -201,6 +208,29 @@ public class CartController extends FrontendBaseController {
         return "/cart/settlement";
     }
 
+    @RequestMapping(value = "/pay")
+    public String pay(HttpServletRequest request, HttpServletResponse response, Long[] cartIds, Long skuId,
+                      Long addressId, Integer payType, Integer totalPrice) {
+        WebUser webUser = this.getCurrentUser(request);
+        List<SettlementDTO> settlementDTOList = new ArrayList<>();
+        if (cartIds.length == 0) {
+            Deal deal = dealBusiness.getDealBySkuId(skuId);
+            Cart cart = new Cart();
+            cart.setDealCount(1);//可以改成多个
+            cart.setDealSkuId(skuId);
+            cart.setDealId(deal.getId());
+            cart.setUserId(webUser.getUserId());
+            settlementDTOList.add(new SettlementDTO(cart, deal));
+        } else {
+            List<Cart> carts = cartBusiness.selectDealCartByIdList(Arrays.asList(cartIds));
+            settlementDTOList = this.createSettlementDTOList(carts);
+        }
+        Address address = areaBusiness.selectUserAddressById(addressId);
+        // 构建Order
+
+        return null;
+
+    }
 
     /**
      * 封装cartVo列表

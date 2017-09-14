@@ -28,7 +28,7 @@ public class IndexController {
 	 *
 	 * ps:没有根据城市显示商品
 	 */
-	@RequestMapping(value = "/index")
+	@RequestMapping(value = "/")
 	public String index(Model model) {
 		// 获取根分类和一级分类
 		ArrayList<DealCategory> firstNode = (ArrayList<DealCategory>) dealCategoryBusiness.getAllChildrenNode();

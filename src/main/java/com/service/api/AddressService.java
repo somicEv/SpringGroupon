@@ -9,4 +9,6 @@ public interface AddressService {
 
     QueryMessage<List<Address>> selectUserAddress(Long userId);
 
+    Address selectUserAddressById(Long addressId);
+
 }

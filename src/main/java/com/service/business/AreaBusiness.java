@@ -63,8 +63,8 @@ public class AreaBusiness {
     /**
      * 根据登录用户信息查询收货地址
      *
-     * @param webUser
-     * @return
+     * @param webUser 用户
+     * @return 地址列表
      */
     public List<Address> selectUserAddress(WebUser webUser) {
         QueryMessage<List<Address>> queryMessage = addressService.selectUserAddress(webUser.getUserId());
@@ -74,4 +74,13 @@ public class AreaBusiness {
         return queryMessage.getQueryObject();
     }
 
+    /**
+     * 根据ID查询用户收货地址
+     *
+     * @param id 地址ID
+     * @return 地址信息
+     */
+    public Address selectUserAddressById(Long id) {
+        return addressService.selectUserAddressById(id);
+    }
 }

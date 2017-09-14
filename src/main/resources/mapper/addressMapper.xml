@@ -20,12 +20,20 @@
     </sql>
 
     <select id="selectAddressDetail" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select 
-          <include refid="base_query_list" />
+        select
+        <include refid="base_query_list"/>
         FROM
-          address
+        address
         WHERE
-          user_id = #{userId}
+        user_id = #{userId}
     </select>
 
+    <select id="selectUserById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="base_query_list"/>
+        FROM
+        address
+        WHERE
+        id = #{addressId}
+    </select>
 </mapper>

@@ -45,4 +45,9 @@ public class CartServiceImpl implements CartService {
     public List<Cart> selectDealCartList(Cart cart){
         return cartDao.selectDealCartList(cart);
     }
+
+    @Override
+    public List<Cart> selectDealCartByIdList(List<Long> idList) {
+        return cartDao.selectDealCartByIdList(idList);
+    }
 }

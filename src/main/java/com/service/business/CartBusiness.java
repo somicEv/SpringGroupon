@@ -46,9 +46,7 @@ public class CartBusiness {
      * @param userId 用户ID
      * @param skuId  商品SkuId
      * @param dealId 商品Id
-     * @return
-     *
-     * TODO 返回值更改为 bo
+     * @return TODO 返回值更改为 bo
      */
     public Cart selectDealCart(Long userId, Long skuId, Long dealId) {
         Cart cart = new Cart();
@@ -62,9 +60,7 @@ public class CartBusiness {
      * 查询是否存在相同的数据
      *
      * @param cart 购物车对象
-     * @return
-     *
-     * TODO 将其余checkExist()方法修改
+     * @return TODO 将其余checkExist()方法修改
      */
 
     private boolean checkExist(Cart cart) {
@@ -119,8 +115,8 @@ public class CartBusiness {
     /**
      * 获得购物车列表中的DealID
      *
-     * @param cartList
-     * @return
+     * @param cartList 购物车列表
+     * @return DealIDList
      */
     public List<Long> selectDealIdsByCart(List<Cart> cartList) {
         ArrayList<Long> resultList = new ArrayList<>();
@@ -128,6 +124,30 @@ public class CartBusiness {
             resultList.add(cart.getDealId());
         }
         return resultList;
+    }
+
+    /**
+     * 获得购物车列表中的SkuId
+     *
+     * @param cartList 购物车列表
+     * @return SkuIdList
+     */
+    public List<Long> selectSkuIdByCart(List<Cart> cartList) {
+        ArrayList<Long> resultList = new ArrayList<>();
+        for (Cart cart : cartList) {
+            resultList.add(cart.getDealSkuId());
+        }
+        return resultList;
+    }
+
+    /**
+     * 根据ID列表查询购物车列表
+     *
+     * @param idList ID列表
+     * @return 购物车列表
+     */
+    public List<Cart> selectDealCartByIdList(List<Long> idList) {
+        return cartService.selectDealCartByIdList(idList);
     }
 
 

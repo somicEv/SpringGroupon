@@ -15,4 +15,6 @@ public interface CartService {
     Integer updateDealCart(Cart cart);
 
     List<Cart> selectDealCartList(Cart cart);
+
+    List<Cart> selectDealCartByIdList(List<Long> idList);
 }

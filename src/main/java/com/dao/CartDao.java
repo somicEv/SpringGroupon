@@ -18,4 +18,6 @@ public interface CartDao {
     List<Cart> selectDealCartList(Cart cart);
 
     Cart selectDealCart(Cart cart);
+
+    List<Cart> selectDealCartByIdList(List<Long> idList);
 }

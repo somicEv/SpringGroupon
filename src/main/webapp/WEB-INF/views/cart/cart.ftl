@@ -36,7 +36,7 @@
                 }
             }
             var totalSpan = document.getElementsByTagName("span");
-            totalSpan[0].innerHTML = '￥' + val/100.;
+            totalSpan[0].innerHTML = '￥' + val/100;
 
             document.getElementById("totalPrice").value = val;
             document.getElementById("cartIds").value = cartIds.substring(0, cartIds.length - 1);
