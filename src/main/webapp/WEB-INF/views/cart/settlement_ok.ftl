@@ -39,14 +39,14 @@
                 <#if result == 1>
                     <span style="font-size: 30px;">付款成功！</span>
                 <#else>
-                    <span style="font-size: 30px;">付款成功！！！</span>
+                    <span style="font-size: 30px;">付款失败，请重试</span>
                 </#if>
             </div>
             <div class="hr_45"></div>
             <div class="hr_15"></div>
             <div style="text-align: center;">
                 <a href="${ctx}/cart" class="settlement_back_btn">返回购物车</a>
-                <a href="${ctx}" class="settlement_back_btn">继续购物</a>
+                <a href="${ctx}/index" class="settlement_back_btn">继续购物</a>
                 <a href="${ctx}/home/order" class="settlement_back_btn">我的订单</a>
             </div>
             <div class="hr_45"></div>

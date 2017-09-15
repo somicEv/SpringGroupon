@@ -57,12 +57,12 @@
         WHERE user_id = #{userId} AND deal_sku_id = #{dealSkuId} AND deal_id = #{dealId}
     </select>
 
-    <select id="selectByIds" resultMap="baseResultMap" parameterType="java.util.List">
+    <select id="selectDealCartByIdList" resultMap="baseResultMap" parameterType="java.util.Map">
         select
         <include refid="base_sql_list"/>
         from cart
-        <if test="ids != null">
-            where user_id in
+        <if test="idList != null">
+            where id in
             <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
                 #{item}
             </foreach>

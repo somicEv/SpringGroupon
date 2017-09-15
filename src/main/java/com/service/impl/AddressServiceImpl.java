@@ -26,4 +26,9 @@ public class AddressServiceImpl implements AddressService {
             return new QueryMessage<>(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
         }
     }
+
+    @Override
+    public Address selectUserAddressById(Long addressId) {
+        return addressDao.selectUserById(addressId);
+    }
 }

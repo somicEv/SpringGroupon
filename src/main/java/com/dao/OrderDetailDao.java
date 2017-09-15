@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface OrderDetailDao {
 
-    Integer saveOrderDetails(List<OrderDetail> orderDetails);
+    Integer saveOrderDetail(List<OrderDetail> orderDetails);
 }

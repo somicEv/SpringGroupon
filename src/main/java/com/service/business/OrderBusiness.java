@@ -6,8 +6,7 @@ import com.common.entity.OrderDetail;
 import com.common.entity.area.Address;
 import com.common.exception.BusinessException;
 import com.common.vo.SettlementDTO;
-import com.dao.OrderDao;
-import com.dao.OrderDetailDao;
+import com.service.api.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -20,10 +19,8 @@ import java.util.List;
 public class OrderBusiness {
 
     @Autowired
-    OrderDao orderDao;
+    OrderService orderService;
 
-    @Autowired
-    OrderDetailDao orderDetailDao;
     /**
      * 下单
      *
@@ -33,7 +30,7 @@ public class OrderBusiness {
      * @param totalPrice
      * @param payType
      */
-    public Long order(Long userId, List<SettlementDTO> cartDTOs, Address address, Integer totalPrice, Integer payType){
+    public Long order(Long userId, List<SettlementDTO> cartDTOs, Address address, Integer totalPrice, Integer payType) {
         if (null == userId) {
             throw new BusinessException("用户ID不能为空");
         }
@@ -47,17 +44,27 @@ public class OrderBusiness {
             throw new BusinessException("订单详细信息不能为空");
         }
 
-        orderDao.saveOrder(order);
+        orderService.saveOrder(order);
         for (OrderDetail detail : order.getOrderDetails()) {
             if (null == detail) {
                 throw new BusinessException("订单详细信息不能为空");
             }
             detail.setOrderId(order.getId());
         }
-        orderDetailDao.saveOrderDetails(order.getOrderDetails());
+        orderService.saveOrderDetail(order.getOrderDetails());
         return order.getId();
     }
 
+    /**
+     * 构建 订单及订单详情对象
+     *
+     * @param userId     用户ID
+     * @param totalPrice 总价格
+     * @param address    地址
+     * @param payType    支付类型
+     * @param cartDTOs   购物车列表
+     * @return
+     */
     private Order initOrder(Long userId, Integer totalPrice, Address address, Integer payType,
                             List<SettlementDTO> cartDTOs) {
         Date now = new Date();

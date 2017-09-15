@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>${title}</title>
+        <title>首页</title>
 		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
 		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 		<link rel="bookmark" href="images/favicon.ico" type="image/x-icon" />
@@ -14,7 +14,6 @@
 		<script type="text/javascript" src="${ctx}/js/DD_belatedPNG_0.0.8a-min.js"></script>
 		<script type="text/javascript" src="${ctx}/js/ie6Fixpng.js"></script>
 		<![endif]-->
-		<title>首页</title>
 	</head>
 	<body>
 		<#include "layout/header.ftl">
