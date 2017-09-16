@@ -31,4 +31,9 @@ public class AddressServiceImpl implements AddressService {
     public Address selectUserAddressById(Long addressId) {
         return addressDao.selectUserById(addressId);
     }
+
+    @Override
+    public Integer saveUserAddress(Address address) {
+        return addressDao.saveUserAddress(address);
+    }
 }

@@ -21,6 +21,27 @@
         VALUES (#{userId},#{dealId},#{dealSkuId},#{createTime},#{updateTime})
     </insert>
     
+    <select id="selectFavoriteList" parameterType="com.common.entity.Favorite" resultMap="baseResultMap">
+        SELECT
+          <include refid="base_sql_list" />
+        FROM
+          favorite
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="dealId != null">
+                AND deal_id = #{dealId}
+            </if>
+            <if test="dealSkuId != null">
+                AND deal_sku_id = #{dealSkuId}
+            </if>
+        </where>
+    </select>
+    
     <select id="checkExist" parameterType="com.common.entity.Favorite" resultMap="baseResultMap">
         SELECT
           <include refid="base_sql_list" />

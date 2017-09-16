@@ -114,10 +114,12 @@ public class DealBusiness {
     /**
      * 查询 deal
      *
-     * @param params
+     * @param value 查询参数
      * @return
      */
-    public List<Deal> selectDealList(Map<String,Object> params){
-        return dealService.selectDealList(params);
+    public List<Deal> selectDealList(List<Long> value){
+        Map<String, Object> idList = new HashMap<>();
+        idList.put("idList", value);
+        return dealService.selectDealList(idList);
     }
 }

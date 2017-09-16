@@ -245,7 +245,10 @@ public class CartController extends FrontendBaseController {
             }
             Address address = areaBusiness.selectUserAddressById(addressId);
             // 构建Order
-            orderBusiness.order(webUser.getUserId(), settlementDTOList, address, totalPrice, payType);
+            Long saveResult = orderBusiness.order(webUser.getUserId(), settlementDTOList, address, totalPrice, payType);
+            if(saveResult == null){
+                this.generateError500Page(response);
+            }
             model.addAttribute("result", 1);
         } catch (Exception e) {
             log.error("支付失败", e);
@@ -265,9 +268,7 @@ public class CartController extends FrontendBaseController {
         // 获取dealIdList
         List<Long> dealIds = cartBusiness.selectDealIdsByCart(cartList);
         // 根据ID列表获取相应的商品信息
-        Map<String, Object> params = new HashMap<>();
-        params.put("idList", dealIds);
-        List<Deal> dealList = dealBusiness.selectDealList(params);
+        List<Deal> dealList = dealBusiness.selectDealList(dealIds);
         Map<Long, Deal> resultMap = new HashMap<>();
         for (Deal deal : dealList) {
             resultMap.put(deal.getId(), deal);

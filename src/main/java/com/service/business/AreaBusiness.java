@@ -1,5 +1,8 @@
 package com.service.business;
 
+import com.common.constant.CartConstant;
+import com.common.constant.GlobalConstant;
+import com.common.entity.Cart;
 import com.common.entity.area.Address;
 import com.common.entity.area.Area;
 import com.common.entity.area.AreaType;
@@ -82,5 +85,19 @@ public class AreaBusiness {
      */
     public Address selectUserAddressById(Long id) {
         return addressService.selectUserAddressById(id);
+    }
+
+    /**
+     * 存储用户地址
+     *
+     * @param address
+     * @return
+     */
+    public QueryMessage saveUserAddress(Address address) {
+        Integer integer = addressService.saveUserAddress(address);
+        if(integer != 1){
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
+        }
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
     }
 }

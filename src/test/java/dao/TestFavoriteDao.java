@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-context.xml", "classpath:spring/spring-dao.xml"})
@@ -28,6 +29,16 @@ public class TestFavoriteDao {
         favorite.setCreateTime(new Date());
         Integer save = favoriteDao.save(favorite);
         System.out.println(save);
+    }
+
+    @Test
+    public void testSelectFavoriteList(){
+        Favorite favorite = new Favorite();
+        favorite.setUserId(14L);
+        List<Favorite> favoriteList = favoriteDao.selectFavoriteList(favorite);
+        for (Favorite f:favoriteList){
+            System.out.println(f.toString());
+        }
     }
 
 }

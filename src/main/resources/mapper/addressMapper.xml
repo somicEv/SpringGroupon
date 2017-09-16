@@ -36,4 +36,10 @@
         WHERE
         id = #{addressId}
     </select>
+
+    <insert id="saveUserAddress" parameterType="com.common.entity.area.Address">
+        INSERT INTO address
+        (user_id, receiver, area, detail, address_type, phone, create_time, update_time)
+        VALUES (#{userId},#{receiver},#{area},#{detail},#{addressType},#{phone},#{createTime},#{updateTime})
+    </insert>
 </mapper>

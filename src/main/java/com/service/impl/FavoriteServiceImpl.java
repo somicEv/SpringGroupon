@@ -6,6 +6,8 @@ import com.service.api.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FavoriteServiceImpl implements FavoriteService{
 
@@ -20,5 +22,10 @@ public class FavoriteServiceImpl implements FavoriteService{
     @Override
     public Favorite checkExist(Favorite favorite) {
        return favoriteDao.checkExist(favorite);
+    }
+
+    @Override
+    public List<Favorite> selectFavoriteList(Favorite favorite) {
+        return favoriteDao.selectFavoriteList(favorite);
     }
 }

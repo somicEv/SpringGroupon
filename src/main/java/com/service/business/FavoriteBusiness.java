@@ -1,9 +1,17 @@
 package com.service.business;
 
 import com.common.entity.Favorite;
+import com.common.entity.deal.Deal;
+import com.common.entity.user.WebUser;
+import com.common.vo.FavoriteDTO;
 import com.service.api.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class FavoriteBusiness {
@@ -11,17 +19,61 @@ public class FavoriteBusiness {
     @Autowired
     private FavoriteService favoriteService;
 
-    public boolean checkExist(Favorite favorite){
+    /**
+     * 检查是否已经存在形同的商品
+     *
+     * @param favorite 用户Favorite
+     * @return
+     */
+    public boolean checkExist(Favorite favorite) {
         Favorite result = favoriteService.checkExist(favorite);
-        if(result != null){
+        if (result != null) {
             // 说明存在
             return false;
         }
         return true;
     }
 
-    public Integer saveResult(Favorite favorite){
+    /**
+     * 添加喜欢
+     *
+     * @param favorite
+     * @return
+     */
+    public Integer saveResult(Favorite favorite) {
         return favoriteService.save(favorite);
+    }
+
+    /**
+     * 查询用户的喜欢列表
+     *
+     * @param webUser
+     * @return
+     */
+    public List<Favorite> selectFavoriteList(WebUser webUser) {
+        Favorite favorite = new Favorite();
+        favorite.setUserId(webUser.getUserId());
+        return favoriteService.selectFavoriteList(favorite);
+    }
+
+    public List<Long> selectDealIdsFromFavoriteList(List<Favorite> list){
+        List<Long> resultList = new ArrayList<>();
+        for (Favorite favorite : list){
+            resultList.add(favorite.getDealId());
+        }
+        return resultList;
+    }
+
+    public List<FavoriteDTO> createFavoriteDtoList(List<Favorite> favoriteList, List<Deal> dealList){
+        Map<Long, Deal> params = new HashMap<>();
+        for (Deal deal : dealList){
+            params.put(deal.getId(), deal);
+        }
+        List<FavoriteDTO> resultList = new ArrayList<>();
+        for (Favorite favorite : favoriteList){
+            resultList.add(new FavoriteDTO(favorite, params.get(favorite.getDealId())));
+        }
+        return resultList;
     }
 
 }

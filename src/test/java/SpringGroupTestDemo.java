@@ -109,9 +109,7 @@ public class SpringGroupTestDemo {
         // 获取dealIdList
         List<Long> dealIds = cartBusiness.selectDealIdsByCart(cartList);
         // 根据IdList查询相应的商品信息
-        Map<String,Object> params = new HashMap<>();
-        params.put("idList", dealIds);
-        List<Deal> dealList = dealBusiness.selectDealList(params);
+        List<Deal> dealList = dealBusiness.selectDealList(dealIds);
         Map<Long,Deal> resultMap = new HashMap<>();
         for (Deal deal : dealList){
             resultMap.put(deal.getId(),deal);

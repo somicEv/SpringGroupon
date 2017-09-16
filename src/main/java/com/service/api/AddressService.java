@@ -11,4 +11,5 @@ public interface AddressService {
 
     Address selectUserAddressById(Long addressId);
 
+    Integer saveUserAddress(Address address);
 }

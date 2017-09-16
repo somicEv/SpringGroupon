@@ -105,10 +105,10 @@
                 create_time = #{createTime},
             </if>
             <if test="updateTime != null and updateTime != '' ">
-                update_time = #{createTime},
+                update_time = #{updateTime},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where nickname = #{nickname}
     </update>
 
     <delete id="delete" parameterType="com.common.entity.user.UserBasicInfo">
