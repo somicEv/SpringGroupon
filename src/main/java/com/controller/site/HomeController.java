@@ -3,6 +3,7 @@ package com.controller.site;
 import com.common.constant.CartConstant;
 import com.common.constant.GlobalConstant;
 import com.common.entity.Favorite;
+import com.common.entity.Order;
 import com.common.entity.Params;
 import com.common.entity.StartRemind;
 import com.common.entity.area.Address;
@@ -45,6 +46,8 @@ public class HomeController extends FrontendBaseController {
     @Autowired
     AreaBusiness areaBusiness;
 
+    @Autowired
+    OrderBusiness orderBusiness;
     /**
      * 展示用户收藏
      *
@@ -162,27 +165,40 @@ public class HomeController extends FrontendBaseController {
     }
 
     /**
-     * 添加用户基本信息
      *
+     * @param params
      * @return
      */
     @RequestMapping(value = "/info/add")
     @ResponseBody
-    public QueryMessage<UserBasicInfo> addUserInfo(UserBasicInfo userBasicInfo) {
-        // TODO 页面转成表单提交
-        System.out.println("ni");
-        return null;
+    public QueryMessage<UserBasicInfo> addUserInfo(@RequestBody Params[] params) {
+        Map<String, String> turnToMap = Params.turnToMap(params);
+        UserBasicInfo userBasicInfo = new UserBasicInfo();
+        userBasicInfo.setNickname(turnToMap.get("nickname"));
+        userBasicInfo.setRealName(turnToMap.get("realName"));
+        userBasicInfo.setMail(turnToMap.get("mail"));
+        userBasicInfo.setPhone(turnToMap.get("phone"));
+        userBasicInfo.setUpdateTime(new Date());
+        userBasicInfo.setCreateTime(new Date());
+        return userBusiness.saveUserBasicInfo(userBasicInfo);
     }
 
     /**
      * 更新用户基本信息
+     *
      * @return
      */
-    @RequestMapping(value = "/info/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/info/update")
     @ResponseBody
-    public QueryMessage updateUserInfo(UserBasicInfo[] params) {
-        // TODO 页面转成表单提交
-        return null;
+    public QueryMessage updateUserInfo(@RequestBody Params[] params) {
+        Map<String, String> turnToMap = Params.turnToMap(params);
+        UserBasicInfo userBasicInfo = new UserBasicInfo();
+        userBasicInfo.setNickname(turnToMap.get("nickname"));
+        userBasicInfo.setRealName(turnToMap.get("realName"));
+        userBasicInfo.setMail(turnToMap.get("mail"));
+        userBasicInfo.setPhone(turnToMap.get("phone"));
+        userBasicInfo.setUpdateTime(new Date());
+        return userBusiness.updateUserBasicInfo(userBasicInfo);
     }
 
     /**
@@ -197,6 +213,7 @@ public class HomeController extends FrontendBaseController {
 
     /**
      * 保存用户新创建的收货地址
+     *
      * @param address
      * @param request
      * @param response
@@ -244,7 +261,14 @@ public class HomeController extends FrontendBaseController {
      */
     @RequestMapping(value = "/order")
     public String showUserOrder(Model model, HttpServletRequest request, HttpServletResponse response) {
-        // todo 展示用户订单
+        WebUser webUser = this.getCurrentUser(request);
+        List<Order> orderList = orderBusiness.show(webUser);
+        if (orderList == null || orderList.size() == 0) {
+            this.generateError500Page(response);
+        }
+        model.addAttribute("orders", orderList);
         return "/user/order";
     }
+
+
 }

@@ -17,6 +17,10 @@
         <result column="pay_type" property="payType" jdbcType="INTEGER" />
     </resultMap>
 
+    <sql id="base_query_list">
+        id,user_id,order_status,create_time,update_time,total_price,total_settlement_price,address,receiver,phone,pay_type
+    </sql>
+
     <insert id="saveOrder" parameterType="com.common.entity.Order">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
@@ -87,4 +91,37 @@
             </if>
         </trim>
     </insert>
+
+    <select id="selectOrder" parameterType="com.common.entity.Order" resultMap="BaseResultMap">
+        select
+          <include refid="base_query_list"/>
+        from
+          order_basic
+        <where>
+            <if test="userId != null">
+              AND user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="orderStatus != null">
+              AND order_status = #{orderStatus,jdbcType=INTEGER}
+            </if>
+            <if test="totalPrice != null">
+              AND total_price = #{totalPrice,jdbcType=INTEGER}
+            </if>
+            <if test="receiver != null">
+              AND receiver = #{receiver,jdbcType=VARCHAR}
+            </if>
+            <if test="totalSettlementPrice != null">
+              AND total_settlement_price = #{totalSettlementPrice,jdbcType=INTEGER}
+            </if>
+            <if test="phone != null">
+              AND phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="address != null">
+              AND address = #{address,jdbcType=VARCHAR}
+            </if>
+            <if test="payType != null">
+              AND pay_type = #{payType,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ import com.common.constant.OrderConstant;
 import com.common.entity.Order;
 import com.common.entity.OrderDetail;
 import com.common.entity.area.Address;
+import com.common.entity.user.WebUser;
 import com.common.exception.BusinessException;
 import com.common.vo.SettlementDTO;
 import com.service.api.OrderService;
@@ -106,4 +107,14 @@ public class OrderBusiness {
         return order;
     }
 
+    public List<Order> show(WebUser webUser) {
+        Order order = new Order();
+        order.setUserId(webUser.getUserId());
+        List<Order> orderList = orderService.selectOrder(order);
+        for (Order o : orderList){
+            List<OrderDetail> orderDetails = orderService.selectOrderDetail(o.getId());
+            o.setOrderDetails(orderDetails);
+        }
+        return orderList;
+    }
 }

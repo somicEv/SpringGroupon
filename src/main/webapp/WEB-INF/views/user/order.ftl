@@ -42,7 +42,7 @@
                             <div class="cart_shopInfo clearfix">
                                 <div>
                                 <#--<input type="checkbox" id="${order.id}" onclick="check(this, ${order.id})" style="float:left; margin-top:40px; margin-right: 10px">-->
-                                    <img src="${helper.getDealImageUrlForGrid(detail.dealImgId)}" alt="">
+                                    <img src="${ctx}/${helper.getUserOrderImageUrl(detail.dealImgId)}" alt="">
                                     <div class="cart_shopInfo_cont">
                                         <p class="cart_link"><a href="${ctx}/item/${detail.id}">${detail.dealTitle}</a></p>
                                         <p class="cart_info">7天退换</p>

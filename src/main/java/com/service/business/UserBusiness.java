@@ -79,7 +79,7 @@ public class UserBusiness {
      * @param userBasicInfo
      * @return
      */
-    public QueryMessage<UserBasicInfo> saveUserBasidInfo(UserBasicInfo userBasicInfo) {
+    public QueryMessage<UserBasicInfo> saveUserBasicInfo(UserBasicInfo userBasicInfo) {
         return userBasicInfoService.saveUserBasicInfo(userBasicInfo);
     }
 

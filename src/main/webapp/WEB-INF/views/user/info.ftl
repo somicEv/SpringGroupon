@@ -102,7 +102,7 @@
                             <td>真实姓名：</td><td><input type="text" id="realName" name="realName"  class="big_input" style="background-color: #BFBFBF" disabled></td>
                         </tr>
                         <tr>
-                            <td align="center" colspan="2"><input type="button" onclick="modify()" value="修改" class="btn"/><input type="submit"  value="提交" class="btn"/></td>
+                            <td align="center" colspan="2"><input type="button" onclick="modify()" value="修改" class="btn"/><input type="button" onclick="addInfo()" value="提交" class="btn"/></td>
                         </tr>
                     </form>
                 </#if>

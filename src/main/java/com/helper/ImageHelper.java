@@ -26,10 +26,10 @@ public class ImageHelper extends BaseHelper {
     /**
      * 获取商品列表图片Url
      *
+     * TODO 修改为私有方法 修改前端页面上使用的方法 DATE: 2017-9-10
+     *
      * @param deal 商品信息
      * @return 图片url地址
-     *
-     * TODO 修改为私有方法 修改前端页面上使用的方法 DATE: 2017-9-10
      */
     public String getDealImageUrlForIndexDealList(Deal deal) {
         Image image = new Image();
@@ -62,6 +62,18 @@ public class ImageHelper extends BaseHelper {
         } catch (Exception e) {
             return "images/blank.gif";
         }
+    }
+
+    public String getUserOrderImageUrl(Integer imageId){
+        Image image = new Image();
+        image.setId(imageId);
+        List<Image> imageList = imageDao.getImage(image);
+        System.out.println(imageList.size());
+        if (imageList != null && imageList.size() > 0) {
+            System.out.println(imageList.get(0).getSourcePath());
+            return imageList.get(0).getSourcePath();
+        }
+        return "images/blank.gif";
     }
 
 

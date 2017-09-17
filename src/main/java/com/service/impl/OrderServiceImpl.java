@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -28,4 +29,15 @@ public class OrderServiceImpl implements OrderService {
     public Integer saveOrderDetail(List<OrderDetail> orderDetails){
         return orderDetailDao.saveOrderDetail(orderDetails);
     }
+
+    @Override
+    public List<Order> selectOrder(Order order) {
+        return orderDao.selectOrder(order);
+    }
+
+    @Override
+    public List<OrderDetail> selectOrderDetail(Long orderId) {
+        return orderDetailDao.selectOrderDetail(orderId);
+    }
+
 }

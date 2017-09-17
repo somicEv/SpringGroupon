@@ -4,8 +4,9 @@ var Submit = {
         $.ajax({
             type: "post",
             url: url,
-            data: {"params":params},
+            data: JSON.stringify(params),
             dataType: "json",
+            contentType: "application/json",
             async: true,
             success: function (result, textStatus) {
                 console.log(result.queryCode + "," + result.resultMessage);
@@ -22,7 +23,7 @@ var Submit = {
             }
         });
     },
-    AjaxSubmit_new: function (url, params) {
+   /* AjaxSubmit_new: function (url, params) {
 
         $.ajax({
             type: "post",
@@ -44,6 +45,6 @@ var Submit = {
                 alert("操作失败--error");
             }
         });
-    }
+    }*/
 
 }
