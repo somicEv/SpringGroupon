@@ -42,7 +42,7 @@
                                     <div class="cart_shopInfo clearfix">
                                         <div>
                                             <#--<input type="checkbox" id="${favorite.favorite.id}" onclick="check(this, ${favorite.favorite.id})" style="float:left; margin-top:40px; margin-right: 10px">-->
-                                            <img src="${helper.getDealImageUrlForDealList(favorite.deal)}" alt="">
+                                            <img src="${ctx}/${helper.getDealImageUrlForIndexDealList(favorite.deal)}" alt="">
                                             <div class="cart_shopInfo_cont">
                                                 <p class="cart_link"><a href="${ctx}/item/${favorite.deal.skuId}">${favorite.deal.dealTitle}</a></p>
                                                 <p class="cart_info">7天退换</p>

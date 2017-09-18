@@ -270,5 +270,8 @@ public class HomeController extends FrontendBaseController {
         return "/user/order";
     }
 
-
+    @RequestMapping(value = "/message")
+    public String showUserMessage(){
+        return "/user/message";
+    }
 }
