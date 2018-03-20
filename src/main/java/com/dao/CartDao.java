@@ -20,4 +20,6 @@ public interface CartDao {
     Cart selectDealCart(Cart cart);
 
     List<Cart> selectDealCartByIdList(Map<String,Object> idList);
+
+
 }

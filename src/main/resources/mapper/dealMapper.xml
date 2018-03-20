@@ -115,4 +115,16 @@
         AND publish_status = 3
         AND end_time &gt;= #{nowTime,jdbcType=TIMESTAMP}
     </select>
+
+        <select id="getNewArrivalsGoods" parameterType="java.util.Map" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        deal
+        WHERE
+        publish_status = #{publishStatus,jdbcType=INTEGER}
+        AND end_time &gt;= #{endTime,jdbcType=TIMESTAMP}
+        ORDER BY publish_time
+    </select>
+
 </mapper>

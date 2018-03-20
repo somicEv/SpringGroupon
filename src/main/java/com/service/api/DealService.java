@@ -19,4 +19,6 @@ public interface DealService {
 	List<Deal> selectDealList(Map<String,Object> params);
 
 	Deal getDealBySkuId(Map<String,Object> params);
+
+    List<Deal> getNewArrivalsGoods(Map<String, Object> params);
 }

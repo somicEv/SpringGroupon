@@ -1,4 +1,4 @@
-<#import "macro/common.ftl" as common>
+<#import "${pageContext.request.getContextPath}/macro/common.ftl" as common>
 <html>
 <head>
     <meta charset="utf-8">
@@ -6,24 +6,43 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
     <link rel="bookmark" href="images/favicon.ico" type="image/x-icon"/>
-    <link type="text/css" rel="stylesheet" href="${ctx}/style/reset.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.getContextPath}/style/reset.css">
     <link type="text/css" rel="stylesheet" href="${ctx}/style/main.css">
-    <!--[if IE 6]>
-    <script type="text/javascript" src="${ctx}/js/DD_belatedPNG_0.0.8a-min.js"></script>
-    <script type="text/javascript" src="${ctx}/js/ie6Fixpng.js"></script>
-    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="${ctx}/stylesheets/style.css"/>
+    <link type="text/css" rel="stylesheet" href="${ctx}/stylesheets/waves.min.css"/>
+<#--   <link type="text/css" rel="stylesheet" href="${ctx}/stylesheets/shortcodes.css"/>-->
+    <link rel="stylesheet" type="text/css" href="${ctx}/stylesheets/responsive.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/stylesheets/bootstrap.min.css">
+    <style>
+        input[type="checkbox"] {
+            opacity: unset;
 
-    <script type="text/javascript" src="${ctx}/js/jquery-1.8.0.min.js"></script>
+        }
+
+        input[type="text"] {
+            padding: 0;
+            border: hidden;
+            border-radius: inherit;
+            height: 31px;
+        }
+
+        .des_number {
+            width: 57px;
+        }
+    </style>
+    <script type="text/javascript" src="${ctx}/javascript/jquery.min.js"></script>
+    <script type="text/javascript" src="${ctx}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${ctx}/js/site.js"></script>
 
     <script type="text/javascript">
         var ctx = '${ctx}';
 
         function check(object, cartId) {
+            console.log(321);
             if (object.checked) {
-//                    alert(1);
+                alert(1);
             } else {
-//                    alert(2);
+                alert(2);
             }
 
             var val = Number(0);//声明一个数组保存结果
@@ -36,7 +55,7 @@
                 }
             }
             var totalSpan = document.getElementsByTagName("span");
-            totalSpan[0].innerHTML = '￥' + val/100;
+            totalSpan[0].innerHTML = '￥' + val / 100;
 
             document.getElementById("totalPrice").value = val;
             document.getElementById("cartIds").value = cartIds.substring(0, cartIds.length - 1);
@@ -60,9 +79,9 @@
                 var addTotalCount = (add_update_count) * add_update_price;
                 // input hidden 的值
                 document.getElementById(id_subtotal).value = addTotalCount;
-                console.log(add_update_count+','+add_update_price+','+addTotalCount+','+document.getElementById(id_subtotal).value);
+                console.log(add_update_count + ',' + add_update_price + ',' + addTotalCount + ',' + document.getElementById(id_subtotal).value);
                 // 页面显示的值
-                document.getElementById(id_subtotal_price).innerText = '￥'+addTotalCount/100;
+                document.getElementById(id_subtotal_price).innerText = '￥' + addTotalCount / 100;
             } else {
                 var subCount = Number(document.getElementById(id).value);
                 if (subCount <= 1) {
@@ -76,9 +95,9 @@
                 var subTotalCount = (sub_update_count) * sub_update_price;
                 // input hidden 的值
                 document.getElementById(id_subtotal).value = subTotalCount;
-                console.log(sub_update_count+','+sub_update_price+','+subTotalCount+','/*+document.getElementById(id_subtotal).value*/);
+                console.log(sub_update_count + ',' + sub_update_price + ',' + subTotalCount + ','/*+document.getElementById(id_subtotal).value*/);
                 // 页面显示的值
-                document.getElementById(id_subtotal_price).innerText = '￥'+subTotalCount/100;
+                document.getElementById(id_subtotal_price).innerText = '￥' + subTotalCount / 100;
             }
         }
 
@@ -87,7 +106,7 @@
 
 <body>
 <div class="headerBar">
-<#include "layout/topbar.ftl">
+<#include "${pageContext.request.getContextPath}/layout/topbar.ftl">
     <div class="logoBar">
         <div class="comWidth">
             <div class="logo fl">
@@ -121,11 +140,12 @@
             <#if carts??>
                 <#list carts as cart>
                     <div class="cart_cont clearfix">
+
                         <div class="cart_item t_name">
                             <div class="cart_shopInfo clearfix">
+                                <input type="checkbox" id="${cart.cart.id}" onclick="check(this, ${cart.cart.id})"
+                                       style="float:left; margin-top:40px; margin-right: 10px;border: solid 5px #000000;"/>
                                 <div>
-                                    <input type="checkbox" id="${cart.cart.id}" onclick="check(this, ${cart.cart.id})"
-                                           style="float:left; margin-top:40px; margin-right: 10px">
                                     <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForDealCart(cart.cart)}"
                                          alt="">
                                     <div class="cart_shopInfo_cont">
@@ -147,8 +167,13 @@
                                      onclick="dealCount(0, '${cart.cart.id}', '${cart.deal.maxPurchaseCount}')">-
                                 </div>
                                 <div class="des_input">
-                                    <input type="text" id="count_${cart.cart.id}" name="count"
-                                           value="${cart.cart.dealCount}" readonly>
+                                    <#if (cart.cart.dealCount > cart.deal.maxPurchaseCount)>
+                                        <input type="text" id="count_${cart.cart.id}" name="count"
+                                               value="${cart.deal.maxPurchaseCount}" readonly>
+                                    <#else>
+                                        <input type="text" id="count_${cart.cart.id}" name="count"
+                                               value="${cart.cart.dealCount}" readonly>
+                                    </#if>
                                 </div>
                                 <div class="plus"
                                      onclick="dealCount(1, '${cart.cart.id}', '${cart.deal.maxPurchaseCount}')">+
@@ -172,10 +197,15 @@
                         <div class="cart_item t_operate"><a href="javascript:void(0)" class="btn_link">删除</a></div>
                     </div>
                 </#list>
-            </#if>
                 <div class="cart_message">
                     若有问题请留言
                 </div>
+            <#else>
+                <div class="cart_message">
+                    购物车内还没有商品~~
+                </div>
+            </#if>
+
             </div>
         </div>
     </div>
@@ -185,11 +215,11 @@
         <div class="shopping_cont padding_shop clearfix">
             <div class="cart_count fr">
                 <div class="cart_rmb">
-                    <i>总计：</i><span>￥0.00</span>
+                    <i>总计：</i><span></span>
                 </div>
                 <div class="settlement_btnBox">
                     <form action="${ctx}/settlement" method="post" id="settlement_form">
-                        <input type="hidden" id="totalPrice" name="totalPrice" value="0">
+                        <input type="hidden" id="totalPrice" name="totalPrice">
                         <input type="hidden" id="cartIds" name="cartIds">
                         <input type="submit" class="settlement_btn" value="提交订单">
                     </form>
@@ -198,6 +228,6 @@
         </div>
     </div>
 </div>
-<#include "layout/footer.ftl">
+<#include "${pageContext.request.getContextPath}/layout/footer.ftl">
 </body>
 </html>

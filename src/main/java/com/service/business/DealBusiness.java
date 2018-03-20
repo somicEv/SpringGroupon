@@ -1,11 +1,15 @@
 package com.service.business;
 
 import com.common.constant.DealConstant;
+import com.common.entity.NewArrival;
 import com.common.entity.deal.Deal;
 import com.common.entity.deal.DealCategory;
 import com.common.vo.IndexCategoryDealDTO;
+import com.dao.DealDao;
 import com.service.api.DealService;
 import com.util.PagingResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,8 @@ public class DealBusiness {
 
     @Autowired
     private DealCategoryBusiness dealCategoryBusiness;
+
+    private Logger log = LoggerFactory.getLogger(RecommendBusiness.class);
 
     /**
      * 构建首页显示vo
@@ -121,5 +127,24 @@ public class DealBusiness {
         Map<String, Object> idList = new HashMap<>();
         idList.put("idList", value);
         return dealService.selectDealList(idList);
+    }
+
+    public List<NewArrival> getIndexNewArrival() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("publishStatus", 3);
+        params.put("endTime", new Date());
+        List<Deal> arrivalsGoods = dealService.getNewArrivalsGoods(params);
+        List<NewArrival> result = new ArrayList<>();
+        int i = 0;
+        while (i<arrivalsGoods.size()){
+            Deal[] deal = new Deal[]{};
+            Deal[] list = arrivalsGoods.subList(i, i + 2).toArray(deal);
+            NewArrival newArrival = new NewArrival();
+            newArrival.setDeals(list);
+            result.add(newArrival);
+            i = i + 2;
+        }
+        log.info("[DealBusiness]getIndexNewArrival-->reuslt{}",result);
+        return result;
     }
 }

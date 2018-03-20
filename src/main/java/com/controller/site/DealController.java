@@ -3,9 +3,13 @@ package com.controller.site;
 import com.common.constant.DealConstant;
 import com.common.entity.deal.Deal;
 import com.common.entity.deal.DealCategory;
+import com.common.vo.CommendDTO;
+import com.common.vo.RecommendDTO;
 import com.controller.common.FrontendBaseController;
+import com.service.business.CommendBusiness;
 import com.service.business.DealBusiness;
 import com.service.business.DealCategoryBusiness;
+import com.service.business.RecommendBusiness;
 import com.util.DealUtil;
 import com.util.PagingResult;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -27,6 +32,13 @@ public class DealController extends FrontendBaseController {
 
     @Autowired
     DealBusiness dealBusiness;
+
+    @Autowired
+    CommendBusiness commendBusiness;
+
+    @Autowired
+    RecommendBusiness recommendBusiness;
+
 
     @RequestMapping(value = "/category/{url_name}", method = RequestMethod.GET)
     public String cateGoryDetail(@PathVariable String url_name,
@@ -72,7 +84,12 @@ public class DealController extends FrontendBaseController {
             return generateError404Page(response);
         }
         model.addAttribute("dealCategory", oneDealCategory);
-        // 查询商品详细信息
+        // 查询当前商品评论
+        CommendDTO commendDTO = commendBusiness.getCommendList(skuId);
+        model.addAttribute("commendList", commendDTO);
+        // 查询首页推荐位
+        List<RecommendDTO> indexRecommendInfo = recommendBusiness.getIndexRecommendInfo();
+        model.addAttribute("indexRecommendInfo", indexRecommendInfo);
         return "/deal/detail";
     }
 

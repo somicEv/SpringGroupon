@@ -54,4 +54,9 @@ public class DealServiceImpl implements DealService {
     public List<Deal> selectDealList(Map<String,Object> params) {
         return dealDao.selectDealList(params);
     }
+
+    @Override
+    public List<Deal> getNewArrivalsGoods(Map<String, Object> params) {
+        return dealDao.getNewArrivalsGoods(params);
+    }
 }

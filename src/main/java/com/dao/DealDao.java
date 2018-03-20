@@ -44,5 +44,10 @@ public interface DealDao {
 	 */
 	Deal getDealBySkuId(Map<String,Object> params);
 
-
+    /**
+     * 查询新到商品
+     * @param params
+     * @return
+     */
+    List<Deal> getNewArrivalsGoods(Map<String, Object> params);
 }

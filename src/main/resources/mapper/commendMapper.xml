@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.CommendDao">
+    <sql id="table">
+        commend
+    </sql>
+
+    <sql id="baseColumn">
+        id,user_id,user_name,sku_id,create_time,update_time,commend
+    </sql>
+
+    <resultMap id="baseResult" type="com.common.entity.Commend">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="sku_id" property="skuId" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="commend" property="commend" />
+    </resultMap>
+
+    <select id="getCommendList" parameterType="java.util.Map" resultMap="baseResult">
+        SELECT
+          <include refid="baseColumn" />
+        FROM
+          <include refid="table" />
+        WHERE
+          sku_id = #{skuId}
+        ORDER BY create_time DESC
+    </select>
+</mapper>

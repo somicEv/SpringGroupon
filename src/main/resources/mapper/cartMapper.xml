@@ -11,7 +11,6 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
-
     <sql id="base_sql_list">
         id,user_id,deal_id,deal_sku_id,deal_count,create_time,update_time
     </sql>
@@ -29,6 +28,15 @@
           update_time = #{updateTime}
         WHERE user_id = #{userId} AND deal_sku_id = #{dealSkuId} AND deal_id = #{dealId}
     </update>
+
+    <delete id="deleteDealFromCart" parameterType="java.util.Map">
+        DELETE FROM cart
+        WHERE user_id = #{userId}
+        AND id IN
+        <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 
     <select id="selectDealCartList" resultMap="baseResultMap" parameterType="com.common.entity.Cart">
         SELECT

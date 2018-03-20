@@ -5,15 +5,17 @@ import com.common.constant.GlobalConstant;
 import com.common.entity.Cart;
 import com.common.vo.QueryMessage;
 import com.service.api.CartService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CartBusiness {
+
+    private Logger log = LoggerFactory.getLogger(CartBusiness.class);
 
     @Autowired
     CartService cartService;
@@ -150,5 +152,12 @@ public class CartBusiness {
         return cartService.selectDealCartByIdList(idList);
     }
 
+    public void deleteDealCart(Integer userId, List<Long> idList) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("idList", idList);
+        Integer integer = cartService.deleteDealFromCart(params);
+        log.info("[CartBusiness]deleteDealCart-->删除数量为：{}",integer);
+    }
 
 }

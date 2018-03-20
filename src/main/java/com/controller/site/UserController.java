@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
@@ -88,8 +89,11 @@ public class UserController extends FrontendBaseController {
         if (!result) {
             return "redirect:/reg";
         }
+        // 查询用户userId
+        User reg_user = userBusiness.dologin(user);
         // 存入Cookie
         WebUser webuser = new WebUser();
+        webuser.setUserId(reg_user.getId().longValue());
         webuser.setUsername(user.getName());
         webuser.setLoginStatus(WebConstants.USER_LOGIN_STATUS_NORMAL);
         CookieUtil.setLoginUser(response, webuser);
@@ -104,8 +108,8 @@ public class UserController extends FrontendBaseController {
      * @return
      */
     @RequestMapping(value = "/logout")
-    public String logout(HttpServletResponse response) {
-        CookieUtil.removeCookie(response, "ui", "/");
+    public String logout(HttpServletResponse response, HttpServletRequest request) {
+        CookieUtil.removeCookie(response, request,"ui", "/");
         return "redirect:/index";
     }
 }

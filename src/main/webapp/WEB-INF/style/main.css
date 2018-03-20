@@ -22,7 +22,7 @@
 .search_text{width:350px;height:35px; line-height:35px\9;/*css hack  \9 代表所有的ie浏览器*/ padding:0 5px; background-color:#FFF;}
 .search_btn{width:70px; height:35px; font-size:14px; font-family:"Microsoft YaHei", "微软雅黑"; background-color:#FF8C00; color:#FFF;}
 /*购物车*/
-.shopCar{width:145px; height:35px;background-color:#FF8C00; margin-top:23px;font:14px/35px "Microsoft YaHei", "微软雅黑"; color:#FFF; margin-right:59px; display:inline;}
+.shopCar{width:145px; height:35px;/*background-color:#FF8C00;*/ margin-top:23px;font:14px/35px "Microsoft YaHei", "微软雅黑"; color:#FFF; margin-right:59px; display:inline;}
 .shopText{/*font-size:14px; font-family:"Microsoft YaHei", "微软雅黑"; line-height:35px;*/  height:100%; width:87px; border-right:#E27A00 solid 1px; background:url(../images/icon/shaoIcon.jpg) 10px center no-repeat; text-indent:40px;}
 .shopNum{width:27px; height:35px; border-left:#FF9C01 solid 1px; background:url(../images/icon/sj.jpg) 33px center no-repeat; text-align:right; padding-right:29px;}
 /*导航*/
@@ -204,7 +204,7 @@
 .des_content{padding:10px;}
 .des_content_tit{font:bold 16px/22px "Microsoft YaHei", "微软雅黑"; padding:13px 25px;}
 .des_content .dl{margin-bottom:8px;}
-.des_content .dt{width:75px; float:left; position:relative; color:#666; text-indent:17px; line-height:25px;}
+.des_content .dt{width:244px; float:left; position:relative; color:#666; text-indent:17px; line-height:25px;}
 .des_content .dd{padding-left:75px; *padding-left:0;}
 .des_money{font-size:18px; color:#F30; font-family:Verdana;}
 .des_money em{font-style:normal; font-size:12px;}

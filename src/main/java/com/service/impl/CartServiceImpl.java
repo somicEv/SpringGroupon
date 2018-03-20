@@ -54,4 +54,9 @@ public class CartServiceImpl implements CartService {
         params.put("idList",idList);
         return cartDao.selectDealCartByIdList(params);
     }
+
+    @Override
+    public Integer deleteDealFromCart(Map<String, Object> params) {
+        return cartDao.deleteDealFromCart(params);
+    }
 }

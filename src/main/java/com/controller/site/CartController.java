@@ -58,9 +58,11 @@ public class CartController extends FrontendBaseController {
                 Long userId = webUser.getUserId();
                 // 获取该用户的购物车列表
                 List<Cart> cartList = cartBusiness.selectCartByUserId(userId);
-                if (cartList != null) {
+                if (cartList != null && cartList.size() > 0) {
                     List<SettlementDTO> settlementDTOList = this.createSettlementDTOList(cartList);
                     model.addAttribute("carts", settlementDTOList);
+                    return "/cart/cart";
+                } else {
                     return "/cart/cart";
                 }
             }
@@ -188,6 +190,7 @@ public class CartController extends FrontendBaseController {
      */
     @RequestMapping(value = "/settlement")
     public String settlement(Integer totalPrice, String cartIds, Model model, HttpServletRequest request, HttpServletResponse response) {
+        log.info("[CartController]settlement-->cartIds--{},totalPrice--{}", cartIds, totalPrice);
         try {
             if (!StringUtils.isEmpty(cartIds) && totalPrice != 0 && totalPrice > 0) {
                 WebUser webUser = this.getCurrentUser(request);
@@ -202,6 +205,7 @@ public class CartController extends FrontendBaseController {
                 model.addAttribute("totalPrice", totalPrice);
                 List<Address> addressList = areaBusiness.selectUserAddress(webUser);
                 model.addAttribute("addresses", addressList);
+
             } else {
                 return generateError404Page(response);
             }
@@ -246,10 +250,12 @@ public class CartController extends FrontendBaseController {
             Address address = areaBusiness.selectUserAddressById(addressId);
             // 构建Order
             Long saveResult = orderBusiness.order(webUser.getUserId(), settlementDTOList, address, totalPrice, payType);
-            if(saveResult == null){
+            if (saveResult == null) {
                 this.generateError500Page(response);
             }
             model.addAttribute("result", 1);
+            // 清空购物车
+            cartBusiness.deleteDealCart(webUser.getUserId().intValue(), Arrays.asList(cartIds));
         } catch (Exception e) {
             log.error("支付失败", e);
             this.generateError500Page(response);

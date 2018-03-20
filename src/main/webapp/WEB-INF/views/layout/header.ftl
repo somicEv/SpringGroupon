@@ -1,31 +1,58 @@
 <div class="headerBar">
-    <#include "${pageContext.request.getContextPath}/layout/topbar.ftl">
-    <#include "${pageContext.request.getContextPath}/layout/logobar.ftl">
-    <#if categories??>
-        <div class="navBox">
-            <div class="comWidth clearfix">
-                <div class="shopClass fl">
-                    <h3>全部商品分类<i class="shopClass_icon"></i></h3>
-                    <div class="shopClass_show">
-                        <#list categories as category>
-                            <dl class="shopClass_item">
-                                <dt><a href="${ctx}/category/${category.url_name}" class="b">${category.name}</a></dt>
-                                <dd>
-                                    <#if category.children??>
-                                        <#list category.children as child>
-                                            <a href="${ctx}/category/${child.url_name}">${child.name}</a>
+<#include "${pageContext.request.getContextPath}/layout/topbar.ftl">
+<#include "${pageContext.request.getContextPath}/layout/logobar.ftl">
+<#if indexCategoryDealDTOs??>
+    <div class="navBox" style="height: 66px;">
+        <div class="comWidth clearfix">
+            <div class="shopClass fl">
+                <div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3 col-2">
+                                <div id="mega-menu">
+                                    <div class="btn-mega"><span></span>
+                                        所有分类
+                                    </div>
+                                    <ul class="menu">
+                                        <#list indexCategoryDealDTOs as dto>
+                                            <li>
+                                                <a href="${ctx}/category/${dto.category.url_name}" title="">
+                                                    <span class="menu-img">
+                                                        <img src="images/icons/menu/01.png" alt="">
+                                                    </span>
+                                                    <span class="menu-title">${dto.category.name}</span>
+                                                </a>
+                                            </li>
                                         </#list>
-                                    </#if>
-                                </dd>
-                            </dl>
-                        </#list>
-                    </div>
-                </div>
-                <ul class="nav fl">
-                    <li><a href="${ctx}" <#if controller?? && controller=="index">class="active"</#if>>团购</a></li>
-                    <li><a href="${ctx}" <#if controller?? && controller=="takeout">class="active"</#if>>二手特卖</a></li>
-                </ul>
+                                    </ul>
+                                </div>
+                            </div><!-- /.col-md-3 -->
+
+                        </div><!-- /.row -->
+                    </div><!-- /.container -->
+                </div><!-- /.header-bottom -->
             </div>
+            <ul class="nav fl">
+                <div class="nav-wrap menu">
+                    <div id="mainnav" class="mainnav" style="padding-left: 96px;margin-top: 32px;height: 22px;">
+                        <ul class="menu">
+                            <li class="column-1">
+                                <a href="index.html" title="">首页</a>
+                            </li><!-- /.column-1 -->
+                            <li class="column-1">
+                                <a href="shop.html" title="">商城</a>
+                            </li><!-- /.column-1 -->
+                            <li class="column-1">
+                                <a href="#" title="">便民服务</a>
+                            </li><!-- /.column-1 -->
+                            <li class="has-mega-menu">
+                                <a href="#" title="">电子报刊</a>
+                            </li><!-- /.has-mega-menu -->
+                        </ul><!-- /.menu -->
+                    </div><!-- /.mainnav -->
+                </div><!-- /.nav-wrap -->
+            </ul>
         </div>
-    </#if>
+    </div>
+</#if>
 </div>

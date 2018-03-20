@@ -1,5 +1,5 @@
-<#import "macro/paging.ftl" as paging_macro>
-<#import "macro/common.ftl" as common>
+<#import "${pageContext.request.contentPath}/macro/paging.ftl" as paging_macro>
+<#import "${pageContext.request.contentPath}/macro/common.ftl" as common>
 <html xmlns="http://www.w3.org/1999/html">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -58,11 +58,11 @@
         </script>
     </head>
     <body>
-    <#include "layout/header.ftl">
+    <#include "${pageContext.request.contentPath}/layout/header.ftl">
     <div class="hr_15"></div>
         <div class="comWidth clearfix products">
             <div class="leftArea">
-                <#include "user/left_menu.ftl">
+                <#include "${pageContext.request.contentPath}/user/left_menu.ftl">
             </div>
             <div class="rightArea">
                 <h3 class="shopping_tit">基本信息</h3>
@@ -109,7 +109,7 @@
                 </table>
             </div>
         </div>
-        <#include "layout/footer.ftl">
+        <#include "${pageContext.request.contentPath}/layout/footer.ftl">
     </body>
 </html>
 

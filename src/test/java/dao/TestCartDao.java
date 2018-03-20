@@ -58,4 +58,16 @@ public class TestCartDao {
         List<Cart> resultList =cartDao.selectDealCartList(cart);
         log.info("查询结果为："+resultList.toString());
     }
+
+    @Test
+    public void testDeleteDealCart() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", 21);
+        List<Integer> idList = new ArrayList<>();
+        idList.add(7);
+        idList.add(8);
+        params.put("idList", idList);
+        Integer integer = cartDao.deleteDealFromCart(params);
+        System.out.println(integer);
+    }
 }
