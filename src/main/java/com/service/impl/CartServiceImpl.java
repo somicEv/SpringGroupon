@@ -59,4 +59,9 @@ public class CartServiceImpl implements CartService {
     public Integer deleteDealFromCart(Map<String, Object> params) {
         return cartDao.deleteDealFromCart(params);
     }
+
+    @Override
+    public Integer deleteDealById(Map<String, Object> params) {
+        return cartDao.deleteCartById(params);
+    }
 }

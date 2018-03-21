@@ -154,9 +154,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="remind_time">
-                <@common.formatDateTime deal.startTime/>开抢
-                </div>
                 <div class="shop_buy">
                 <#if deal.start>
                     <a href="${ctx}/settlement/${deal.skuId}" class="buy_btn"></a>

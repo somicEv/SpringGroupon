@@ -137,6 +137,14 @@ public class CartController extends FrontendBaseController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/cart/delete/{cartId}")
+    public QueryMessage deleteCart(@PathVariable Long cartId) {
+        log.info("[CartController]deleteCart request->cartId:{}",cartId);
+        QueryMessage resultMessage = cartBusiness.deleteCartById(cartId);
+        return resultMessage;
+    }
+
     /**
      * 从详情页面直接跳转到结算页面 -- 创建一个新的购物车对象列表
      *

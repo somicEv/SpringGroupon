@@ -20,4 +20,7 @@ public interface CartService {
     List<Cart> selectDealCartByIdList(List<Long> idList);
 
     Integer deleteDealFromCart(Map<String, Object> params);
+
+    Integer deleteDealById(Map<String, Object> params);
+
 }

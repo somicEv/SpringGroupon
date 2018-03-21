@@ -76,4 +76,9 @@
             </foreach>
         </if>
     </select>
+
+    <delete id="deleteCartById" parameterType="java.util.Map">
+        DELETE FROM cart
+        WHERE id = #{cartId}
+    </delete>
 </mapper>

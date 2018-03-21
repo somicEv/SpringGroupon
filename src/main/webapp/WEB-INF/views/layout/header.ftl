@@ -37,10 +37,7 @@
                     <div id="mainnav" class="mainnav" style="padding-left: 96px;margin-top: 32px;height: 22px;">
                         <ul class="menu">
                             <li class="column-1">
-                                <a href="index.html" title="">首页</a>
-                            </li><!-- /.column-1 -->
-                            <li class="column-1">
-                                <a href="shop.html" title="">商城</a>
+                                <a href="${pageContext.request.contentPath}/index" title="">首页</a>
                             </li><!-- /.column-1 -->
                             <li class="column-1">
                                 <a href="#" title="">便民服务</a>

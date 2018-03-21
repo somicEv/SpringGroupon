@@ -100,7 +100,11 @@
                 document.getElementById(id_subtotal_price).innerText = '￥' + subTotalCount / 100;
             }
         }
+        
+        function deleteDealCart(cartId) {
+            Submit.AjaxSubmit(ctx + '/cart/delete/' + cartId);
 
+        }
     </script>
 </head>
 
@@ -110,7 +114,7 @@
     <div class="logoBar">
         <div class="comWidth">
             <div class="logo fl">
-                <a href="${ctx}"><img src="${ctx}/images/logo.jpg" alt="慕课网"></a>
+                <a href="${ctx}/index"><img src="${ctx}/images/logos/logo.png" alt="慕课网"></a>
             </div>
             <div class="stepBox fr">
                 <div class="step"></div>
@@ -194,7 +198,7 @@
                                 未开始
                             </#if>
                         </div>
-                        <div class="cart_item t_operate"><a href="javascript:void(0)" class="btn_link">删除</a></div>
+                        <div class="cart_item t_operate"><a href="#" onclick="deleteDealCart(${cart.cart.id})" class="btn_link">删除</a></div>
                     </div>
                 </#list>
                 <div class="cart_message">

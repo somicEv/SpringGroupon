@@ -70,4 +70,12 @@ public class TestCartDao {
         Integer integer = cartDao.deleteDealFromCart(params);
         System.out.println(integer);
     }
+
+    @Test
+    public void testDeleteCartById() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("cartId", 14);
+        Integer cartById = cartDao.deleteCartById(params);
+        System.out.println(cartById);
+    }
 }

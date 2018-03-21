@@ -21,5 +21,5 @@ public interface CartDao {
 
     List<Cart> selectDealCartByIdList(Map<String,Object> idList);
 
-
+    Integer deleteCartById(Map<String, Object> params);
 }

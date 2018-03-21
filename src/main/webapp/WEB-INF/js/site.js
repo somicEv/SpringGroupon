@@ -17,6 +17,7 @@ var Submit = {
                 } else {
                     alert(result.resultMessage);
                 }
+                location.reload();
             },
             error: function () {
                 alert("操作失败--error");

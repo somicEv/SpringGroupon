@@ -66,9 +66,9 @@
                                 <div class="divider65"></div>
                                 <div class="content-item">
                                     <div class="price">
-                                        <span class="sale">${recommendList.deal.dealPrice}</span>
+                                        <span class="sale">￥${recommendList.deal.dealPrice}</span>
                                         <span class="btn-shop">
-												<a href="#" title="">SHOP NOW <img src="images/icons/right-2.png"
+												<a href="${pageContext.request.contextPath}/item/${recommendList.deal.skuId}" title="">SHOP NOW <img src="images/icons/right-2.png"
                                                                                    alt=""></a>
                                     </span>
                                         <div class="clearfix"></div>
@@ -97,7 +97,6 @@
                 <div class="product-tab">
                     <ul class="tab-list">
                         <li class="active">New Arrivals</li>
-                        <a href="${ctx}/category/jiadian" class="more">更多&gt;&gt;</a>
                     </ul>
                 </div><!-- /.product-tab -->
             </div><!-- /.col-md-12 -->

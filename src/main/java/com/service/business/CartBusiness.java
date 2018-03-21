@@ -64,7 +64,6 @@ public class CartBusiness {
      * @param cart 购物车对象
      * @return TODO 将其余checkExist()方法修改
      */
-
     private boolean checkExist(Cart cart) {
         Cart dealCart = cartService.selectDealCart(cart);
         if (dealCart != null) {
@@ -109,6 +108,22 @@ public class CartBusiness {
         Integer updateResult = cartService.updateDealCart(cart);
         if (updateResult != 1) {
             // 更新出错
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
+        }
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
+    }
+
+    /**
+     * 删除购物车
+     * @param cartId
+     * @return
+     */
+    public QueryMessage deleteCartById(Long cartId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("cartId", cartId);
+        Integer result = cartService.deleteDealById(params);
+        if (result != 1) {
+            // 删除出错
             return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
         }
         return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
