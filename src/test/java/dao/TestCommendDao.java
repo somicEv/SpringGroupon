@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,5 +27,18 @@ public class TestCommendDao {
         params.put("skuId", 2);
         List<Commend> commendList = commendDao.getCommendList(params);
         System.out.println(commendList);
+    }
+
+    @Test
+    public void testAddCommend() {
+        Commend commend = new Commend();
+        commend.setUserId(21);
+        commend.setUserName("测试");
+        commend.setSkuId(2);
+        commend.setCommend("测试评论");
+        commend.setCreateTime(new Date());
+        commend.setUpdateTime(new Date());
+        Integer result = commendDao.addNewCommend(commend);
+        System.out.println("添加的结果为：" + result);
     }
 }

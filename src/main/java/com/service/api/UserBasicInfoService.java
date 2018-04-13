@@ -5,7 +5,7 @@ import com.common.vo.QueryMessage;
 
 public interface UserBasicInfoService {
 
-    QueryMessage<UserBasicInfo> selectUserBasicInfo(String username);
+    QueryMessage<UserBasicInfo> selectUserBasicInfo(Long userId);
 
     QueryMessage<UserBasicInfo> saveUserBasicInfo(UserBasicInfo userBasicInfo);
 

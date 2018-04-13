@@ -124,4 +124,15 @@
             </if>
         </where>
     </select>
+
+    <delete id="deleteOrder" parameterType="java.lang.Long">
+        DELETE FROM order_basic
+        WHERE id = #{orderId}
+    </delete>
+
+    <update id="updateOrder" parameterType="com.common.entity.Order">
+        UPDATE order_basic
+        SET order_status = #{orderStatus}
+        WHERE id = #{id}
+    </update>
 </mapper>

@@ -1,4 +1,4 @@
-<#import "macro/common.ftl" as common>
+<#import "${pageContext.request.contentPath}/macro/common.ftl" as common>
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,7 +16,7 @@
 
     <body>
         <div class="headerBar">
-        <#include "layout/topbar.ftl">
+        <#include "${pageContext.request.contentPath}/layout/topbar.ftl">
             <div class="logoBar">
                 <div class="comWidth">
                     <div class="logo fl">
@@ -51,6 +51,6 @@
             </div>
             <div class="hr_45"></div>
         </div>
-        <#include "layout/footer.ftl">
+        <#include "${pageContext.request.contentPath}/layout/footer.ftl">
     </body>
 </html>

@@ -5,35 +5,35 @@
 
     <resultMap id="BaseResultMap" type="com.common.entity.deal.Deal">
         <id column="id" property="id"/>
-        <result column="area_id" property="areaId" />
+        <result column="area_id" property="areaId"/>
         <result column="area_name" property="areaName"/>
-        <result column="sku_id" property="skuId" />
-        <result column="deal_class" property="dealClass" />
-        <result column="merchant_id" property="merchantId" />
-        <result column="merchant_sku" property="merchantSku" />
-        <result column="deal_title" property="dealTitle" />
-        <result column="deal_price" property="dealPrice" />
-        <result column="merchant_price" property="merchantPrice" />
-        <result column="market_price" property="marketPrice" />
-        <result column="settlementrice_max" property="settlementPriceMax" />
-        <result column="settlement_price" property="settlementPrice" />
+        <result column="sku_id" property="skuId"/>
+        <result column="deal_class" property="dealClass"/>
+        <result column="merchant_id" property="merchantId"/>
+        <result column="merchant_sku" property="merchantSku"/>
+        <result column="deal_title" property="dealTitle"/>
+        <result column="deal_price" property="dealPrice"/>
+        <result column="merchant_price" property="merchantPrice"/>
+        <result column="market_price" property="marketPrice"/>
+        <result column="settlementrice_max" property="settlementPriceMax"/>
+        <result column="settlement_price" property="settlementPrice"/>
         <result column="discount" property="discount"/>
-        <result column="bonus_points" property="bonusPoints" />
-        <result column="deal_type" property="dealType" />
-        <result column="image_id" property="imageId" />
-        <result column="deal_level" property="dealLevel" />
-        <result column="max_purchase_count" property="maxPurchaseCount" />
-        <result column="publish_status" property="publishStatus" />
-        <result column="inventory_amount" property="inventoryAmount" />
-        <result column="vendibility_amount" property="vendibilityAmount" />
-        <result column="oos_status" property="oosStatus" />
-        <result column="start_time" property="startTime" />
-        <result column="end_time" property="endTime" />
-        <result column="publish_time" property="publishTime" />
-        <result column="merchant_code" property="merchantCode" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="category_id" property="categoryId" />
+        <result column="bonus_points" property="bonusPoints"/>
+        <result column="deal_type" property="dealType"/>
+        <result column="image_id" property="imageId"/>
+        <result column="deal_level" property="dealLevel"/>
+        <result column="max_purchase_count" property="maxPurchaseCount"/>
+        <result column="publish_status" property="publishStatus"/>
+        <result column="inventory_amount" property="inventoryAmount"/>
+        <result column="vendibility_amount" property="vendibilityAmount"/>
+        <result column="oos_status" property="oosStatus"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="merchant_code" property="merchantCode"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="category_id" property="categoryId"/>
         <result column="root_id" property="rootId"/>
     </resultMap>
 
@@ -61,7 +61,7 @@
     <!-- 分页查询某个类别下的商品 -->
     <select id="selectDealsOfCategories" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from deal
         where publish_status = #{publishStatus,jdbcType=INTEGER}
         and end_time &gt;= #{nowTime,jdbcType=TIMESTAMP}
@@ -78,7 +78,7 @@
 
     <select id="selectDealList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from deal
         <where>
             <if test="idList != null">
@@ -106,9 +106,10 @@
         order by deal_level desc
 
     </select>
-    
+
     <select id="getDealBySkuId" parameterType="java.util.Map" resultMap="BaseResultMap">
-        SELECT <include refid="Base_Column_List" />
+        SELECT
+        <include refid="Base_Column_List"/>
         FROM deal
         WHERE
         sku_id = #{skuId,jdbcType=BIGINT}
@@ -116,7 +117,7 @@
         AND end_time &gt;= #{nowTime,jdbcType=TIMESTAMP}
     </select>
 
-        <select id="getNewArrivalsGoods" parameterType="java.util.Map" resultMap="BaseResultMap" >
+    <select id="getNewArrivalsGoods" parameterType="java.util.Map" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -125,6 +126,7 @@
         publish_status = #{publishStatus,jdbcType=INTEGER}
         AND end_time &gt;= #{endTime,jdbcType=TIMESTAMP}
         ORDER BY publish_time
+        limit 8
     </select>
 
 </mapper>

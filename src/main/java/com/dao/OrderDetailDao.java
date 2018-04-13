@@ -12,4 +12,6 @@ public interface OrderDetailDao {
     Integer saveOrderDetail(List<OrderDetail> orderDetails);
 
     List<OrderDetail> selectOrderDetail(Long orderId);
+
+    Integer deleteOrderDetail(Long orderId);
 }

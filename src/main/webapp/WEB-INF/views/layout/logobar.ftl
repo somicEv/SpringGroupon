@@ -3,18 +3,7 @@
         <div class="logo fl">
             <a href="${ctx}/index"><img src="${ctx}/images/logos/logo.png" style="width: 124px;height: 40px;"></a>
         </div>
-        <div class="search_box fl">
-            <form action="/search" id="search_form" method="get">
-                <div class="box-search" style="height: 73px;">
-                    <input type="text" name="search" placeholder="Search what you looking for ?">
-                    <span class="btn-search">
-                        <button type="submit" class="waves-effect" style="top: -48px;left: 250px;">
-                            <img src="${ctx}/images/icons/search.png" alt="">
-                        </button>
-                    </span>
-                </div><!-- /.box-search -->
-            </form>
-        </div>
+
         <!-- /.col-md-3 -->
         <div class="shopCar fr">
             <span class="fl"><#--<a href="${ctx}/cart">购物车</a>-->

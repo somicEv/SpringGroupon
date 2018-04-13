@@ -78,9 +78,6 @@
                                                     </a>
                                                 </div><!-- /.box-image -->
                                                 <div class="box-content">
-                                                    <div class="cat-name">
-                                                        <a href="#" title="">Cameras</a>
-                                                    </div>
                                                     <div class="product-name">
                                                         <a href="${ctx}/item/${deal.skuId}">${deal.dealTitle}</a>
                                                     </div>

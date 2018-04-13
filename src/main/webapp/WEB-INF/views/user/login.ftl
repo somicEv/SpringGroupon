@@ -19,7 +19,7 @@
             <div class="logoBar login_logo">
                 <div class="comWidth">
                     <div class="logo fl">
-                        <a href="#"><img src="${ctx}/images/logo.jpg" alt="慕课网"></a>
+                        <a href="#"><img src="${ctx}/images/logos/logo.png" alt="慕课网"></a>
                     </div>
                     <h3 class="welcome_title">欢迎登陆</h3>
                 </div>
@@ -30,7 +30,7 @@
             <div class="login_cont">
                 <ul class="login">
                     <form action="/dologin" method="post">
-                        <li class="l_tit">邮箱/用户名/手机号</li>
+                        <li class="l_tit">用户名</li>
                         <li class="mb_10"><input type="text" name="name" class="login_input user_icon"></li>
                         <li class="l_tit">密码</li>
                         <li class="mb_10"><input type="password" name="password" class="login_input user_icon"></li>
@@ -57,6 +57,6 @@
             </div>
             <a class="reg_link" href="${ctx}/reg"></a>
         </div>
-        <#include "layout/footer.ftl">
+        <#include "${ctx}/layout/footer.ftl">
     </body>
 </html>

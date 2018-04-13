@@ -32,5 +32,6 @@ public class GlobalConstant {
     // 查询不到结果
     public static final String QUERY_RESULT_NOTFOUND = "404";
 
+    public static final Integer PAGE_SIZE = 3;
 
 }

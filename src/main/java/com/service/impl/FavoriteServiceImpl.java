@@ -28,4 +28,9 @@ public class FavoriteServiceImpl implements FavoriteService{
     public List<Favorite> selectFavoriteList(Favorite favorite) {
         return favoriteDao.selectFavoriteList(favorite);
     }
+
+    @Override
+    public Integer deleteFavorite(Favorite favorite) {
+        return favoriteDao.deleteFavorite(favorite);
+    }
 }

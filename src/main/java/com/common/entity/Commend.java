@@ -3,6 +3,8 @@ package com.common.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Date;
+
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Commend {
@@ -12,7 +14,8 @@ public class Commend {
     private String userName;
     private Integer skuId;
     private String commend;
-    private String createTime;
-    private String updateTime;
+    private Integer rate;
+    private Date createTime;
+    private Date updateTime;
 
 }

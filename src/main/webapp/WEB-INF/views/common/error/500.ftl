@@ -63,9 +63,7 @@
 			  		
 			  			<h1 class="kern-this">500 Error.</h1>
 			  			<p>
-						Oooooops! Looks like nothing was found at this location.
-						Maybe try on of the links below, click on the top menu
-						or try a search?
+						出现错误请重试
 			  			</p>
 
 			  			   			

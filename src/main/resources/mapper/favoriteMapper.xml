@@ -50,5 +50,9 @@
         WHERE
           user_id = #{userId} AND deal_id = #{dealId} AND deal_sku_id = #{dealSkuId}
     </select>
-    
+
+    <delete id="deleteFavorite" parameterType="com.common.entity.Favorite">
+        DELETE FROM favorite
+        WHERE user_id = #{userId} AND deal_sku_id = #{dealSkuId}
+    </delete>
 </mapper>

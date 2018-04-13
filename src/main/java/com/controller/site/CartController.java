@@ -2,6 +2,7 @@ package com.controller.site;
 
 import com.common.constant.CartConstant;
 import com.common.constant.GlobalConstant;
+import com.common.constant.OrderConstant;
 import com.common.entity.Cart;
 import com.common.entity.area.Address;
 import com.common.entity.deal.Deal;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -106,8 +108,9 @@ public class CartController extends FrontendBaseController {
      * @return 返回相应的状态码
      */
     @ResponseBody
-    @RequestMapping(value = "/cart/default/{skuId}")
-    public QueryMessage addCart(@PathVariable Long skuId, Integer params, HttpServletRequest request) {
+    @RequestMapping(value = "/cart/default/{skuId}/{count}")
+    public QueryMessage addCart(@PathVariable Long skuId, @PathVariable Integer count,
+                                HttpServletRequest request) {
         // 验证skuId合法性
         boolean validSkuId = DealUtil.isValidSkuId(skuId);
         if (!validSkuId) {
@@ -118,20 +121,20 @@ public class CartController extends FrontendBaseController {
         // 查询当前用户
         WebUser webUser = this.getCurrentUser(request);
         // 根据ID查询购物车对象
-        QueryMessage queryMessage = this.updateExistDealCart(deal, webUser, skuId, params);
+        QueryMessage queryMessage = this.updateExistDealCart(deal, webUser, skuId, count);
         if ("200".equals(queryMessage.getQueryCode())) {
             return queryMessage;
         } else if ("500".equals(queryMessage.getQueryCode())) {
             return queryMessage;
         } else {
             Cart dealCart = new Cart(webUser.getUserId(), deal.getId(), skuId);
-            if (params == null || params < 0) {
+            if (count == null || count < 0) {
                 // 如果没有输入数量 设置默认值 避免出错
                 dealCart.setDealCount(1);
                 dealCart.setUpdateTime(new Date());
                 return cartBusiness.saveDealCart(dealCart);
             }
-            dealCart.setDealCount(params);
+            dealCart.setDealCount(count);
             dealCart.setUpdateTime(new Date());
             return cartBusiness.saveDealCart(dealCart);
         }
@@ -140,7 +143,7 @@ public class CartController extends FrontendBaseController {
     @ResponseBody
     @RequestMapping(value = "/cart/delete/{cartId}")
     public QueryMessage deleteCart(@PathVariable Long cartId) {
-        log.info("[CartController]deleteCart request->cartId:{}",cartId);
+        log.info("[CartController]deleteCart request->cartId:{}", cartId);
         QueryMessage resultMessage = cartBusiness.deleteCartById(cartId);
         return resultMessage;
     }
@@ -240,6 +243,7 @@ public class CartController extends FrontendBaseController {
     @RequestMapping(value = "/pay")
     public String pay(HttpServletRequest request, HttpServletResponse response, Long[] cartIds, Long skuId,
                       Long addressId, Integer payType, Integer totalPrice, Model model) {
+        Long orderId = null;
         try {
             WebUser webUser = this.getCurrentUser(request);
             List<SettlementDTO> settlementDTOList = new ArrayList<>();
@@ -257,19 +261,42 @@ public class CartController extends FrontendBaseController {
             }
             Address address = areaBusiness.selectUserAddressById(addressId);
             // 构建Order
-            Long saveResult = orderBusiness.order(webUser.getUserId(), settlementDTOList, address, totalPrice, payType);
-            if (saveResult == null) {
+            orderId = orderBusiness.order(webUser.getUserId(), settlementDTOList, address, totalPrice,
+                    payType);
+            if (orderId == null) {
                 this.generateError500Page(response);
             }
             model.addAttribute("result", 1);
-            // 清空购物车
-            cartBusiness.deleteDealCart(webUser.getUserId().intValue(), Arrays.asList(cartIds));
+            List<Cart> cartList = cartBusiness.selectCartByUserId(webUser.getUserId());
+            if (cartList.size() > 0) {
+                // 清空购物车
+                cartBusiness.deleteDealCart(webUser.getUserId().intValue(), Arrays.asList(cartIds));
+            }
+            log.info("[CartController]pay--orderId->{}", orderId);
+            // 支付完成更新订单状态
+            QueryMessage message = orderBusiness.update(orderId, OrderConstant.STATUS_ALREADY_PAID);
+            if ("500".equals(message.getQueryCode())) {
+                this.generateError500Page(response);
+            }
         } catch (Exception e) {
             log.error("支付失败", e);
             this.generateError500Page(response);
         }
         return "/cart/settlement_ok";
+    }
 
+    /**
+     * 更新订单状态
+     */
+    @RequestMapping(value = "/order/update/{orderId}")
+    public String updateOrderStatus(@PathVariable Long orderId,HttpServletResponse response,Model model) {
+        QueryMessage message = orderBusiness.update(orderId, OrderConstant.STATUS_ALREADY_PAID);
+        if ("500".equals(message.getQueryCode())) {
+            this.generateError500Page(response);
+        }
+        // 证明付款成功
+        model.addAttribute("result", 1);
+        return "/cart/settlement_ok";
     }
 
     /**

@@ -345,7 +345,7 @@
 .cart_cont .t_operate,
 .cart_cont .t_subtotal{line-height:37px;}
 .cart_shopInfo img{width:90px; height:100px; display:block; float:left;}
-.cart_shopInfo_cont{padding-left:90px; font-size:12px;}
+.cart_shopInfo_cont{padding-left:95px; font-size:12px;}
 .cart_link{line-height:37px; margin-bottom:30px;}
 .cart_link a:hover{text-decoration:underline;}
 .cart_info{color:#000;}
@@ -420,7 +420,7 @@
 .remind_btn{display:inline-block; width:184px; height:48px; background:url(../images/icon/remind.png) left top no-repeat; background-size:contain;}
 .remind_time{color:#000000; text-indent:17px; font-size: 15px; margin-bottom: 15px; margin-top: 15px;}
 .cart_btn{display:inline-block; width:60px; height:48px; background:url(../images/icon/cart.png) left top no-repeat; background-size:contain;}
-.collection_btn{display:inline-block; width:20px; height:20px; background:url(../images/icon/collection.jpg) left top no-repeat; background-size:contain;}
+.collection_btn{display:inline-block; width:60px; height:48px; background:url(../images/icon/collection.png) left top no-repeat; background-size:contain;}
 
 
 .settlement_btnBox{text-align:right;}

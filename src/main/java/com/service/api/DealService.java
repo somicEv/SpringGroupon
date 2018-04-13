@@ -1,6 +1,7 @@
 package com.service.api;
 
 import com.common.entity.deal.Deal;
+import com.common.entity.deal.DealDetail;
 
 import java.util.Date;
 import java.util.List;
@@ -21,4 +22,6 @@ public interface DealService {
 	Deal getDealBySkuId(Map<String,Object> params);
 
     List<Deal> getNewArrivalsGoods(Map<String, Object> params);
+
+    DealDetail getDealDetailBySkuId(DealDetail dealDetail);
 }

@@ -3,6 +3,7 @@ package com.controller.site;
 import com.common.constant.DealConstant;
 import com.common.entity.deal.Deal;
 import com.common.entity.deal.DealCategory;
+import com.common.entity.deal.DealDetail;
 import com.common.vo.CommendDTO;
 import com.common.vo.RecommendDTO;
 import com.controller.common.FrontendBaseController;
@@ -47,13 +48,15 @@ public class DealController extends FrontendBaseController {
     }
 
     @RequestMapping(value = "/category/{url_name}/{page}", method = RequestMethod.GET)
-    public String listDealsOfDealCateGory(@PathVariable String url_name, @PathVariable Integer page, Model model) {
+    public String listDealsOfDealCateGory(@PathVariable String url_name,
+                                          @PathVariable Integer page, Model model) {
         try {
             // 向页面添加分类信息
             DealCategory dealCategory = dealCategoryBusiness.getByUrlName(url_name);
             model.addAttribute("dealCategory", dealCategory);
             // 显示分页商品
-            PagingResult<Deal> pagingDealList = dealBusiness.getDealsOfDealCates(dealCategory, 367, DealConstant.DEAL_PUBLISH_STATUS_PUBLISH, page, 3);
+            PagingResult<Deal> pagingDealList = dealBusiness.getDealsOfDealCates(dealCategory,
+                    367, DealConstant.DEAL_PUBLISH_STATUS_PUBLISH, page, 6);
             model.addAttribute("pagingDealList", pagingDealList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,6 +78,8 @@ public class DealController extends FrontendBaseController {
             return generateError404Page(response);
         }
         model.addAttribute("deal", deal);
+        DealDetail dealDetail = dealBusiness.getDealDetailBySkuId(skuId);
+        model.addAttribute("detail", dealDetail);
         // 查询商品的分类名称
         DealCategory dealCategory = new DealCategory();
         dealCategory.setId(deal.getCategoryId().longValue());

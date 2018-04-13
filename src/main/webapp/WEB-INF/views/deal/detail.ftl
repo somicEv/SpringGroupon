@@ -72,9 +72,9 @@
         }
 
         function addToCart(skuId) {
-            var count = document.getElementById('count').value;
         <#if username??>
-            Submit.AjaxSubmit('${ctx}/cart/default/' + skuId, count);
+            var count = document.getElementById('count').value;
+            Submit.AjaxSubmit('${ctx}/cart/default/' + skuId + '/' + count);
         <#else >
             window.location = '${ctx}/login';
         </#if>
@@ -113,7 +113,7 @@
             <div class="description_imgs">
                 <div class="big">
                     <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(deal)}" alt=""
-                         style="width: 300px;height: 350px">
+                         style="width: 300px;height: 335px">
                 </div>
 
             </div>
@@ -123,21 +123,11 @@
                 <h3 class="des_content_tit">${deal.dealTitle}</h3>
                 <div class="dl clearfix">
                     <div class="dt">
-                        慕课价
+                        商城价
                         <span class="des_money">
                         <@common.formatPrice deal.dealPrice/>
                         </span>
                     </div>
-                </div>
-                <div class="dl clearfix">
-                    <div class="dt" style="width: 350px;">
-                        优惠
-                        <span class="hg">
-                            <i class="hg_icon">满换购</i>
-                            <em>购ipad加价优惠够配件或USB充电插座</em>
-                        </span>
-                    </div>
-                    <div class="dd clearfix"></div>
                 </div>
                 <div class="des_position">
                     <div class="dl">
@@ -156,15 +146,10 @@
                 </div>
                 <div class="shop_buy">
                 <#if deal.start>
-                    <a href="${ctx}/settlement/${deal.skuId}" class="buy_btn"></a>
-                <#else>
-                <#--<a href="${ctx}/settlement/${deal.skuId}" class="remind_btn"></a>-->
-                    <a href="#" onclick="addToStartRemind(${deal.skuId})" class="remind_btn"></a>
+                    <a href="#" class="buy_btn" onclick="addToCart(${deal.skuId})"></a>
                 </#if>
                     <span class="line"></span>
-                    <a href="#" onclick="addToCart(${deal.skuId})" class="cart_btn"></a>
-                    <span class="line"></span>
-                    <a href="#" onclick="addToFavorite(${deal.skuId})" class="collection_btn"></a>
+                    <a href="#" onclick="addToFavorite(${deal.skuId})" class="collection_btn" style="margin-top:10px;"></a>添加收藏
                 </div>
                 <div class="notes">
                     注意：此商品可提供普通发票，不提供增值税发票。
@@ -182,15 +167,15 @@
             <h3 class="tit">推荐商品</h3>
         <#if indexRecommendInfo??>
             <#list indexRecommendInfo as recommendList>
-            <div class="item">
-                <div class="item_cont">
-                    <div class="img_item">
-                        <a href="#"><img src="${ctx}/images/shopImg.jpg" alt=""></a>
+                <div class="item">
+                    <div class="item_cont">
+                        <div class="img_item">
+                            <a href="#"><img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(recommendList.deal)}" alt=""></a>
+                        </div>
+                        <p><a href="#">${recommendList.recommend.recommendName}</a></p>
+                        <p class="money"><@common.formatPrice recommendList.deal.dealPrice/></p>
                     </div>
-                    <p><a href="#">${recommendList.recommend.recommendName}</a></p>
-                    <p class="money">￥${recommendList.deal.dealPrice}</p>
                 </div>
-            </div>
             </#list>
         </#if>
         </div>
@@ -207,7 +192,7 @@
                 <p>商品名称：${deal.dealTitle!}</p>
                 <p>商品编号：${deal.skuId}</p>
                 <p>商品产地：${deal.areaName}</p>
-                <p>商品简介：${deal.dealDetail.dealDetail!}</p>
+                <p>商品简介：${detail.dealDetail}</p>
             </div>
         </div>
         <div class="hr_15"></div>
@@ -225,12 +210,11 @@
                         <div class="review_userHead fl">
                             <div class="review_user">
                                 <img src="${ctx}/images/userhead.jpg" alt="">
-                                <p>${commendList.userId}</p>
                                 <p>${commendList.userName}</p>
                             </div>
                         </div>
                         <div class="review_cont" style="position: relative">
-                            <p>时间：${commendList.createTime}</p>
+                            <p>时间：${commendList.createTime?string('yyyy-MM-dd hh:mm:ss')}</p>
                             <p>${commendList.commend}</p>
                         </div>
                     </div>

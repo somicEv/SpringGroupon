@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.NewsPaperDao">
+
+    <sql id="table">
+        newspaper
+    </sql>
+
+    <sql id="column">
+        id,news_title,image_id,content_url,news_desc,create_time,update_time
+    </sql>
+
+    <resultMap id="baseResultColumn" type="com.common.vo.NewspaperDTO">
+        <id column="id" property="id"/>
+        <result column="news_title" property="newsTitle"/>
+        <result column="image_id" property="imageId"/>
+        <result column="content_url" property="contentUrl"/>
+        <result column="news_desc" property="newsDesc"/>
+    </resultMap>
+
+    <select id="getList" resultMap="baseResultColumn">
+        SELECT
+        <include refid="column"/>
+        FROM
+        <include refid="table"/>
+        WHERE
+        1 = 1
+        ORDER BY create_time DESC
+    </select>
+</mapper>

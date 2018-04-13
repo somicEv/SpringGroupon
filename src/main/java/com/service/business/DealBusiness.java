@@ -4,6 +4,7 @@ import com.common.constant.DealConstant;
 import com.common.entity.NewArrival;
 import com.common.entity.deal.Deal;
 import com.common.entity.deal.DealCategory;
+import com.common.entity.deal.DealDetail;
 import com.common.vo.IndexCategoryDealDTO;
 import com.dao.DealDao;
 import com.service.api.DealService;
@@ -110,11 +111,17 @@ public class DealBusiness {
      * @param skuId
      * @return
      */
-    public Deal getDealBySkuId(Long skuId){
-        Map<String,Object> params = new HashMap<>();
-        params.put("skuId",skuId);
-        params.put("nowTime",new Date());
+    public Deal getDealBySkuId(Long skuId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("skuId", skuId);
+        params.put("nowTime", new Date());
         return dealService.getDealBySkuId(params);
+    }
+
+    public DealDetail getDealDetailBySkuId(Long skuId) {
+        DealDetail dealDetail = new DealDetail();
+        dealDetail.setSkuId(skuId);
+        return dealService.getDealDetailBySkuId(dealDetail);
     }
 
     /**
@@ -123,7 +130,7 @@ public class DealBusiness {
      * @param value 查询参数
      * @return
      */
-    public List<Deal> selectDealList(List<Long> value){
+    public List<Deal> selectDealList(List<Long> value) {
         Map<String, Object> idList = new HashMap<>();
         idList.put("idList", value);
         return dealService.selectDealList(idList);
@@ -136,7 +143,7 @@ public class DealBusiness {
         List<Deal> arrivalsGoods = dealService.getNewArrivalsGoods(params);
         List<NewArrival> result = new ArrayList<>();
         int i = 0;
-        while (i<arrivalsGoods.size()){
+        while (i < arrivalsGoods.size()) {
             Deal[] deal = new Deal[]{};
             Deal[] list = arrivalsGoods.subList(i, i + 2).toArray(deal);
             NewArrival newArrival = new NewArrival();
@@ -144,7 +151,7 @@ public class DealBusiness {
             result.add(newArrival);
             i = i + 2;
         }
-        log.info("[DealBusiness]getIndexNewArrival-->reuslt{}",result);
+        log.info("[DealBusiness]getIndexNewArrival-->reuslt{}", result);
         return result;
     }
 }

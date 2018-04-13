@@ -106,6 +106,17 @@ public class HomeController extends FrontendBaseController {
         return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/favorite/delete/{skuId}")
+    public QueryMessage deleteFavorite(@PathVariable Long skuId,HttpServletRequest request) {
+        WebUser user = this.getCurrentUser(request);
+        Favorite favorite = new Favorite();
+        favorite.setUserId(user.getUserId());
+        favorite.setDealSkuId(skuId);
+        QueryMessage queryMessage = favoriteBusiness.deleteFavorite(user.getUserId(), skuId);
+        return queryMessage;
+    }
+
     /**
      * 添加开团提醒
      *
@@ -165,15 +176,18 @@ public class HomeController extends FrontendBaseController {
     }
 
     /**
+     * 添加用户结办信息
      *
      * @param params
      * @return
      */
     @RequestMapping(value = "/info/add")
     @ResponseBody
-    public QueryMessage<UserBasicInfo> addUserInfo(@RequestBody Params[] params) {
+    public QueryMessage<UserBasicInfo> addUserInfo(@RequestBody Params[] params, HttpServletRequest request) {
+        WebUser user = this.getCurrentUser(request);
         Map<String, String> turnToMap = Params.turnToMap(params);
         UserBasicInfo userBasicInfo = new UserBasicInfo();
+        userBasicInfo.setUserId(user.getUserId().intValue());
         userBasicInfo.setNickname(turnToMap.get("nickname"));
         userBasicInfo.setRealName(turnToMap.get("realName"));
         userBasicInfo.setMail(turnToMap.get("mail"));
@@ -190,9 +204,11 @@ public class HomeController extends FrontendBaseController {
      */
     @RequestMapping(value = "/info/update")
     @ResponseBody
-    public QueryMessage updateUserInfo(@RequestBody Params[] params) {
+    public QueryMessage updateUserInfo(@RequestBody Params[] params, HttpServletRequest request) {
+        WebUser user = this.getCurrentUser(request);
         Map<String, String> turnToMap = Params.turnToMap(params);
         UserBasicInfo userBasicInfo = new UserBasicInfo();
+        userBasicInfo.setUserId(user.getUserId().intValue());
         userBasicInfo.setNickname(turnToMap.get("nickname"));
         userBasicInfo.setRealName(turnToMap.get("realName"));
         userBasicInfo.setMail(turnToMap.get("mail"));
@@ -220,7 +236,8 @@ public class HomeController extends FrontendBaseController {
      * @return
      */
     @RequestMapping(value = "/address/create", method = RequestMethod.POST)
-    public String saveUserAddress(Address address, HttpServletRequest request, HttpServletResponse response) {
+    public String saveUserAddress(Address address, HttpServletRequest request,
+                                  HttpServletResponse response) {
         WebUser webUser = this.getCurrentUser(request);
         address.setUserId(webUser.getUserId());
         address.setUpdateTime(new Date());
@@ -270,8 +287,12 @@ public class HomeController extends FrontendBaseController {
         return "/user/order";
     }
 
-    @RequestMapping(value = "/message")
-    public String showUserMessage(){
-        return "/user/message";
+    @ResponseBody
+    @RequestMapping(value = "/order/delete/{skuId}")
+    public QueryMessage deleteUserOrder(@PathVariable Long skuId) {
+
+        return null;
     }
+
+
 }

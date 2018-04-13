@@ -3,7 +3,7 @@
 <#include "${pageContext.request.getContextPath}/layout/logobar.ftl">
 <#if indexCategoryDealDTOs??>
     <div class="navBox" style="height: 66px;">
-        <div class="comWidth clearfix">
+        <div class="comWidth clearfix" style="padding-top: 10px;">
             <div class="shopClass fl">
                 <div>
                     <div class="container">
@@ -40,10 +40,10 @@
                                 <a href="${pageContext.request.contentPath}/index" title="">首页</a>
                             </li><!-- /.column-1 -->
                             <li class="column-1">
-                                <a href="#" title="">便民服务</a>
+                                <a href="${pageContext.request.contentPaht}/search/index" title="">便民服务</a>
                             </li><!-- /.column-1 -->
                             <li class="has-mega-menu">
-                                <a href="#" title="">电子报刊</a>
+                                <a href="${pageContext.request.contentPath}/newspaper/index" title="">电子报刊</a>
                             </li><!-- /.has-mega-menu -->
                         </ul><!-- /.menu -->
                     </div><!-- /.mainnav -->

@@ -1,9 +1,12 @@
 package com.service.business;
 
+import com.common.constant.CartConstant;
+import com.common.constant.GlobalConstant;
 import com.common.entity.Favorite;
 import com.common.entity.deal.Deal;
 import com.common.entity.user.WebUser;
 import com.common.vo.FavoriteDTO;
+import com.common.vo.QueryMessage;
 import com.service.api.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +57,24 @@ public class FavoriteBusiness {
         Favorite favorite = new Favorite();
         favorite.setUserId(webUser.getUserId());
         return favoriteService.selectFavoriteList(favorite);
+    }
+
+    /**
+     * 删除用户收藏
+     * @param userId
+     * @param skuId
+     * @return
+     */
+    public QueryMessage deleteFavorite(Long userId,Long skuId) {
+        Favorite favorite = new Favorite();
+        favorite.setUserId(userId);
+        favorite.setDealSkuId(skuId);
+        Integer result = favoriteService.deleteFavorite(favorite);
+        if (result != 1) {
+            // 删除出错
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
+        }
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
     }
 
     public List<Long> selectDealIdsFromFavoriteList(List<Favorite> list){

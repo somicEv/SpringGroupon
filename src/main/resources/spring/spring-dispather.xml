@@ -14,6 +14,8 @@
     <context:component-scan base-package="com.controller"/>
     <!-- 配置资源映射 -->
     <mvc:resources mapping="/images/**" location="WEB-INF/images/"/>
+    <mvc:resources mapping="/images/product/foods/**" location="WEB-INF/images/product/foods"/>
+    <mvc:resources mapping="/newspaper_images/**" location="WEB-INF/newspaper_images/"/>
     <mvc:resources mapping="/js/**" location="WEB-INF/js/" />
     <mvc:resources mapping="/javascript/**" location="WEB-INF/javascript/" />
     <mvc:resources mapping="/style/**" location="WEB-INF/style/" />

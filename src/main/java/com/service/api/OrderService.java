@@ -16,4 +16,5 @@ public interface OrderService {
 
     List<OrderDetail> selectOrderDetail(Long orderId);
 
+    Integer updateOrder(Order order);
 }

@@ -40,4 +40,8 @@ public class OrderServiceImpl implements OrderService {
         return orderDetailDao.selectOrderDetail(orderId);
     }
 
+    @Override
+    public Integer updateOrder(Order order) {
+        return orderDao.updateOrder(order);
+    }
 }

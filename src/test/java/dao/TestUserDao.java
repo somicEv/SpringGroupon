@@ -49,6 +49,7 @@ public class TestUserDao {
 	@Test
 	public void testGetAll(){
 		User user = new User();
+		user.setName("yuhaohan");
 		List<User> userList = userDao.get(user);
 		for (User u : userList){
 			System.out.println(u);

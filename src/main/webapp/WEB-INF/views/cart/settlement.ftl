@@ -1,4 +1,4 @@
-<#import "macro/common.ftl" as common>
+<#import "${ctx}macro/common.ftl" as common>
 <html>
 <head>
     <meta charset="utf-8">
@@ -16,11 +16,11 @@
 
 <body>
 <div class="headerBar">
-<#include "layout/topbar.ftl">
+<#include "${ctx}/layout/topbar.ftl">
     <div class="logoBar">
         <div class="comWidth">
             <div class="logo fl">
-                <a href="${ctx}"><img src="${ctx}/images/logo.jpg" alt="慕课网"></a>
+                <a href="${ctx}"><img src="${ctx}/images/logos/logo.png" alt="慕课网"></a>
             </div>
             <div class="stepBox fr">
                 <div class="step"></div>
@@ -135,6 +135,6 @@
     <#--</div>-->
     <#--</div>-->
     </form>
-<#include "layout/footer.ftl">
+<#include "${ctx}/layout/footer.ftl">
 </body>
 </html>

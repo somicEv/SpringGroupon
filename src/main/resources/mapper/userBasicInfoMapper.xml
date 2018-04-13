@@ -5,6 +5,7 @@
 
     <resultMap id="BaseResultMap" type="com.common.entity.user.UserBasicInfo" >
         <id column="id" property="id" jdbcType="INTEGER"  />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
         <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
         <result column="real_name" property="realName" jdbcType="VARCHAR"/>
         <result column="mail" property="mail" jdbcType="VARCHAR"/>
@@ -14,7 +15,7 @@
     </resultMap>
     
     <sql id="Base_column_list">
-        id,nickname,real_name,mail,phone,create_time,update_time
+        id,user_id,nickname,real_name,mail,phone,create_time,update_time
     </sql>
 
     <select id="get" parameterType="com.common.entity.user.UserBasicInfo" resultMap="BaseResultMap">
@@ -24,6 +25,9 @@
           user_basic_info
         WHERE
           1 = 1
+          <if test="userId != null and userId != ''">
+              AND user_id = #{userId}
+          </if>
           <if test="nickname != null and nickname != ''">
               AND nickname = #{nickname}
           </if>
@@ -47,13 +51,15 @@
     <insert id="add" parameterType="com.common.entity.user.UserBasicInfo">
         insert into user_basic_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
             <if test="nickname != null">
                 nickname,
             </if>
             <if test="realName != null">
                 real_name,
             </if>
-
             <if test="mail != null">
                 mail,
             </if>
@@ -68,6 +74,9 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
             <if test="nickname != null">
                 #{nickname},
             </if>
@@ -108,7 +117,7 @@
                 update_time = #{updateTime},
             </if>
         </set>
-        where nickname = #{nickname}
+        where user_id = #{userId}
     </update>
 
     <delete id="delete" parameterType="com.common.entity.user.UserBasicInfo">

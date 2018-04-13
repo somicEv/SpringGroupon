@@ -24,4 +24,6 @@ public class TestRecommendDao {
         System.out.println(recommendList.toString());
     }
 
+
+
 }

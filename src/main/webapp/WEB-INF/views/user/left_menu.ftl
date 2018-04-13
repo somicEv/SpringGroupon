@@ -18,10 +18,4 @@
             <li><a href="${ctx}/home/address">收货地址</a></li>
         </ul>
     </div>
-    <div class="nav_cont">
-        <h3>消息</h3>
-        <ul class="navCont_list clearfix">
-            <li><a href="${ctx}/home/message">消息提醒</a></li>
-        </ul>
-    </div>
 </div>

@@ -1,10 +1,14 @@
 var Submit = {
-    AjaxSubmit: function (url, params) {
+    AjaxSubmit: function (url, params1,params2) {
+        var test = {
+            "param":params2,
+            "skuId":params1
+        };
 
         $.ajax({
             type: "post",
             url: url,
-            data: JSON.stringify(params),
+            data: JSON.stringify(test),
             dataType: "json",
             contentType: "application/json",
             async: true,
@@ -23,7 +27,7 @@ var Submit = {
                 alert("操作失败--error");
             }
         });
-    },
+    }
    /* AjaxSubmit_new: function (url, params) {
 
         $.ajax({

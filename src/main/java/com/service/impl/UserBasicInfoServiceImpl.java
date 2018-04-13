@@ -18,9 +18,9 @@ public class UserBasicInfoServiceImpl implements UserBasicInfoService{
     UserBasicInfoDao userBasicInfoDao;
 
     @Override
-    public QueryMessage<UserBasicInfo> selectUserBasicInfo(String username) {
+    public QueryMessage<UserBasicInfo> selectUserBasicInfo(Long userId) {
         UserBasicInfo user = new UserBasicInfo();
-        user.setNickname(username);
+        user.setUserId(userId.intValue());
         List<UserBasicInfo> infoList = userBasicInfoDao.get(user);
         if (infoList == null || infoList.size() != 1){
             return new QueryMessage<>(GlobalConstant.QUERY_RESULT_NOTFOUND, CartConstant.ERROR);

@@ -11,4 +11,8 @@ public interface OrderDao {
     Integer saveOrder(Order order);
 
     List<Order> selectOrder(Order order);
+
+    Integer deleteOrder(Long orderId);
+
+    Integer updateOrder(Order order);
 }

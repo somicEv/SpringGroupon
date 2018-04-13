@@ -8,6 +8,7 @@ import com.service.business.UserBusiness;
 import com.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,27 +52,34 @@ public class UserController extends FrontendBaseController {
      * @return
      */
     @RequestMapping(value = "/dologin")
-    public String doLogin(String name, String password, HttpServletResponse response) {
-        // 将用户的密码进行MD5加密
-        String md5DigestAsHex = md5DigestAsHex(password.getBytes());
-        // 在数据库中查找
-        User user = new User();
-        user.setName(name);
-        user.setPassword(md5DigestAsHex);
-        User resultUser = userBusiness.dologin(user);
-        if (resultUser == null) {
-            return "redirect:/login";
+    public String doLogin(String name, String password, HttpServletResponse response, Model model) {
+        try {
+            // 将用户的密码进行MD5加密
+            String md5DigestAsHex = md5DigestAsHex(password.getBytes());
+            // 在数据库中查找
+            User user = new User();
+            user.setName(name);
+            user.setPassword(md5DigestAsHex);
+            User resultUser = userBusiness.doLogin(user);
+            if (resultUser == null) {
+                return "redirect:/login";
+            }
+            // 存入Cookie
+            WebUser webuser = new WebUser();
+            webuser.setUserId(resultUser.getId().longValue());
+            webuser.setUsername(resultUser.getName());
+            webuser.setLoginStatus(WebConstants.USER_LOGIN_STATUS_NORMAL);
+            CookieUtil.setLoginUser(response, webuser);
+            // 更新用户信息
+            User userTemplate = new User();
+            userTemplate.setId(resultUser.getId());
+            userTemplate.setLoginTime(new Date());
+            model.addAttribute("result", 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("result", 0);
+            return "redirect:/index";
         }
-        // 存入Cookie
-        WebUser webuser = new WebUser();
-        webuser.setUserId(resultUser.getId().longValue());
-        webuser.setUsername(resultUser.getName());
-        webuser.setLoginStatus(WebConstants.USER_LOGIN_STATUS_NORMAL);
-        CookieUtil.setLoginUser(response, webuser);
-        // 更新用户信息
-        User userTemplate = new User();
-        userTemplate.setId(resultUser.getId());
-        userTemplate.setLoginTime(new Date());
         return "redirect:/index";
     }
 
@@ -85,18 +93,22 @@ public class UserController extends FrontendBaseController {
     @RequestMapping(value = "/register")
     public String doRegister(User user, HttpServletResponse response) {
         // 查询数据库
-        boolean result = userBusiness.doRegister(user);
-        if (!result) {
-            return "redirect:/reg";
+        try {
+            boolean result = userBusiness.doRegister(user);
+            if (!result) {
+                return "redirect:/reg";
+            }
+            // 查询用户userId
+            User reg_user = userBusiness.doLogin(user);
+            // 存入Cookie
+            WebUser webuser = new WebUser();
+            webuser.setUserId(reg_user.getId().longValue());
+            webuser.setUsername(user.getName());
+            webuser.setLoginStatus(WebConstants.USER_LOGIN_STATUS_NORMAL);
+            CookieUtil.setLoginUser(response, webuser);
+        } catch (Exception e) {
+            this.generateError500Page(response);
         }
-        // 查询用户userId
-        User reg_user = userBusiness.dologin(user);
-        // 存入Cookie
-        WebUser webuser = new WebUser();
-        webuser.setUserId(reg_user.getId().longValue());
-        webuser.setUsername(user.getName());
-        webuser.setLoginStatus(WebConstants.USER_LOGIN_STATUS_NORMAL);
-        CookieUtil.setLoginUser(response, webuser);
         return "redirect:/index";
     }
 
@@ -109,7 +121,7 @@ public class UserController extends FrontendBaseController {
      */
     @RequestMapping(value = "/logout")
     public String logout(HttpServletResponse response, HttpServletRequest request) {
-        CookieUtil.removeCookie(response, request,"ui", "/");
+        CookieUtil.removeCookie(response, request, "ui", "/");
         return "redirect:/index";
     }
 }

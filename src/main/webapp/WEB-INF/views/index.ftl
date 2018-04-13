@@ -23,7 +23,7 @@
     <script>
         function addToCart(skuId) {
         <#if username??>
-            Submit.AjaxSubmit('${ctx}/cart/default/' + skuId, 1);
+            Submit.AjaxSubmit('${ctx}/cart/default/' + skuId + '/' + 1);
         <#else >
             window.location = '${ctx}/login';
         </#if>
@@ -44,6 +44,10 @@
 
         .banner_big, .banner_big img {
             width: 1001px;
+        }
+
+        .slider .slider-item:before {
+            height: 294%;
         }
     </style>
 </head>
@@ -66,17 +70,19 @@
                                 <div class="divider65"></div>
                                 <div class="content-item">
                                     <div class="price">
-                                        <span class="sale">￥${recommendList.deal.dealPrice}</span>
+
+                                        <span class="sale"><@common.formatPrice recommendList.deal.dealPrice/></span>
                                         <span class="btn-shop">
-												<a href="${pageContext.request.contextPath}/item/${recommendList.deal.skuId}" title="">SHOP NOW <img src="images/icons/right-2.png"
-                                                                                   alt=""></a>
+												<a href="${pageContext.request.contextPath}/item/${recommendList.deal.skuId}"
+                                                   title="">SHOP NOW <img src="images/icons/right-2.png"
+                                                                          alt=""></a>
                                     </span>
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="item-image">
-                                <img src="images/slider/03.png" alt="">
+                                <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(recommendList.deal)}" alt="">
                             </div>
                             <div class="clearfix"></div>
                         </div><!-- /.slider -->
@@ -113,37 +119,44 @@
                                     <ul class="box-image owl-carousel-1">
                                         <li>
                                             <a href="#" title="">
-                                                <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(dealList)}" alt="">
+                                                <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(dealList)}"
+                                                     alt="">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" title="">
-                                                <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(dealList)}" alt="">
+                                                <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(dealList)}"
+                                                     alt="">
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#" title="">
-                                                <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(dealList)}" alt="">
+                                                <img src="${pageContext.request.contextPath}/${helper.getDealImageUrlForIndexDealList(dealList)}"
+                                                     alt="">
                                             </a>
                                         </li>
                                     </ul><!-- /.box-image -->
                                     <div class="box-content">
                                         <div class="product-name">
-                                            <a href="${pageContext.request.contextPath}/item/${dealList.skuId}" title="">${dealList.dealTitle}</a>
+                                            <a href="${pageContext.request.contextPath}/item/${dealList.skuId}"
+                                               title="">${dealList.dealTitle}</a>
                                         </div>
                                         <div class="price">
-                                            <span class="sale">￥${dealList.dealPrice}</span>
+
+                                            <span class="sale"><@common.formatPrice dealList.dealPrice/></span>
                                         </div>
                                     </div><!-- /.box-content -->
                                     <div class="box-bottom">
                                         <div class="btn-add-cart">
                                             <a href="#" title="" onclick="addToCart(${dealList.skuId})">
-                                                <img src="${pageContext.request.contextPath}/images/icons/add-cart.png" alt="">Add to Cart
+                                                <img src="${pageContext.request.contextPath}/images/icons/add-cart.png"
+                                                     alt="">Add to Cart
                                             </a>
                                         </div>
                                         <div style="margin: 20px 0px 0px 0px;">
                                             <a href="#" title="" onclick="addToFavorite(${dealList.skuId})"">
-                                                <img src="${pageContext.request.contextPath}/images/icons/wishlist.png" alt="">Add to WishList
+                                            <img src="${pageContext.request.contextPath}/images/icons/wishlist.png"
+                                                 alt="">Add to WishList
                                             </a>
                                         </div>
                                     </div><!-- /.box-bottom -->

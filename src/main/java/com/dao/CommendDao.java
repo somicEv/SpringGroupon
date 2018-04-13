@@ -9,4 +9,6 @@ import java.util.Map;
 @Repository
 public interface CommendDao {
     List<Commend> getCommendList(Map<String, Object> params);
+
+    Integer addNewCommend(Commend commend);
 }

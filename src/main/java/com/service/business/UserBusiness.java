@@ -30,7 +30,7 @@ public class UserBusiness {
      * @param user
      * @return
      */
-    public User dologin(User user) {
+    public User doLogin(User user) {
         List<User> userList = userService.get(user);
         if (userList == null || userList.size() == 0) {
             return new User();
@@ -70,7 +70,7 @@ public class UserBusiness {
      * @return
      */
     public QueryMessage<UserBasicInfo> selectUserBasicInfo(WebUser webUser) {
-        return userBasicInfoService.selectUserBasicInfo(webUser.getUsername());
+        return userBasicInfoService.selectUserBasicInfo(webUser.getUserId());
     }
 
     /**

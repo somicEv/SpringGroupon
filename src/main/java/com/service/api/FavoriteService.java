@@ -12,4 +12,5 @@ public interface FavoriteService {
 
     List<Favorite> selectFavoriteList(Favorite favorite);
 
+    Integer deleteFavorite(Favorite favorite);
 }

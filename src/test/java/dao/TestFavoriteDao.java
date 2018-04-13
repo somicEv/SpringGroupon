@@ -41,4 +41,12 @@ public class TestFavoriteDao {
         }
     }
 
+    @Test
+    public void testDeleteFavorite() {
+        Favorite favorite = new Favorite();
+        favorite.setUserId(14L);
+        favorite.setDealSkuId(2L);
+        Integer integer = favoriteDao.deleteFavorite(favorite);
+        System.out.println(integer);
+    }
 }

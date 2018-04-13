@@ -26,20 +26,11 @@
         <if test="id != null">
             AND id = #{id}
         </if>
-        <if test="password != null and password != ''">
-            AND password = #{password}
-        </if>
         <if test="name != null and name != '' ">
             AND name = #{name}
         </if>
-        <if test="loginTime != null and loginTime != '' ">
-            AND login_time = #{loginTime}
-        </if>
-        <if test="createTime != null and createTime != '' ">
-            AND create_time = #{createTime}
-        </if>
-        <if test="updateTime != null and updateTime != '' ">
-            AND update_time = #{createTime}
+        <if test="password != null and password != '' ">
+            AND password = #{password}
         </if>
     </select>
 

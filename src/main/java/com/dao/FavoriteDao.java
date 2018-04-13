@@ -16,4 +16,5 @@ public interface FavoriteDao {
 
     Favorite selectFavorite(Favorite favorite);
 
+    Integer deleteFavorite(Favorite favorite);
 }

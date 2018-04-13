@@ -1,7 +1,9 @@
 package com.service.impl;
 
 import com.common.entity.deal.Deal;
+import com.common.entity.deal.DealDetail;
 import com.dao.DealDao;
+import com.dao.DealDetailDao;
 import com.service.api.DealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class DealServiceImpl implements DealService {
 
     @Autowired
     private DealDao dealDao;
+
+    @Autowired
+    private DealDetailDao dealDetailDao;
 
     @Override
     public List<Deal> getDeal(Deal deal) {
@@ -58,5 +63,10 @@ public class DealServiceImpl implements DealService {
     @Override
     public List<Deal> getNewArrivalsGoods(Map<String, Object> params) {
         return dealDao.getNewArrivalsGoods(params);
+    }
+
+    @Override
+    public DealDetail getDealDetailBySkuId(DealDetail dealDetail) {
+        return dealDetailDao.getDealDetailBySkuId(dealDetail);
     }
 }

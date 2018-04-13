@@ -1,11 +1,14 @@
 package com.service.business;
 
+import com.common.constant.CartConstant;
+import com.common.constant.GlobalConstant;
 import com.common.constant.OrderConstant;
 import com.common.entity.Order;
 import com.common.entity.OrderDetail;
 import com.common.entity.area.Address;
 import com.common.entity.user.WebUser;
 import com.common.exception.BusinessException;
+import com.common.vo.QueryMessage;
 import com.common.vo.SettlementDTO;
 import com.service.api.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,5 +119,23 @@ public class OrderBusiness {
             o.setOrderDetails(orderDetails);
         }
         return orderList;
+    }
+
+    /**
+     * 更新用户订单状态
+     * @param orderId
+     * @param status
+     * @return
+     */
+    public QueryMessage update(Long orderId, Integer status) {
+        Order order = new Order();
+        order.setId(orderId);
+        order.setOrderStatus(status);
+        Integer result = orderService.updateOrder(order);
+        if (result != 1) {
+            // 更新出错
+            return new QueryMessage(GlobalConstant.QUERY_RESULT_ERROR, CartConstant.ERROR);
+        }
+        return new QueryMessage(GlobalConstant.QUERY_RESULT_OK, CartConstant.SUCCESS);
     }
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.SearchDao">
+    <sql id="table">
+        search
+    </sql>
+
+    <sql id="baseColumn">
+        id,key_name,result_url,result_desc,image_id,create_time,update_time
+    </sql>
+
+    <resultMap id="baseResult" type="com.common.vo.SearchDTO">
+        <id property="id" column="id"/>
+        <result property="keyName" column="key_name"/>
+        <result property="resultUrl" column="result_url"/>
+        <result property="resultDesc" column="result_desc"/>
+        <result property="imageId" column="image_id"/>
+    </resultMap>
+
+    <select id="getResultByKeyName" resultMap="baseResult">
+        SELECT
+          <include refid="baseColumn"/>
+        FROM
+          <include refid="table"/>
+        WHERE
+          key_name LIKE CONCAT('%',#{keyName},'%')
+        limit 1
+    </select>
+
+    <select id="getSearchResultList" resultMap="baseResult" parameterType="java.util.Map">
+        SELECT
+          <include refid="baseColumn"/>
+        FROM
+          <include refid="table"/>
+        WHERE
+          key_name LIKE CONCAT('%',#{keyName},'%')
+        ORDER BY create_time
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="countSearchResult" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT
+          COUNT(*)
+        FROM
+          <include refid="table"/>
+        WHERE
+          key_name LIKE CONCAT('%',#{keyName},'%')
+        ORDER BY create_time
+    </select>
+</mapper>
